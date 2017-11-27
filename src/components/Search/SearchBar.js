@@ -6,15 +6,14 @@ const SearchBar = props => [
             <input 
                 type="search" 
                 id="search" 
-                placeholder="Buscar..."
+                placeholder="¿Qué buscas?"
                 value={props.value}
                 onChange={props.onChange}
                 />
             <button 
-                className="icon"
-                onClick={props.onClick}
-                >
-                    <i className="fa fa-search"></i>
+                className="icon-search"
+                onClick={props.onClick}>
+                <i className="fa fa-search"></i>
             </button>
         </div>
     </div>

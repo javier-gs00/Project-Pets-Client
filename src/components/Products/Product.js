@@ -2,6 +2,25 @@ import React from 'react';
 import './products.css'
 
 const Product = (props) => [
+    <div>
+    {props.results.length !== 0?
+        <div className="filters-container">
+            <div className="filter-container">
+                <label>Precio</label>
+                <button 
+                    className="icon-filter">
+                    <i className="fa fa-sort-amount-asc"></i>
+                </button>
+            </div>
+            <div className="filter-container">
+                <label>Tienda</label>
+                <button 
+                    className="icon-filter">
+                    <i className="fa fa-sort-alpha-desc"></i>
+                </button>
+            </div>
+        </div>
+    :null}
     <div className="products-container">
         {props.results.map(result => {
             // transform the price into a string and add a $ and a .
@@ -32,6 +51,7 @@ const Product = (props) => [
                 </div>
             )
         })}
+    </div>
     </div>
 ]
 

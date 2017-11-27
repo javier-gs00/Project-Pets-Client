@@ -24,7 +24,7 @@ class Nav extends Component {
         return (
             <div className="navbar">
                 <NavItem 
-                    to={'/search'}
+                    to={'/'}
                     className={"active"}
                     svg={<NavSearchIcon strokeWidth=".53"/>}
                     textDisplay={"Buscar"}

@@ -9,7 +9,6 @@ import Header from '../components/Header/Header.js';
 import SearchContainer from './Search/SearchContainer.js'
 import ProductsContainer from './Products/ProductsContainer.js'
 import StoresContainer from './Stores/StoresContainer.js'
-// import Routes from './Routes'
 
 class App extends Component {
   render() {
@@ -18,7 +17,7 @@ class App extends Component {
         <Header />
         <NavContainer />
         <Switch>
-            <Route exact path='/search' component={SearchContainer} />
+            <Route exact path='/' component={SearchContainer} />
             <Route exact path='/productos' component={ProductsContainer} />
             <Route exact path='/tiendas' component={StoresContainer} />
         </Switch>
