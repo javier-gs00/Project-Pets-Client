@@ -195,3 +195,6 @@
 .filter-container:hover > button.icon-filter {
   background: #d2691e;
 }
+.product-link {
+  text-decoration: none;
+}

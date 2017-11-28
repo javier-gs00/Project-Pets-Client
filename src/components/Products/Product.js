@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import './products.css'
 
 const Product = (props) => [
@@ -33,22 +34,24 @@ const Product = (props) => [
             }
 
             return (
-                <div key={result._id} className="product-container">
-                    <div className="product-image">
-                        <img src="img/royal_canin_maxi_adulto_400x400.jpg" alt="Royal Canin Maxi Adulto"/>
+                <a className="product-link" href={result.href} target="_blank">
+                    <div key={result._id} className="product-container">
+                        <div className="product-image">
+                            <img src={result.image_href} alt="Royal Canin Maxi Adulto"/>
+                        </div>
+                        <div className="product-data">
+                            <div className="product-data-block">
+                                <span className="product-name">{result.name}</span>
+                            </div>
+                            <div className="product-data-block">
+                                <span className="product-store">{result.store}</span>
+                            </div>
+                            <div className="product-data-block">
+                                <span className="product-price">{price}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div className="product-data">
-                        <div className="product-data-block">
-                            <span className="product-name">{result.name}</span>
-                        </div>
-                        <div className="product-data-block">
-                            <span className="product-store">{result.store}</span>
-                        </div>
-                        <div className="product-data-block">
-                            <span className="product-price">{price}</span>
-                        </div>
-                    </div>
-                </div>
+                </a>
             )
         })}
     </div>
