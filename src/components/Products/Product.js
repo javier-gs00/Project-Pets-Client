@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import './products.css'
 
 const Product = (props) => [
@@ -34,8 +34,8 @@ const Product = (props) => [
             }
 
             return (
-                <a className="product-link" href={result.href} target="_blank">
-                    <div key={result._id} className="product-container">
+                <div key={result._id} className="product-container">
+                    {/* <a className="product-link" href={result.href} target="_blank"> */}
                         <div className="product-image">
                             <img src={result.image_href} alt="Royal Canin Maxi Adulto"/>
                         </div>
@@ -50,8 +50,8 @@ const Product = (props) => [
                                 <span className="product-price">{price}</span>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    {/* </a> */}
+                </div>                
             )
         })}
     </div>

@@ -14,7 +14,7 @@ function parseJSON(response) {
 }
 
 function search (query, cb) {
-    return fetch(`api/search?query=${query}`, {
+    return fetch(`api/product?query=${query}`, {
         accept: "application/json"
     })
     .then(checkStatus)
