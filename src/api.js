@@ -1,20 +1,27 @@
+const productionRoute = 'https://project-pets.herokuapp.com'
+const localhostRoute = 'http://localhost:3001'
+
 function checkStatus (response) {
     if (response.status >= 200 && response.status < 300) {
-        return response;
+        console.log('Check status succesful...')
+        return response
     }
-    const error = new Error(`HTTP Error ${response.statusText}`);
-    error.status = response.statusText;
-    error.response = response;
-    console.log(error);
-    throw error;
+    const error = new Error(`HTTP Error ${response.statusText}`)
+    error.status = response.statusText
+    error.response = response
+    console.log(error)
+    throw error
 }
 
 function parseJSON(response) {
-    return response.json();
+    console.log(response)
+    console.log('Parsing response to json...')
+    return response.json()
 }
 
 function search (query, cb) {
-    return fetch(`api/product?query=${query}`, {
+    console.log('Search query sent...')
+    return fetch(`/api/product?query=${query}`, {
         accept: "application/json"
     })
     .then(checkStatus)
@@ -22,5 +29,5 @@ function search (query, cb) {
     .then(cb)
 }
 
-const Client = { search };
-export default Client;
+const Client = { search }
+export default Client
