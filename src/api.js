@@ -1,5 +1,5 @@
-const productionRoute = 'https://project-pets.herokuapp.com'
-const localhostRoute = 'http://localhost:3001'
+const productionRoute = 'https://project-pets-api.herokuapp.com'
+// const localhostRoute = 'http://localhost:3001'
 
 function checkStatus (response) {
     if (response.status >= 200 && response.status < 300) {
@@ -21,7 +21,7 @@ function parseJSON(response) {
 
 function search (query, cb) {
     console.log('Search query sent...')
-    return fetch(`/api/product?query=${query}`, {
+    return fetch(`${productionRoute}/api/product?query=${query}`, {
         accept: "application/json"
     })
     .then(checkStatus)
