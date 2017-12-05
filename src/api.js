@@ -1,6 +1,3 @@
-// const apiRoute = 'https://project-pets-api.herokuapp.com'
-// const apiRoute = 'http://localhost:3001'
-
 function checkStatus (response) {
     if (response.status >= 200 && response.status < 300) {
         console.log('Check status succesful...')
