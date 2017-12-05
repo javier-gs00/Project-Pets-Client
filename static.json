@@ -8,7 +8,7 @@
     },
     "proxies": {
         "/api/": {
-            "origin": "https://project-pets-api.heroku.app.com/api"
+            "origin": "https://project-pets-api.herokuapp.com/api"
         } 
     }
 }
