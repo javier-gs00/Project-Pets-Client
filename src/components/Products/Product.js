@@ -24,8 +24,13 @@ const Product = (props) => [
     :null}
     <div className="products-container">
         {props.results.map(result => {
+            // check for unicode characters and transforms to normal string
+            // const productName = unicodeToChar(result.name)
+            // const productName = String.fromCharCode(parseInt(result.name, 16))
+            // console.log(hexToString(result.name))
+            // let productName = hexToString(result.name)
+            // console.log('productName: ' + productName)
             // transform the price into a string and add a $ and a .
-            
             let price = result.price.toString()
             if (price.length > 4) {
                 price = "$" + price.slice(0, 2) + "." + price.slice(-3)
@@ -41,7 +46,7 @@ const Product = (props) => [
                         </div>
                         <div className="product-data">
                             <div className="product-data-block">
-                                <span className="product-name">{result.name}</span>
+                                <span className="product-name">{hexToString(result.name)}</span>
                             </div>
                             <div className="product-data-block">
                                 <span className="product-store">{result.store}</span>
@@ -57,5 +62,76 @@ const Product = (props) => [
     </div>
     </div>
 ]
+
+// Transforms a string that contains hex NCR code to a normal string
+function hexToString (inputStr) {
+    // Look for &# and separate the string in two. Then look for a ";"" and separate the string in two again.
+    // Repeat until you have every expression that starts with &# and ends with ";""
+    // For every expression captured replace &# with a 0 and erase the ";"
+    // Transform the resulting expressions using fromCharCode and concatenate the resulting string
+    // console.log('========= InputStr')
+    // console.log(inputStr)
+    inputStr = inputStr.replace('&#x2013;', '-')
+    let startStr = '&#'
+    let endStr = ';'
+    let start = inputStr.indexOf(startStr)
+    let end = inputStr.indexOf(endStr)
+    if (start > 0) {
+        let firstPart = inputStr.slice(0, start) 
+        let secondPart = inputStr.slice(start, end + 1)
+        secondPart = secondPart.replace('&#', '0').replace(';', '')
+        let thirdPart = inputStr.slice(end + 1)
+        // console.log('===== First part is: ')
+        console.log(firstPart)
+        // console.log('===== SEcond part is: ')
+        console.log(secondPart)
+        console.log(hex2b(secondPart).length)
+        // console.log('===== Third part is: ')
+        console.log(thirdPart)
+        let newString = firstPart + hex2b(secondPart).slice(1) + thirdPart
+        // console.log('===== Result is')
+        console.log(newString)
+        hexToString(newString)
+        // let rucursive = newString.indexOf(startStr)
+        // if (rucursive > 0) { 
+        //     hexToString(newString)
+        // } else {
+        //     console.log('check 1')
+        //     return newString
+        // }
+    } else {
+        // console.log('check 2')
+        return inputStr
+    }
+}
+
+// function unicodeToChar(text) {
+//     return text.replace(/\\u[\dA-F]{4}/gi, 
+//         function (match) {
+//             return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
+//         });
+// }
+// function a2hex(str) {
+//     var arr = [];
+//     for (var i = 0, l = str.length; i < l; i ++) {
+//       var hex = Number(str.charCodeAt(i)).toString(16);
+//       arr.push(hex);
+//     }
+//     return arr.join('');
+//   }
+  
+//   function hex2a(hexx) {
+//       var hex = hexx.toString();//force conversion
+//       var str = '';
+//       for (var i = 0; i < hex.length; i += 2)
+//           str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+//       return str;
+//   }
+
+  function hex2b(hex) {
+    var str = '';
+    for (var i = 0; i < hex.length; i += 2) str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
+}
 
 export default Product;

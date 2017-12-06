@@ -15,15 +15,14 @@ class SearchContainer extends Component {
     }
 
     handleChange = e => {
-        const value = e.target.value;
-
+        const value = e.target.value
         this.setState({
             searchValue: value
         })
     };
 
     handleSubmit = () => {
-        const query = this.state.searchValue;
+        const query = this.state.searchValue
 
         if (query === "") {
             this.setState({
@@ -31,8 +30,6 @@ class SearchContainer extends Component {
             });
         } else {
             Client.search(query, results => {
-                console.log(results);
-                console.log(results.length)
                 this.setState({
                     results: results
                 })
@@ -40,14 +37,21 @@ class SearchContainer extends Component {
         }
     };
 
+    handleKeyPress = e => {
+        if (e.key === 'Enter') {
+            this.handleSubmit()
+        }
+    }
+
     render() {
-        const results = this.state.results;
+        const results = this.state.results
         return (
             <div className="main">
                 <SearchBar 
                     value={ this.state.searchValue }
                     onChange={ this.handleChange }
-                    onClick={ this.handleSubmit } />
+                    onClick={ this.handleSubmit } 
+                    onKeyPress={ this.handleKeyPress } />
                 {results?
                     <Product 
                         results={ this.state.results } />

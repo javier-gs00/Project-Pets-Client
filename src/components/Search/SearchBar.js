@@ -8,8 +8,8 @@ const SearchBar = props => [
                 id="search" 
                 placeholder="¿Qué buscas?"
                 value={props.value}
-                onChange={props.onChange}
-                />
+                onChange={props.onChange} 
+                onKeyPress={props.onKeyPress} />
             <button 
                 className="icon-search"
                 onClick={props.onClick}>

@@ -17,25 +17,36 @@
     max-width: 400px;
     vertical-align: middle;
     white-space: nowrap;
-    -webkit-boder-radius: 5px;
+    -webkit-appearance: none;
+    /* -webkit-boder-radius: 5px;
     -moz-border-radius: 5px;
-    border-radius: 5px;
+    border-radius: 5px; */
+
+}
+.search-input-container:hover {
+    /* box-shadow: 0 1px 8px 0 rgba(70, 70, 70, 0.8); */
+    box-shadow: 0 4px 8px 0 rgba(70, 70, 70, 0.5);
 }
 .search-input-container input#search {
     width: 100%;
     max-width: 400px;
     height: 50px;
     background: #fafafa;
-    border: 1px solid #fafafa;
+    /* border: 1px solid #fafafa; */
     font-size: 1.8rem;
     float: left;
     color: #464646;
     padding-left: 15px;
     -webkit-appearance: none;
-    -webkit-border-radius: 5px;
+    -webkit-border-radius: 0px;
+    border: 1px solid rgba(70,70,70,1); 
+    /* -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    border-radius: 5px;
+    border-radius: 5px; */
 }
+/* .search-input-container input#search:hover {
+    border: 1px solid #d2691e;
+} */
 .search-input-container input#search:focus {
     border: 1px solid #d2691e;
 }
@@ -54,12 +65,12 @@
     color: #65737e;
 }
 .search-input-container button.icon-search {
-    -webkit-border-top-right-radius: 5px;
+    /* -webkit-border-top-right-radius: 5px;
     -webkit-border-bottom-right-radius: 5px;
     -moz-border-radius-topright: 5px;
     -moz-border-radius-bottomright: 5px;
     border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px; */
     border: none;
     background: #464646;
     height: 50px;
@@ -68,19 +79,15 @@
     opacity: 1;
     font-size: 1.6rem;
     margin-left: -50px;
-    -webkit-transition: all .35s ease;
-    -moz-transition: all .35s ease;
-    -ms-transition: all .35s ease;
-    -o-transition: all .35s ease;
-    transition: all .35s ease;
-}
-.search-input-container:hover {
-    box-shadow: 0 1px 8px 0 rgba(70, 70, 70, 0.8);
-}
-.search-input-container:hover > button.icon-search {
-    background: #d2691e;
-}
+    -webkit-transition: all .15s ease;
+    -moz-transition: all .15s ease;
+    -ms-transition: all .15s ease;
+    -o-transition: all .15s ease;
+    transition: all .15s ease;
+}   
 .search-input-container button.icon-search:hover {
+    cursor: pointer;
+}
+.search-input-container input#search:focus + button.icon-search {
     background: #d2691e;
 }
-
