@@ -24,13 +24,6 @@ const Product = (props) => [
     :null}
     <div className="products-container">
         {props.results.map(result => {
-            // check for unicode characters and transforms to normal string
-            // const productName = unicodeToChar(result.name)
-            // const productName = String.fromCharCode(parseInt(result.name, 16))
-            // console.log(hexToString(result.name))
-            // let productName = hexToString(result.name)
-            // console.log('productName: ' + productName)
-            // transform the price into a string and add a $ and a .
             let price = result.price.toString()
             if (price.length > 4) {
                 price = "$" + price.slice(0, 2) + "." + price.slice(-3)
@@ -42,11 +35,11 @@ const Product = (props) => [
                 <div key={result._id} className="product-container">
                     {/* <a className="product-link" href={result.href} target="_blank"> */}
                         <div className="product-image">
-                            <img src={result.image_href} alt="Royal Canin Maxi Adulto"/>
+                            <img src={result.image_href} alt={'Sin Imagen :('}/>
                         </div>
                         <div className="product-data">
                             <div className="product-data-block">
-                                <span className="product-name">{parseHex(result.name)}</span>
+                                <span className="product-name">{result.name}</span>
                             </div>
                             <div className="product-data-block">
                                 <span className="product-store">{result.store}</span>
@@ -65,25 +58,25 @@ const Product = (props) => [
 
 // Manually replace hex values. Though hexToString correctly parses hex values,
 // for some reason they don't get displayed in the Browser
-function parseHex (str) {
-    return str
-    .replace(/&#x2013;/gi, ' ')
-    .replace(/&#xa0;/gi, ' ')
-    .replace(/&#xc4;/gi, 'Á')
-    .replace(/&#xe1;/gi, 'á')
-    .replace(/&#xc9;/gi, 'É')
-    .replace(/&#xe9;/gi, 'é')
-    .replace(/&#xcd;/gi, 'Í')
-    .replace(/&#xed;/gi, 'í')
-    .replace(/&#xd3;/gi, 'Ó')
-    .replace(/&#xF3;/gi, 'ó')
-    .replace(/&#xda;/gi, 'Ú')
-    .replace(/&#xfa;/gi, 'ú')
-    .replace(/&#xdc;/gi, 'Ü')
-    .replace(/&#xfc;/gi, 'ü')
-    .replace(/&#xd1;/gi, 'Ñ')
-    .replace(/&#xf1;/gi, 'ñ')
-}
+// function parseHex (str) {
+//     return str
+//     .replace(/&#x2013;/gi, ' ')
+//     .replace(/&#xa0;/gi, ' ')
+//     .replace(/&#xc4;/gi, 'Á')
+//     .replace(/&#xe1;/gi, 'á')
+//     .replace(/&#xc9;/gi, 'É')
+//     .replace(/&#xe9;/gi, 'é')
+//     .replace(/&#xcd;/gi, 'Í')
+//     .replace(/&#xed;/gi, 'í')
+//     .replace(/&#xd3;/gi, 'Ó')
+//     .replace(/&#xF3;/gi, 'ó')
+//     .replace(/&#xda;/gi, 'Ú')
+//     .replace(/&#xfa;/gi, 'ú')
+//     .replace(/&#xdc;/gi, 'Ü')
+//     .replace(/&#xfc;/gi, 'ü')
+//     .replace(/&#xd1;/gi, 'Ñ')
+//     .replace(/&#xf1;/gi, 'ñ')
+// }
 
 // Transforms a string that contains hex NCR code to a normal string
 // function hexToString (inputStr) {
