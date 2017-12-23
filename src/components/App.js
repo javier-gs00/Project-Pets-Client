@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-// Components
-import Header from '../components/header/header'
-
 // Containers
 import NavContainer from './nav/nav-container.jsx'
 import SearchContainer from './search/search-container.jsx'

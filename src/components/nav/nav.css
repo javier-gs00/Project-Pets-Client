@@ -12,13 +12,16 @@
       position: relative;
       top: 0px;
       width: 100%;
+      background: #fff;
+      /* padding: 0 100px 0 100px;  */
       display: flex;
       display: -ms-flex;
+      justify-content: center;
       box-shadow: 0 2px 4px -1px rgba(70, 70, 70, .5);
     }
   }
   .navbar a {
-    flex-basis: 20%;
+    flex-basis: 33%;
     /* background: #fafafa; */
     background: #fff;
     align-items: center;
@@ -26,9 +29,20 @@
     text-decoration: none;
     padding: 14px 10px;
   }
+  @media only screen and (min-width: 600px) {
+    .navbar a {
+      flex-basis: 15%;
+      /* background: #fafafa; */
+      background: #fff;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      padding: 14px 5px;
+    }
+  }
   .navbar a:hover > .navbar-link-container .navbar-text {
     /* color: #d2691e; */
-    color: #ffa000;
+    /* color: #ffa000; */
     color: #c67100;
   }
   .navbar-link-container {
@@ -56,6 +70,11 @@
     /* color: #d2691e; */
   }
   /* ---------------- NAVBAR ICONS SVG ---------------- */
+  @media only screen and (min-width: 600px) {
+    .navbar svg {
+      display: none
+    }
+  }
   .navbar svg {
     fill: none;
     stroke: #464646;

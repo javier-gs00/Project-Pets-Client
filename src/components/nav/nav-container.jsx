@@ -23,14 +23,14 @@ class Nav extends Component {
     render() {
         return (
             <div className="navbar">
-                <NavItem 
+                {/* <NavItem 
                     to={'/'}
                     className={"active"}
                     svg={<NavSearchIcon strokeWidth=".53"/>}
                     textDisplay={"Buscar"}
-                    onClick={this.handleClick}/>
+                    onClick={this.handleClick}/> */}
                 <NavItem 
-                    to={'/productos'}
+                    to={'/'}
                     className={""}
                     svg={<NavProductsIcon strokeWidth=".53"/>}
                     textDisplay={"Productos"}
@@ -41,12 +41,12 @@ class Nav extends Component {
                     svg={<NavStoresIcon strokeWidth=".53"/>}
                     textDisplay={"Tiendas"}
                     onClick={this.handleClick}/>
-                <NavItem 
+                {/* <NavItem 
                     to={'/login'}
                     className={""}
                     svg={<NavLoginIcon strokeWidth=".53"/>}
                     textDisplay={"Ingresar"}
-                    onClick={this.handleClick}/>
+                    onClick={this.handleClick}/> */}
                 <NavItem 
                     to={'/menu'}
                     className={""}

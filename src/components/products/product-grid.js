@@ -4,31 +4,31 @@ import './products.css'
 
 const ProductGrid = (props) => [
     <div>
-    {props.results.length !== 0?
-        <div className="filters-container">
-            <div className="filter-container">
-                <label>Precio</label>
-                <button 
-                    className="icon-filter">
-                    <i className="fa fa-sort-amount-asc"></i>
-                </button>
+        {/* {props.results.length !== 0?
+            <div className="filters-container">
+                <div className="filter-container">
+                    <label>Precio</label>
+                    <button 
+                        className="icon-filter">
+                        <i className="fa fa-sort-amount-asc"></i>
+                    </button>
+                </div>
+                <div className="filter-container">
+                    <label>Tienda</label>
+                    <button 
+                        className="icon-filter">
+                        <i className="fa fa-sort-alpha-desc"></i>
+                    </button>
+                </div>
             </div>
-            <div className="filter-container">
-                <label>Tienda</label>
-                <button 
-                    className="icon-filter">
-                    <i className="fa fa-sort-alpha-desc"></i>
-                </button>
-            </div>
+        :null} */}
+        <div className="products-container">
+            {props.results.map(result => {
+                return (
+                    < ProductItem result={ result }/>            
+                )
+            })}
         </div>
-    :null}
-    <div className="products-container">
-        {props.results.map(result => {
-            return (
-                < ProductItem result={ result }/>            
-            )
-        })}
-    </div>
     </div>
 ]
 
