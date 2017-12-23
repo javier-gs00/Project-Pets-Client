@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import './search.css'
 import Client from '../../api.js'
-import Product from '../../components/Products/Product'
-import SearchBar from '../../components/Search/SearchBar'
+import ProductGrid from '../products/product-grid'
+import SearchForm from './search-form'
 
 class SearchContainer extends Component {
     constructor(props) {
@@ -47,13 +47,13 @@ class SearchContainer extends Component {
         const results = this.state.results
         return (
             <div className="main">
-                <SearchBar 
+                <SearchForm 
                     value={ this.state.searchValue }
                     onChange={ this.handleChange }
                     onClick={ this.handleSubmit } 
                     onKeyPress={ this.handleKeyPress } />
                 {results?
-                    <Product 
+                    <ProductGrid 
                         results={ this.state.results } />
                     :<div>No se encontraron resultados</div>
                 }

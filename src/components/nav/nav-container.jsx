@@ -6,7 +6,7 @@ import NavProductsIcon from '../../assets/svg/nav.products.js';
 import NavStoresIcon from '../../assets/svg/nav.stores.js';
 import NavLoginIcon from '../../assets/svg/nav.login.js';
 import NavMenuIcon from '../../assets/svg/nav.menu.js';
-import NavItem from '../../components/Nav/NavItem.js'
+import NavItem from './nav-item'
 
 class Nav extends Component {
     constructor() {

@@ -1,8 +1,8 @@
-import React from 'react';
-// import { Link } from 'react-router-dom'
+import React from 'react'
+import ProductItem from './product-item'
 import './products.css'
 
-const Product = (props) => [
+const ProductGrid = (props) => [
     <div>
     {props.results.length !== 0?
         <div className="filters-container">
@@ -24,59 +24,13 @@ const Product = (props) => [
     :null}
     <div className="products-container">
         {props.results.map(result => {
-            let price = result.price.toString()
-            if (price.length > 4) {
-                price = "$" + price.slice(0, 2) + "." + price.slice(-3)
-            } else {
-                price = "$" + price.slice(0, 1) + "." + price.slice(-3)
-            }
-
             return (
-                <div key={result._id} className="product-container">
-                    {/* <a className="product-link" href={result.href} target="_blank"> */}
-                        <div className="product-image">
-                            <img src={result.image_href} alt={'Sin Imagen :('}/>
-                        </div>
-                        <div className="product-data">
-                            <div className="product-data-block">
-                                <span className="product-name">{result.name}</span>
-                            </div>
-                            <div className="product-data-block">
-                                <span className="product-store">{result.store}</span>
-                            </div>
-                            <div className="product-data-block">
-                                <span className="product-price">{price}</span>
-                            </div>
-                        </div>
-                    {/* </a> */}
-                </div>                
+                < ProductItem result={ result }/>            
             )
         })}
     </div>
     </div>
 ]
-
-// Manually replace hex values. Though hexToString correctly parses hex values,
-// for some reason they don't get displayed in the Browser
-// function parseHex (str) {
-//     return str
-//     .replace(/&#x2013;/gi, ' ')
-//     .replace(/&#xa0;/gi, ' ')
-//     .replace(/&#xc4;/gi, 'Á')
-//     .replace(/&#xe1;/gi, 'á')
-//     .replace(/&#xc9;/gi, 'É')
-//     .replace(/&#xe9;/gi, 'é')
-//     .replace(/&#xcd;/gi, 'Í')
-//     .replace(/&#xed;/gi, 'í')
-//     .replace(/&#xd3;/gi, 'Ó')
-//     .replace(/&#xF3;/gi, 'ó')
-//     .replace(/&#xda;/gi, 'Ú')
-//     .replace(/&#xfa;/gi, 'ú')
-//     .replace(/&#xdc;/gi, 'Ü')
-//     .replace(/&#xfc;/gi, 'ü')
-//     .replace(/&#xd1;/gi, 'Ñ')
-//     .replace(/&#xf1;/gi, 'ñ')
-// }
 
 // Transforms a string that contains hex NCR code to a normal string
 // function hexToString (inputStr) {
@@ -126,4 +80,4 @@ const Product = (props) => [
 //     return str;
 // }
 
-export default Product;
+export default ProductGrid
