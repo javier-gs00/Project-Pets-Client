@@ -47,13 +47,13 @@ class SearchContainer extends Component {
         const results = this.state.results
         return (
             <div className="main">
-                <SearchForm 
+                <SearchForm
                     value={ this.state.searchValue }
                     onChange={ this.handleChange }
                     onClick={ this.handleSubmit } 
                     onKeyPress={ this.handleKeyPress } />
                 {results?
-                    <ProductGrid 
+                    <ProductGrid
                         results={ this.state.results } />
                     :<div>No se encontraron resultados</div>
                 }

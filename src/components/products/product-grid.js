@@ -2,7 +2,8 @@ import React from 'react'
 import ProductItem from './product-item'
 import './products.css'
 
-const ProductGrid = (props) => [
+const ProductGrid = (props) => {
+    return (
     <div>
         {/* {props.results.length !== 0?
             <div className="filters-container">
@@ -25,12 +26,13 @@ const ProductGrid = (props) => [
         <div className="products-container">
             {props.results.map(result => {
                 return (
-                    < ProductItem result={ result }/>            
+                    <ProductItem key={result._id} result={ result }/>            
                 )
             })}
         </div>
     </div>
-]
+    )
+}
 
 // Transforms a string that contains hex NCR code to a normal string
 // function hexToString (inputStr) {

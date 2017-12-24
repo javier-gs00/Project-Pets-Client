@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './nav.css'
 
-import NavSearchIcon from '../../assets/svg/nav.search.js';
+// import NavSearchIcon from '../../assets/svg/nav.search.js';
 import NavProductsIcon from '../../assets/svg/nav.products.js';
 import NavStoresIcon from '../../assets/svg/nav.stores.js';
-import NavLoginIcon from '../../assets/svg/nav.login.js';
+// import NavLoginIcon from '../../assets/svg/nav.login.js';
 import NavMenuIcon from '../../assets/svg/nav.menu.js';
 import NavItem from './nav-item'
 

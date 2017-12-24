@@ -3,7 +3,7 @@ import React from 'react'
 const ProductItem = props => {
     let result = props.result
     return (
-        <div key={result.id} className="product-container">
+        <div className="product-container">
             {/* <a className="product-link" href={result.href} target="_blank"> */}
                 <div className="product-image">
                     <img src={result.imageUrl} alt={'Sin Imagen :('}/>

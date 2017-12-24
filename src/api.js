@@ -26,5 +26,15 @@ function search (query, cb) {
     .then(cb)
 }
 
-const Client = { search }
+function getStores (cb) {
+    console.log('Requesting stores...')
+    return fetch(`/api/store`, {
+        accept: 'application/json'
+    })
+    .then(checkStatus)
+    .then(parseJSON)
+    .then(cb)
+}
+
+const Client = { search, getStores }
 export default Client
