@@ -33,15 +33,13 @@
     max-width: 400px;
     height: 40px;
     background: #fff;
-    /* border: 1px solid #fafafa; */
     font-size: 1.8rem;
     float: left;
     color: #464646;
     padding-left: 15px;
-    -webkit-appearance: none;
-    -webkit-border-radius: 0px;
-    /* border: 1px solid rgba(,70,70,1);  */
     border: none;
+    -webkit-appearance: 'none';
+    -webkit-border-radius: 0px;
     /* -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px; */
@@ -49,14 +47,11 @@
 /* .search-input-container input#search:hover {
     border: 1px solid #d2691e;
 } */
+/*Disable blue outline on chrome*/
 .search-input-container input#search:focus {
-    /* border: 1px solid #d2691e; */
+    outline: 0;
 }
 .search-input-container input#search:-webkit-input-placeholder {
-    color: #65737e;
-}
-.search-input-container input#search:-moz-placeholder {
-/* Firefox 18- */
     color: #65737e;
 }
 .search-input-container input#search:-moz-placeholder {

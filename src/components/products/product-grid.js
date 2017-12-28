@@ -1,28 +1,15 @@
 import React from 'react'
 import ProductItem from './product-item'
+import ProductFilter from './product-filter'
 import './products.css'
 
 const ProductGrid = (props) => {
+    const stores = props.results.map(result => result.store)
+    let storeList = stores.filter((store, index, self) => self.indexOf(store) === index)
+    // console.log(storeList)
     return (
     <div>
-        {/* {props.results.length !== 0?
-            <div className="filters-container">
-                <div className="filter-container">
-                    <label>Precio</label>
-                    <button 
-                        className="icon-filter">
-                        <i className="fa fa-sort-amount-asc"></i>
-                    </button>
-                </div>
-                <div className="filter-container">
-                    <label>Tienda</label>
-                    <button 
-                        className="icon-filter">
-                        <i className="fa fa-sort-alpha-desc"></i>
-                    </button>
-                </div>
-            </div>
-        :null} */}
+        {props.results.length > 0 ? <ProductFilter stores={storeList} handleFilterClick={props.handleStoreFilterClick}/> : <span></span>}
         <div className="products-container">
             {props.results.map(result => {
                 return (
