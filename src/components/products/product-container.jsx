@@ -1,43 +1,51 @@
-import React, { Component } from 'react';
-
+import React, { Component } from 'react'
 import './search.css'
 import Client from '../../api.js'
-import ProductGrid from './product-grid'
-import SearchForm from './search-form'
+import ProductGrid from './product-grid.jsx'
+import SearchForm from './search-form.jsx'
 
 class SearchContainer extends Component {
     constructor(props) {
         super(props)
         this.state = {
             results: [],
-            searchValue: ""
+            searchValue: "",
+            storeFilters: []
         }
     }
 
-    handleChange = e => {
-        const value = e.target.value
+    handleInputChange = e => {
         this.setState({
-            searchValue: value
+            searchValue: e.target.value
         })
-    };
+    }
 
     handleSubmit = () => {
         const query = this.state.searchValue
-
         if (query === "") {
-            this.setState({
-                results: []
-            });
+            this.setState({ results: [] })
         } else {
             Client.search(query, results => {
-                this.setState({
-                    results: results
-                })
+                // retrieve the store values from the results
+                // const stores = results.map(result => result.store)
+                // get an array with only the resulting stores
+                // const storeList = stores.filter((store, index, self) => self.indexOf(store) === index)
+                // Create the filter objects defaulting to true to show all the results at first
+                // const storeFilters = storeList.map(storeName => ({id: storeName, checked: true}))
+                const storeFilters = results
+                    .map(result => result.store)
+                    .filter((store, index, self) => self.indexOf(store) === index)
+                    .map(storeName => ({id: storeName, checked: true}))
+
+                this.setState({ 
+                    results: results,
+                    storeFilters: storeFilters
+                 })
             })
         }
-    };
+    }
 
-    handleKeyPress = e => {
+    handleInputKeyPress = e => {
         if (e.key === 'Enter') {
             this.handleSubmit()
         }
@@ -46,48 +54,40 @@ class SearchContainer extends Component {
     handleStoreFilterClick = e => {
         const store = e.target.innerHTML
         let filteredResults = this.state.results.filter(result => result.store === store)
-        this.setState({results: filteredResults})
+        this.setState({ results: filteredResults })
+    }
+
+    handleStoreFilterChange = newStoreFilter => {
+        let currentFilters = this.state.storeFilters
+        const newStoreFilters = currentFilters.map(store => {
+            if (store.id === newStoreFilter.id) {
+                store.checked = newStoreFilter.checked
+            }
+            return store
+        })
+        this.setState({ storeFilter: newStoreFilters })
     }
 
     render() {
         const results = this.state.results
-        const query = this.state.searchValue
+        const stores = this.state.storeFilters
 
         return (
             <div className="main">
                 <SearchForm
-                    value={ this.state.searchValue }
-                    onChange={ this.handleChange }
-                    onClick={ this.handleSubmit } 
-                    onKeyPress={ this.handleKeyPress } />
-                {this.showResults(results, query)}
+                    value={this.state.searchValue}
+                    onChange={this.handleInputChange}
+                    onClick={this.handleSubmit} 
+                    onKeyPress={this.handleInputKeyPress} />
+                <ProductGrid 
+                    results={results}
+                    stores={stores}
+                    handleStoreFilterClick={this.handleStoreFilterClick}
+                    handleFiltersDisplay={this.handleFiltersDisplay}
+                    storeFilter={this.storeFilter}
+                    onStoreFilterChange={this.handleStoreFilterChange}/>
             </div>
         ) 
-    }
-
-    showResults = (results, query) => {
-        if (results.length > 0) {
-            return (
-                <div>
-                    <button onClick={this.handleFiltersDisplay}>Filtrar</button>
-                    <ProductGrid 
-                        results={results}
-                        handleStoreFilterClick={this.handleStoreFilterClick}/>
-                </div>
-            )
-        } else if (results.length === 0 && query !== '') {
-            return <div>No se encontraron resultados</div>
-        }
-    }
-
-    handleFiltersDisplay = e => {
-        if (this.state.results.length > 0) {
-            if (document.getElementById('filters').classList.contains('hidden')){
-                document.getElementById('filters').classList.remove('hidden')
-            } else {
-                document.getElementById('filters').classList.add('hidden')
-            }
-        }
     }
 }
 

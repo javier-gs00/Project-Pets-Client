@@ -3,23 +3,57 @@ import ProductItem from './product-item'
 import ProductFilter from './product-filter'
 import './products.css'
 
-const ProductGrid = (props) => {
-    const stores = props.results.map(result => result.store)
-    let storeList = stores.filter((store, index, self) => self.indexOf(store) === index)
-    // console.log(storeList)
-    return (
-    <div>
-        {props.results.length > 0 ? <ProductFilter stores={storeList} handleFilterClick={props.handleStoreFilterClick}/> : <span></span>}
-        <div className="products-container">
-            {props.results.map(result => {
-                return (
-                    <ProductItem key={result._id} result={ result }/>            
-                )
-            })}
-        </div>
-    </div>
-    )
+class ProductGrid extends React.Component {
+    handleFiltersDisplay = e => {
+        if (this.props.results.length > 0) {
+            if (document.getElementById('filters').classList.contains('hidden')){
+                document.getElementById('filters').classList.remove('hidden')
+            } else {
+                document.getElementById('filters').classList.add('hidden')
+            }
+        }
+    }
+
+    handleStoreFilterChange = e => {
+        this.props.onStoreFilterChange({
+            id: e.target.id,
+            checked: e.target.checked
+        })
+    }
+
+    render() {
+        const results = this.props.results
+        const stores = this.props.stores
+        const activeStoreFilters = []
+        stores.filter(store => {
+            if (store.checked) {activeStoreFilters.push(store.id)}
+        })
+
+        const products = this.props.results.map(result => {
+            if (activeStoreFilters.indexOf(result.store) !== -1) {
+                return (<ProductItem key={result._id} result={result}/>)
+            }
+        })
+
+        return (
+            <div>
+                <button onClick={this.handleFiltersDisplay}>Filtrar</button>
+                {results.length > 0 
+                    ? <ProductFilter 
+                            stores={stores} 
+                            handleFilterClick={this.handleStoreFilterClick}
+                            storeFilter={this.props.storeFilter}
+                            handleStoreFilterChange={this.handleStoreFilterChange}/> 
+                    : <span></span>}
+                <div className="products-container">
+                    {products}
+                </div>
+            </div>
+        )
+    }
 }
+
+export default ProductGrid
 
 // Transforms a string that contains hex NCR code to a normal string
 // function hexToString (inputStr) {
@@ -68,5 +102,3 @@ const ProductGrid = (props) => {
 //     for (var i = 0; i < hex.length; i += 2) str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
 //     return str;
 // }
-
-export default ProductGrid

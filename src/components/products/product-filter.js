@@ -3,13 +3,19 @@ import React from 'react'
 const ProductFilter = props => {
     let storeFilters = props.stores.map(store => {
         return (
-        <div className="filter">
-            <input type="checkbox" id={store} className="cbx hidden"/>
-            <label for={store} className="lbl"></label>
-            <span className="filter-name" onClick={props.handleStoreFilterClick}>{store}</span>
-        </div>
+            <div className="filter">
+                <input 
+                    type="checkbox" 
+                    id={store.id} 
+                    className="cbx hidden"
+                    checked={store.checked}
+                    onChange={props.handleStoreFilterChange}/>
+                <label for={store.id} className="lbl"></label>
+                <span className="filter-name" onClick={props.handleStoreFilterClick}>{store.id}</span>
+            </div>
         )
     })
+    
     return (
         <div id="filters" className="filters-container">
             <span className="filter-title">Tiendas</span>
