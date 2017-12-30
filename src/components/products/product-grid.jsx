@@ -24,16 +24,14 @@ class ProductGrid extends React.Component {
     render() {
         const results = this.props.results
         const stores = this.props.stores
-        const activeStoreFilters = []
-        stores.filter(store => {
-            if (store.checked) {activeStoreFilters.push(store.id)}
-        })
-
-        const products = this.props.results.map(result => {
-            if (activeStoreFilters.indexOf(result.store) !== -1) {
-                return (<ProductItem key={result._id} result={result}/>)
-            }
-        })
+        // Get the checked store filters and put them in an array
+        const activeStoreFilters = stores
+            .filter(store => store.checked)
+            .map(store => store.id)
+        // Get the products matching the active store filters
+        const products = this.props.results
+            .filter(product => activeStoreFilters.indexOf(product.store) !== -1)
+            .map(product => <ProductItem key={product.id} result={product}/>)
 
         return (
             <div>
@@ -41,8 +39,6 @@ class ProductGrid extends React.Component {
                 {results.length > 0 
                     ? <ProductFilter 
                             stores={stores} 
-                            handleFilterClick={this.handleStoreFilterClick}
-                            storeFilter={this.props.storeFilter}
                             handleStoreFilterChange={this.handleStoreFilterChange}/> 
                     : <span></span>}
                 <div className="products-container">

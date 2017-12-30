@@ -27,20 +27,16 @@ class SearchContainer extends Component {
         } else {
             Client.search(query, results => {
                 // retrieve the store values from the results
-                // const stores = results.map(result => result.store)
+                const stores = results.map(result => result.store)
                 // get an array with only the resulting stores
-                // const storeList = stores.filter((store, index, self) => self.indexOf(store) === index)
+                const storeList = stores.filter((store, index, self) => self.indexOf(store) === index)
                 // Create the filter objects defaulting to true to show all the results at first
-                // const storeFilters = storeList.map(storeName => ({id: storeName, checked: true}))
-                const storeFilters = results
-                    .map(result => result.store)
-                    .filter((store, index, self) => self.indexOf(store) === index)
-                    .map(storeName => ({id: storeName, checked: true}))
+                const storeFilters = storeList.map(storeName => ({id: storeName, checked: true}))
 
                 this.setState({ 
                     results: results,
                     storeFilters: storeFilters
-                 })
+                })
             })
         }
     }
@@ -49,12 +45,6 @@ class SearchContainer extends Component {
         if (e.key === 'Enter') {
             this.handleSubmit()
         }
-    }
-
-    handleStoreFilterClick = e => {
-        const store = e.target.innerHTML
-        let filteredResults = this.state.results.filter(result => result.store === store)
-        this.setState({ results: filteredResults })
     }
 
     handleStoreFilterChange = newStoreFilter => {
@@ -82,9 +72,7 @@ class SearchContainer extends Component {
                 <ProductGrid 
                     results={results}
                     stores={stores}
-                    handleStoreFilterClick={this.handleStoreFilterClick}
                     handleFiltersDisplay={this.handleFiltersDisplay}
-                    storeFilter={this.storeFilter}
                     onStoreFilterChange={this.handleStoreFilterChange}/>
             </div>
         ) 

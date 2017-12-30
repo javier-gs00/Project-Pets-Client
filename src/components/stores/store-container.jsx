@@ -11,16 +11,8 @@ class StoreContainer extends Component {
         }
     }
 
-    // componentWillMount() {
-    //     Client.getStores(results => {
-    //         // console.log(results)
-    //         this.setState({stores: results})
-    //     })
-    // }
-
     componentDidMount() {
         Client.getStores(results => {
-            // console.log(results)
             this.setState({stores: results})
         })    
     }

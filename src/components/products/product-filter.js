@@ -11,11 +11,11 @@ const ProductFilter = props => {
                     checked={store.checked}
                     onChange={props.handleStoreFilterChange}/>
                 <label for={store.id} className="lbl"></label>
-                <span className="filter-name" onClick={props.handleStoreFilterClick}>{store.id}</span>
+                <span className="filter-name">{store.id}</span>
             </div>
         )
     })
-    
+
     return (
         <div id="filters" className="filters-container">
             <span className="filter-title">Tiendas</span>
