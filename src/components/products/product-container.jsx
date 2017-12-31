@@ -69,11 +69,13 @@ class SearchContainer extends Component {
                     onChange={this.handleInputChange}
                     onClick={this.handleSubmit} 
                     onKeyPress={this.handleInputKeyPress} />
-                <ProductGrid 
+                {results.length > 0
+                ?<ProductGrid 
                     results={results}
                     stores={stores}
                     handleFiltersDisplay={this.handleFiltersDisplay}
                     onStoreFilterChange={this.handleStoreFilterChange}/>
+                :<span></span>}
             </div>
         ) 
     }

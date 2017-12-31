@@ -22,7 +22,6 @@ class ProductGrid extends React.Component {
     }
 
     render() {
-        const results = this.props.results
         const stores = this.props.stores
         // Get the checked store filters and put them in an array
         const activeStoreFilters = stores
@@ -36,11 +35,9 @@ class ProductGrid extends React.Component {
         return (
             <div>
                 <button className="btn filter-toggle" onClick={this.handleFiltersDisplay}>FILTRAR</button>
-                {results.length > 0 
-                    ? <ProductFilter 
-                            stores={stores} 
-                            handleStoreFilterChange={this.handleStoreFilterChange}/> 
-                    : <span></span>}
+                <ProductFilter 
+                    stores={stores} 
+                    handleStoreFilterChange={this.handleStoreFilterChange}/> 
                 <div className="products-container">
                     {products}
                 </div>
