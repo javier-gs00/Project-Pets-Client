@@ -35,7 +35,7 @@ class ProductGrid extends React.Component {
 
         return (
             <div>
-                <button onClick={this.handleFiltersDisplay}>Filtrar</button>
+                <button className="btn filter-toggle" onClick={this.handleFiltersDisplay}>FILTRAR</button>
                 {results.length > 0 
                     ? <ProductFilter 
                             stores={stores} 

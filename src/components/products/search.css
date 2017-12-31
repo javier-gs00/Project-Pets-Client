@@ -87,6 +87,5 @@
     cursor: pointer;
 }
 .search-input-container input#search:focus + button.icon-search {
-    /* background: #d2691e; */
     background: #ffa000;
 }

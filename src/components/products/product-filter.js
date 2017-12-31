@@ -17,7 +17,7 @@ const ProductFilter = props => {
     })
 
     return (
-        <div id="filters" className="filters-container">
+        <div id="filters" className="filters-container hidden">
             <span className="filter-title">Tiendas</span>
             {storeFilters}
             <span className="filter-title">Ordenar</span>
