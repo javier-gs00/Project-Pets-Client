@@ -16,10 +16,59 @@ const ProductFilter = props => {
         )
     })
 
+    let petFilters = props.pets.map(pet => {
+        if (pet.id !== '') {
+            return (
+                <div className="filter">
+                    <input 
+                        type="checkbox" 
+                        id={pet.id} 
+                        className="cbx hidden"
+                        checked={pet.checked}
+                        onChange={props.handlePetFilterChange}/>
+                    <label for={pet.id} className="lbl"></label>
+                    <span className="filter-name">{capitalizeFirstLetter(pet.id)}</span>
+                </div>
+            )
+        } else {
+            return (
+                <div className="filter">
+                    <input 
+                        type="checkbox" 
+                        id={pet.id} 
+                        className="cbx hidden"
+                        checked={pet.checked}
+                        onChange={props.handlePetFilterChange}/>
+                    <label for={pet.id} className="lbl"></label>
+                    <span className="filter-name">{"Indefinido"}</span>
+                </div>
+            )
+        }
+    })
+
+    let categoryFilters = props.categories.map(category => {
+        return (
+            <div className="filter">
+                <input 
+                    type="checkbox" 
+                    id={category.id} 
+                    className="cbx hidden"
+                    checked={category.checked}
+                    onChange={props.handleCategoryFilterChange}/>
+                <label for={category.id} className="lbl"></label>
+                <span className="filter-name">{capitalizeFirstLetter(category.id)}</span>
+            </div>
+        )
+    })
+
     return (
         <div id="filters" className="filters-container hidden">
             <span className="filter-title">Tiendas</span>
             {storeFilters}
+            <span className="filter-title">Mascotas</span>
+            {petFilters}
+            <span className="filter-title">Categoría</span>
+            {categoryFilters}
             {/* <span className="filter-title">Ordenar</span>
             <div className="filter">
                 <input type="checkbox" id="alphabet-filter" className="cbx hidden"/>
@@ -36,3 +85,7 @@ const ProductFilter = props => {
 }
 
 export default ProductFilter
+
+function capitalizeFirstLetter(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1)
+}

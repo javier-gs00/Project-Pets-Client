@@ -21,23 +21,53 @@ class ProductGrid extends React.Component {
         })
     }
 
+    handlePetFilterChange = e => {
+        this.props.onPetFilterChange({
+            id: e.target.id,
+            checked: e.target.checked
+        })
+    }
+
+    handleCategoryFilterChange = e => {
+        this.props.onCategoryFilterChange({
+            id: e.target.id,
+            checked: e.target.checked
+        })
+    }
+
     render() {
         const stores = this.props.stores
+        const pets = this.props.pets
+        const categories = this.props.categories
         // Get the checked store filters and put them in an array
         const activeStoreFilters = stores
             .filter(store => store.checked)
             .map(store => store.id)
+        // Get the checked pet filters and put them in an array
+        const activePetFilters = pets
+            .filter(pet => pet.checked)
+            .map(pet => pet.id)
+        // Get the checked category filters and put them in an array
+        const activeCategoryFilters = categories
+            .filter(category => category.checked)
+            .map(category => category.id)
         // Get the products matching the active store filters
         const products = this.props.results
             .filter(product => activeStoreFilters.indexOf(product.store) !== -1)
+            .filter(product => activePetFilters.indexOf(product.animal) !== -1)
+            .filter(product => activeCategoryFilters.indexOf(product.category) !== -1)
             .map(product => <ProductItem key={product.id} result={product}/>)
 
         return (
             <div>
-                <button className="btn filter-toggle" onClick={this.handleFiltersDisplay}>FILTRAR</button>
+                <button className="btn filter-toggle" onClick={this.handleFiltersDisplay}>FILTROS</button>
                 <ProductFilter 
-                    stores={stores} 
-                    handleStoreFilterChange={this.handleStoreFilterChange}/> 
+                    stores={stores}
+                    pets={pets}
+                    categories={categories}
+                    handleStoreFilterChange={this.handleStoreFilterChange}
+                    handlePetFilterChange={this.handlePetFilterChange}
+                    handleCategoryFilterChange={this.handleCategoryFilterChange}/> 
                 <div className="products-container">
                     {products}
                 </div>
