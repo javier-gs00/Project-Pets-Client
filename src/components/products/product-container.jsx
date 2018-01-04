@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './search.css'
 import Client from '../../api.js'
 import ProductGrid from './product-grid.jsx'
-import SearchForm from './search-form.jsx'
+import SearchForm from './search-form'
 
 class SearchContainer extends Component {
     constructor(props) {

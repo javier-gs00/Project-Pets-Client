@@ -12,8 +12,6 @@
       position: relative;
       top: 0px;
       width: 100%;
-      background: #fff;
-      /* padding: 0 100px 0 100px;  */
       display: flex;
       display: -ms-flex;
       justify-content: center;
@@ -22,8 +20,6 @@
   }
   .navbar a {
     flex-basis: 33%;
-    /* background: #fafafa; */
-    background: #fff;
     align-items: center;
     justify-content: center;
     text-decoration: none;
@@ -32,8 +28,6 @@
   @media only screen and (min-width: 600px) {
     .navbar a {
       flex-basis: 15%;
-      /* background: #fafafa; */
-      background: #fff;
       align-items: center;
       justify-content: center;
       text-decoration: none;
@@ -41,8 +35,6 @@
     }
   }
   .navbar a:hover > .navbar-link-container .navbar-text {
-    /* color: #d2691e; */
-    /* color: #ffa000; */
     color: #c67100;
   }
   .navbar-link-container {
@@ -56,18 +48,13 @@
     height: 3rem;
   }
   .navbar-link-container .navbar-text {
-    font-size: 1.8rem;
     margin-left: 5px;
     text-align: center;
-    color: #464646;
   }
   @media only screen and (max-width: 599px) {
     .navbar-link-container .navbar-text {
       display: none;
     }
-  }
-  .navbar-link-container .navbar-text-active {
-    /* color: #d2691e; */
   }
   /* ---------------- NAVBAR ICONS SVG ---------------- */
   @media only screen and (min-width: 600px) {
@@ -81,11 +68,5 @@
   }
   .navbar a:hover svg {
     fill: none;
-    /* stroke: #d2691e; */
-    /* stroke: #ffa000; */
     stroke: #c67100;
   }
-  /* .navbar a.active svg {
-    fill: none;
-    stroke: #d2691e;
-  } */

@@ -22,7 +22,7 @@ class Nav extends Component {
 
     render() {
         return (
-            <div className="navbar">
+            <div className="navbar bg-white">
                 {/* <NavItem 
                     to={'/'}
                     className={"active"}
@@ -30,7 +30,7 @@ class Nav extends Component {
                     textDisplay={"Buscar"}
                     onClick={this.handleClick}/> */}
                 <NavItem 
-                    to={'/'}
+                    to={'/productos'}
                     className={""}
                     svg={<NavProductsIcon strokeWidth=".53"/>}
                     textDisplay={"Productos"}

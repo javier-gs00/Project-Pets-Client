@@ -32,10 +32,10 @@
     width: 100%;
     max-width: 400px;
     height: 40px;
-    background: #fff;
-    font-size: 1.8rem;
+    /* background: #fff; */
+    /* font-size: 1.8rem; */
     float: left;
-    color: #464646;
+    /* color: #464646; */
     padding-left: 15px;
     border: none;
     -webkit-appearance: 'none';

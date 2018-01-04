@@ -4,6 +4,71 @@ html {
 }
 body {
   margin: 0px;
-  font-family: "Ubuntu", sans-serif;
+  /* font-family: "Ubuntu", sans-serif; */
+  font-family: 'Raleway', sans-serif;
   background: #fafafa;
+}
+a {
+  text-decoration: none;
+}
+/* Common classes used through the app to style components */
+/* Three main types of font weight */
+.font-light {
+  font-weight: 300;
+}
+.font-normal {
+  font-weight: 500;
+}
+.font-bold {
+  font-weight: 700;
+}
+/* Three main types of font weight */
+.font-small {
+  font-size: 1.3rem;
+}
+.font-medium {
+  font-size: 1.5rem;
+}
+.font-large {
+  font-size: 1.8rem;
+}
+/* Primary background colors */
+.bg-white {
+  background: #fff
+}
+.bg-lightgrey {
+  background: #fafafa;
+}
+.bg-darkgrey {
+  background: #c7c7c7;
+}
+/* Secondary background colors */
+.bg-ligthamber {
+  background: #ffd149;
+}
+.bg-amber {
+  background: #ffa000;
+}
+.bg-darkamber {
+  background: #c67100;
+}
+/* Primary font colors */
+.font-white {
+  color: #fff
+}
+.font-black {
+  color: rgba(0, 0, 0, 1);
+}
+.font-darkgrey {
+  color: rgba(0, 0, 0, .7);
+}
+/* Secondary font colors */
+.font-ligthamber {
+  color: #ffd149;
+}
+.font-amber {
+  color: #ffa000;
+}
+.font-darkamber {
+  color: #c67100;
 }

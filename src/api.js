@@ -1,4 +1,4 @@
-function checkStatus (response) {
+function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         console.log('Check status succesful...')
         return response
@@ -16,7 +16,7 @@ function parseJSON(response) {
     return response.json()
 }
 
-function search (query, cb) {
+function search(query, cb) {
     console.log('Search query sent...')
     return fetch(`/api/product?query=${query}`, {
         accept: "application/json"
@@ -26,7 +26,17 @@ function search (query, cb) {
     .then(cb)
 }
 
-function getStores (cb) {
+function findOne(id, cb) {
+    console.log('Search query sent...')
+    return fetch(`/api/product/id/${id}`, {
+        accept: "application/json"
+    })
+    .then(checkStatus)
+    .then(parseJSON)
+    .then(cb)
+}
+
+function getStores(cb) {
     console.log('Requesting stores...')
     return fetch(`/api/store`, {
         accept: 'application/json'
@@ -36,5 +46,5 @@ function getStores (cb) {
     .then(cb)
 }
 
-const Client = { search, getStores }
+const Client = { search, findOne, getStores }
 export default Client

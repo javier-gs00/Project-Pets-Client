@@ -1,25 +1,25 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ProductItem = props => {
-    let result = props.result
+    let product = props.result
     return (
         <div className="product-container">
-            {/* <a className="product-link" href={result.href} target="_blank"> */}
-                <div className="product-image">
-                    <img src={result.imageUrl} alt={'Sin Imagen :('}/>
+            <div className="product-image">
+                <img src={product.imageUrl} alt={'Sin Imagen :('}/>
+            </div>
+            <div className="product-data">
+                <div className="product-data-block">
+                    {/* <span className="product-name">{product.name}</span> */}
+                    <Link to={"/productos/" + product._id} className="product-name">{product.name}</Link>
                 </div>
-                <div className="product-data">
-                    <div className="product-data-block">
-                        <span className="product-name">{result.name}</span>
-                    </div>
-                    <div className="product-data-block">
-                        <span className="product-store">{result.store}</span>
-                    </div>
-                    <div className="product-data-block">
-                        <span className="product-price">{parsePrice(result.price)}</span>
-                    </div>
+                <div className="product-data-block">
+                    <span className="product-store">{product.store}</span>
                 </div>
-            {/* </a> */}
+                <div className="product-data-block">
+                    <span className="product-price">{parsePrice(product.price)}</span>
+                </div>
+            </div>
         </div>     
     )
 }

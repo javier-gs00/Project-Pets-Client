@@ -6,7 +6,7 @@ const NavItem = (props) => {
         <Link to={props.to} className={props.className} onClick={props.onClick}>
             <div className="navbar-link-container">
                 {props.svg}
-                <div className="navbar-text navbar-text-active">{props.textDisplay}</div>
+                <div className="navbar-text font-darkgrey font-bold font-large">{props.textDisplay}</div>
             </div>
         </Link>
     );
