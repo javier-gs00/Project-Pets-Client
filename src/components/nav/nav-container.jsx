@@ -8,53 +8,44 @@ import NavStoresIcon from '../../assets/svg/nav.stores.js';
 import NavMenuIcon from '../../assets/svg/nav.menu.js';
 import NavItem from './nav-item'
 
+// set the width of the svg
+const strokeWidth = '.53'
+
 class Nav extends Component {
     constructor() {
         super();
         this.state = {
-            active: true
+            links: [
+                {
+                    to: '/productos',
+                    textDisplay: 'Productos',
+                    svg: <NavProductsIcon strokeWidth={strokeWidth} />
+                },{
+                    to: '/tiendas',
+                    textDisplay: 'Tiendas',
+                    svg: <NavStoresIcon strokeWidth={strokeWidth} />
+                },{
+                    to: '/menu',
+                    textDisplay: 'Menú',
+                    svg: <NavMenuIcon strokeWidth={strokeWidth} />
+                }
+            ]
         }
     }
 
-    handleClick = e => {
-        // e.target.className = "active";
-    }
-
     render() {
+        const links = this.state.links.map(link => (
+            <NavItem 
+                to={link.to}
+                textDisplay={link.textDisplay}
+                svg={link.svg}/>
+        ))
+
         return (
             <div className="navbar bg-white">
-                {/* <NavItem 
-                    to={'/'}
-                    className={"active"}
-                    svg={<NavSearchIcon strokeWidth=".53"/>}
-                    textDisplay={"Buscar"}
-                    onClick={this.handleClick}/> */}
-                <NavItem 
-                    to={'/productos'}
-                    className={""}
-                    svg={<NavProductsIcon strokeWidth=".53"/>}
-                    textDisplay={"Productos"}
-                    onClick={this.handleClick}/>
-                <NavItem 
-                    to={'/tiendas'}
-                    className={""}
-                    svg={<NavStoresIcon strokeWidth=".53"/>}
-                    textDisplay={"Tiendas"}
-                    onClick={this.handleClick}/>
-                {/* <NavItem 
-                    to={'/login'}
-                    className={""}
-                    svg={<NavLoginIcon strokeWidth=".53"/>}
-                    textDisplay={"Ingresar"}
-                    onClick={this.handleClick}/> */}
-                <NavItem 
-                    to={'/menu'}
-                    className={""}
-                    svg={<NavMenuIcon strokeWidth=".53"/>}
-                    textDisplay={"Menú"}
-                    onClick={this.handleClick}/>
+                { links }
             </div>
-        );
+        )
     }
 }
 

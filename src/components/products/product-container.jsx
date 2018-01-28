@@ -3,6 +3,8 @@ import './search.css'
 import Client from '../../api.js'
 import ProductGrid from './product-grid.jsx'
 import SearchForm from './search-form'
+// import { connect } from 'react-redux'
+// import { loadProducts } from '../../actions/actions'
 
 class SearchContainer extends Component {
     constructor(props) {

@@ -1,16 +1,21 @@
-import { GET_PRODUCTS } from '../actions/action-types'
+import { LOAD_PRODUCTS } from '../actions/action-types'
 
 const initialState = [
     {
-        query: ''
+        products: []
     }
 ]
 
-export default function products(state = initialState, action) {
+const products = (state = initialState, action) => {
     switch (action.type) {
-        case GET_PRODUCTS:
-            return { ...state, query: action.query }
+        case LOAD_PRODUCTS:
+            return [
+                ...state,
+                action.products
+            ]
         default:
             return state
     }
 }
+
+export default products
