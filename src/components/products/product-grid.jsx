@@ -60,7 +60,7 @@ class ProductGrid extends React.Component {
 
         return (
             <div>
-                <button className="btn filter-toggle" onClick={this.handleFiltersDisplay}>FILTROS</button>
+                <button className="btn filter-toggle bg-darkamber" onClick={this.handleFiltersDisplay}>FILTROS</button>
                 <ProductFilter 
                     stores={stores}
                     pets={pets}

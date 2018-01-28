@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 // Containers
 import NavContainer from './nav/nav-container.jsx'
@@ -13,6 +13,7 @@ class App extends Component {
       <div>
         <NavContainer />
         <Switch>
+          <Redirect exact from="/" to="/productos" />
           <Route exact path='/productos' component={ProductContainer} />
           <Route path='/productos/:id' component={ProductView} />
           <Route exact path='/tiendas' component={StoreContainer} />

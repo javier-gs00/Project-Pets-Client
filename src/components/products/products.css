@@ -191,6 +191,8 @@
   flex-basis: 100%;
   display: flex;
   margin: 5px 5px;
+  justify-content: space-between;
+  align-items: center;
 }
 .hidden {
   display: none;
@@ -242,45 +244,11 @@
   display: flex;
 }
 .filters-container span.filter-name {
-  justify-content: center;
-  align-items: top;
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   color: rgba(70, 70, 70, .8);
 }
 .filters-container span.filter-title {
   font-size: 1.8rem;
   color: rgba(70, 70, 70, 1);
-  justify-content: left;
-  align-items: center;
   border-bottom: 2px solid #c7c7c7;
-}
-/* FILTER TOGGLE */
-.btn {
-  border: none;
-  border-radius: 2px;
-  box-shadow: 0 2px 2px 0 rgba(70, 70, 70, 0.5);
-  background: #c67100;
-  padding: 0 16px;
-  height: 32px;
-  width: auto;
-  color: #fff;
-  font-size: 1.3rem;
-  -webkit-transition: all .15s ease;
-  -moz-transition: all .15s ease;
-  -ms-transition: all .15s ease;
-  -o-transition: all .15s ease;
-  transition: all .15s ease;  
-}
-.btn:hover {
-  cursor: pointer;
-  background: #ffa000;
-}
-.btn:focus {
-  outline: 0;
-}
-.btn:active {
-  background: #ffa000;
-}
-.filter-toggle {
-  margin-left: 5px;
 }

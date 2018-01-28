@@ -4,6 +4,7 @@ const ProductFilter = props => {
     let storeFilters = props.stores.map(store => {
         return (
             <div className="filter">
+                <span className="filter-name">{store.id}</span>
                 <input 
                     type="checkbox" 
                     id={store.id} 
@@ -11,7 +12,6 @@ const ProductFilter = props => {
                     checked={store.checked}
                     onChange={props.handleStoreFilterChange}/>
                 <label for={store.id} className="lbl"></label>
-                <span className="filter-name">{store.id}</span>
             </div>
         )
     })
@@ -20,6 +20,7 @@ const ProductFilter = props => {
         if (pet.id !== '') {
             return (
                 <div className="filter">
+                    <span className="filter-name">{capitalizeFirstLetter(pet.id)}</span>
                     <input 
                         type="checkbox" 
                         id={pet.id} 
@@ -27,12 +28,12 @@ const ProductFilter = props => {
                         checked={pet.checked}
                         onChange={props.handlePetFilterChange}/>
                     <label for={pet.id} className="lbl"></label>
-                    <span className="filter-name">{capitalizeFirstLetter(pet.id)}</span>
                 </div>
             )
         } else {
             return (
                 <div className="filter">
+                    <span className="filter-name">{"Indefinido"}</span>
                     <input 
                         type="checkbox" 
                         id={pet.id} 
@@ -40,7 +41,6 @@ const ProductFilter = props => {
                         checked={pet.checked}
                         onChange={props.handlePetFilterChange}/>
                     <label for={pet.id} className="lbl"></label>
-                    <span className="filter-name">{"Indefinido"}</span>
                 </div>
             )
         }
@@ -49,6 +49,7 @@ const ProductFilter = props => {
     let categoryFilters = props.categories.map(category => {
         return (
             <div className="filter">
+                <span className="filter-name">{capitalizeFirstLetter(category.id)}</span>
                 <input 
                     type="checkbox" 
                     id={category.id} 
@@ -56,7 +57,6 @@ const ProductFilter = props => {
                     checked={category.checked}
                     onChange={props.handleCategoryFilterChange}/>
                 <label for={category.id} className="lbl"></label>
-                <span className="filter-name">{capitalizeFirstLetter(category.id)}</span>
             </div>
         )
     })
