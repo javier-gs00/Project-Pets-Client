@@ -16,18 +16,14 @@ class SearchContainer extends Component {
         }
     }
 
-    handleInputChange = e => {
-        this.setState({
-            searchValue: e.target.value
-        })
-    }
+    handleInputChange = e => this.setState({ searchValue: e.target.value })
 
     handleSubmit = () => {
         const query = this.state.searchValue
         if (query === "") {
-            this.setState({ results: [] })
+            return this.setState({ results: [] })
         } else {
-            Client.search(query, results => {
+            return Client.search(query, results => {
                 const storeFilters = results
                     // retrieve the store values from the results
                     .map(result => result.store)
@@ -46,7 +42,7 @@ class SearchContainer extends Component {
                     .filter((category, index, self) => self.indexOf(category) === index)
                     .map(category => ({id: category, checked: true}))
 
-                this.setState({ 
+                return this.setState({ 
                     results: results,
                     storeFilters: storeFilters,
                     petFilters: petFilters,
@@ -58,49 +54,43 @@ class SearchContainer extends Component {
 
     handleInputKeyPress = e => {
         if (e.key === 'Enter') {
-            this.handleSubmit()
+            return this.handleSubmit()
         }
     }
 
     // Receives an object containing the the filter name(id) and its new checked value
     handleStoreFilterChange = newStoreFilter => {
-        let currentFilters = this.state.storeFilters
-        const newStoreFilters = currentFilters.map(store => {
+        const newStoreFilters = this.state.storeFilters.map(store => {
             if (store.id === newStoreFilter.id) {
                 store.checked = newStoreFilter.checked
             }
             return store
         })
-        this.setState({ storeFilter: newStoreFilters })
+        return this.setState({ storeFilter: newStoreFilters })
     }
 
     handlePetFilterChange = newPetFilter => {
-        let currentFilters = this.state.petFilters
-        const newPetFilters = currentFilters.map(pet => {
+        const newPetFilters = this.state.petFilters.map(pet => {
             if (pet.id === newPetFilter.id) {
                 pet.checked = newPetFilter.checked
             }
             return pet
         })
-        this.setState({ petFilters: newPetFilters})
+        return this.setState({ petFilters: newPetFilters})
     }
 
     handleCategoryFilterChange = newCategoryFilter => {
-        let currentFilters = this.state.categoryFilters
-        const newCategoryFilters = currentFilters.map(category => {
+        const newCategoryFilters = this.state.categoryFilters.map(category => {
             if (category.id === newCategoryFilter.id) {
                 category.checked = newCategoryFilter.checked
             }
             return category
         })
-        this.setState({ categoryFilters: newCategoryFilters})
+        return this.setState({ categoryFilters: newCategoryFilters})
     }
 
     render() {
-        const results = this.state.results
-        const stores = this.state.storeFilters
-        const pets = this.state.petFilters
-        const categories = this.state.categoryFilters
+        const { results, storeFilters, petFilters, categoryFilters } = this.state
 
         return (
             <div className="main">
@@ -112,9 +102,9 @@ class SearchContainer extends Component {
                 {results.length > 0
                 ?<ProductGrid 
                     results={results}
-                    stores={stores}
-                    pets={pets}
-                    categories={categories}
+                    stores={storeFilters}
+                    pets={petFilters}
+                    categories={categoryFilters}
                     handleFiltersDisplay={this.handleFiltersDisplay}
                     onStoreFilterChange={this.handleStoreFilterChange}
                     onPetFilterChange={this.handlePetFilterChange}

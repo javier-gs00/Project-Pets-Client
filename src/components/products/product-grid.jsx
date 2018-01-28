@@ -7,38 +7,36 @@ class ProductGrid extends React.Component {
     handleFiltersDisplay = e => {
         if (this.props.results.length > 0) {
             if (document.getElementById('filters').classList.contains('hidden')){
-                document.getElementById('filters').classList.remove('hidden')
+                return document.getElementById('filters').classList.remove('hidden')
             } else {
-                document.getElementById('filters').classList.add('hidden')
+                return document.getElementById('filters').classList.add('hidden')
             }
         }
     }
 
-    handleStoreFilterChange = e => {
+    handleStoreFilterChange = e => (
         this.props.onStoreFilterChange({
             id: e.target.id,
             checked: e.target.checked
         })
-    }
+    )
 
-    handlePetFilterChange = e => {
+    handlePetFilterChange = e => (
         this.props.onPetFilterChange({
             id: e.target.id,
             checked: e.target.checked
         })
-    }
+    )
 
-    handleCategoryFilterChange = e => {
+    handleCategoryFilterChange = e => (
         this.props.onCategoryFilterChange({
             id: e.target.id,
             checked: e.target.checked
         })
-    }
+    )
 
     render() {
-        const stores = this.props.stores
-        const pets = this.props.pets
-        const categories = this.props.categories
+        const { stores, pets, categories } = this.props
         // Get the checked store filters and put them in an array
         const activeStoreFilters = stores
             .filter(store => store.checked)

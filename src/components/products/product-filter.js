@@ -62,7 +62,7 @@ const ProductFilter = props => {
     })
 
     return (
-        <div id="filters" className="filters-container hidden">
+        <div id="filters" className="filters-container">
             <span className="filter-title">Tiendas</span>
             {storeFilters}
             <span className="filter-title">Mascotas</span>
