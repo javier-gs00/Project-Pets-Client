@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 const ProductItem = props => {
@@ -34,6 +35,10 @@ function parsePrice(intPrice) {
         price = "$" + price.slice(0, 1) + "." + price.slice(-3)
     }
     return price
+}
+
+ProductItem.propTypes = {
+    result: PropTypes.object
 }
 
 export default ProductItem

@@ -16,6 +16,7 @@ function parseJSON(response) {
     return response.json()
 }
 
+// Used to fetch products using a regular expression
 function search(query, cb) {
     console.log('Search query sent...')
     return fetch(`/api/product?query=${query}`, {
@@ -26,6 +27,7 @@ function search(query, cb) {
     .then(cb)
 }
 
+// Used to fetch one product by its id
 function findOne(id, cb) {
     console.log('Search query sent...')
     return fetch(`/api/product/id/${id}`, {
@@ -36,6 +38,7 @@ function findOne(id, cb) {
     .then(cb)
 }
 
+// Used to fetch all the stores
 function getStores(cb) {
     console.log('Requesting stores...')
     return fetch(`/api/store`, {

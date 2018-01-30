@@ -108,7 +108,7 @@ class SearchContainer extends Component {
         const { isLoading, searchValue, results, storeFilters, petFilters, categoryFilters } = this.state
 
         return (
-            <div className="main">
+            <div id="main" className="main">
                 <SearchForm
                     value={searchValue}
                     onChange={this.handleInputChange}

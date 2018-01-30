@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const ProductFilter = props => {
     let storeFilters = props.stores.map((store, index) => {
@@ -63,8 +64,12 @@ const ProductFilter = props => {
         )
     })
 
+    // Determine if the viewport is wide enough to show the filters div open
+    // Right now is set to show it only for hd notebook displays and above
+    let showFiltersDiv = document.getElementById("main").offsetWidth > 1200 ? true : false
+
     return (
-        <div id="filters" className="filters-container">
+        <div id="filters" className={"filters-container " + (showFiltersDiv ? '' : 'hidden')} >
             <span className="filter-title">Tiendas</span>
             {storeFilters}
             <span className="filter-title">Mascotas</span>
@@ -84,6 +89,15 @@ const ProductFilter = props => {
             </div> */}
         </div>
     )
+}
+
+ProductFilter.propTypes = {
+    stores: PropTypes.arrayOf(PropTypes.object),
+    pets: PropTypes.arrayOf(PropTypes.object),
+    categories: PropTypes.arrayOf(PropTypes.object),
+    handleStoreFilterChange: PropTypes.func.isRequired,
+    handlePetFilterChange: PropTypes.func.isRequired,
+    handleCategoryFilterChange: PropTypes.func.isRequired,
 }
 
 export default ProductFilter
