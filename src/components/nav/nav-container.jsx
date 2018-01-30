@@ -41,7 +41,7 @@ class Nav extends Component {
                 key={index}
                 route={link.to}
                 textDisplay={link.textDisplay}
-                stroke={activeRoute === link.to ? '#c67100' : '#464646'} />
+                stroke={activeRoute === link.to ? true : false} />
         ))
 
         return (

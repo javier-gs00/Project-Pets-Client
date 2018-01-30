@@ -35,6 +35,8 @@
 .store-data-block {
     margin: 5px;
     padding: 0 5px 0 5px;
+    display: flex;
+    flex-wrap: wrap;
 }
 .store-data-block:first-child {
     max-height: 6rem;

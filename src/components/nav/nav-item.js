@@ -6,7 +6,8 @@ import NavProductsIcon from '../../assets/svg/nav.products.js'
 import NavStoresIcon from '../../assets/svg/nav.stores.js'
 import NavMenuIcon from '../../assets/svg/nav.menu.js'
 
-const color = '#c67100'
+const textColor = '#464646'
+const normalColor = '#c67100'
 // const highlightColor = '#ffa000'
 
 const NavItem = props => {
@@ -15,10 +16,9 @@ const NavItem = props => {
     return (
         <NavLink 
             to={props.route}>
-            <div 
-                className="navbar-link-container">
+            <div className="navbar-link-container">
                 { svgIcon }
-                <div className="navbar-text font-darkgrey font-bold font-large" style={props.routeMatch ? {color: color} : {}}>{props.textDisplay}</div>
+                <div className="navbar-text font-darkgrey font-bold font-large" style={props.routeMatch ? {color: normalColor} : {}}>{props.textDisplay}</div>
             </div>
         </NavLink>
     )
@@ -31,11 +31,11 @@ const strokeWidth = ".53"
 function getSvgIcon (route, routeMatch, stroke) {
     switch (route) {
         case '/productos':
-            return <NavProductsIcon strokeWidth={strokeWidth} stroke={stroke} />
+            return <NavProductsIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
         case '/tiendas':
-            return <NavStoresIcon strokeWidth={strokeWidth} stroke={stroke}/>
+            return <NavStoresIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
         case '/menu':
-            return <NavMenuIcon strokeWidth={strokeWidth} stroke={stroke}/>
+            return <NavMenuIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
         default:
             return false
     }
