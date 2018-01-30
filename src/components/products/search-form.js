@@ -1,4 +1,5 @@
 import React from 'react'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 
 const SearchForm = props => {
     return (
@@ -16,7 +17,8 @@ const SearchForm = props => {
                 <button 
                     className="icon-search"
                     onClick={props.onClick}>
-                    <i className="fa fa-search"></i>
+                    <FontAwesomeIcon icon="search" />
+                    {/* <FontAwesomeIcon icon="spinner" spin /> */}
                 </button>
             </div>
         </div>

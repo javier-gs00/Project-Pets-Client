@@ -1,9 +1,9 @@
 import React from 'react'
 
 const ProductFilter = props => {
-    let storeFilters = props.stores.map(store => {
+    let storeFilters = props.stores.map((store, index) => {
         return (
-            <div className="filter">
+            <div key={index} className="filter">
                 <span className="filter-name">{store.id}</span>
                 <input 
                     type="checkbox" 
@@ -11,15 +11,17 @@ const ProductFilter = props => {
                     className="cbx hidden"
                     checked={store.checked}
                     onChange={props.handleStoreFilterChange}/>
-                <label for={store.id} className="lbl"></label>
+                <label htmlFor={store.id} className="lbl"></label>
             </div>
         )
     })
 
-    let petFilters = props.pets.map(pet => {
+    let petFilters = props.pets.map((pet, index) => {
+        // Check if the product has a registered pet kind. This is because not
+        // all products are for a specific kind a pet
         if (pet.id !== '') {
             return (
-                <div className="filter">
+                <div key={index} className="filter">
                     <span className="filter-name">{capitalizeFirstLetter(pet.id)}</span>
                     <input 
                         type="checkbox" 
@@ -27,12 +29,12 @@ const ProductFilter = props => {
                         className="cbx hidden"
                         checked={pet.checked}
                         onChange={props.handlePetFilterChange}/>
-                    <label for={pet.id} className="lbl"></label>
+                    <label htmlFor={pet.id} className="lbl"></label>
                 </div>
             )
         } else {
             return (
-                <div className="filter">
+                <div key={index} className="filter">
                     <span className="filter-name">{"Indefinido"}</span>
                     <input 
                         type="checkbox" 
@@ -40,15 +42,15 @@ const ProductFilter = props => {
                         className="cbx hidden"
                         checked={pet.checked}
                         onChange={props.handlePetFilterChange}/>
-                    <label for={pet.id} className="lbl"></label>
+                    <label htmlFor={pet.id} className="lbl"></label>
                 </div>
             )
         }
     })
 
-    let categoryFilters = props.categories.map(category => {
+    let categoryFilters = props.categories.map((category, index) => {
         return (
-            <div className="filter">
+            <div key={index} className="filter">
                 <span className="filter-name">{capitalizeFirstLetter(category.id)}</span>
                 <input 
                     type="checkbox" 
@@ -56,7 +58,7 @@ const ProductFilter = props => {
                     className="cbx hidden"
                     checked={category.checked}
                     onChange={props.handleCategoryFilterChange}/>
-                <label for={category.id} className="lbl"></label>
+                <label htmlFor={category.id} className="lbl"></label>
             </div>
         )
     })

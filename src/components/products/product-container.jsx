@@ -4,18 +4,15 @@ import './search.css'
 import Client from '../../api.js'
 import ProductGrid from './product-grid.jsx'
 import SearchForm from './search-form'
+import LoadingScreen from './loading'
 // import { connect } from 'react-redux'
 // import { loadProducts } from '../../actions/actions'
 
 class SearchContainer extends Component {
-    static propTypes = {
-        getActiveRoute: PropTypes.func.isRequired,
-        location: PropTypes.object.isRequired,
-    }
-
     constructor(props) {
         super(props)
         this.state = {
+            isLoading: false,
             results: [],
             searchValue: "",
             storeFilters: [],
@@ -32,9 +29,13 @@ class SearchContainer extends Component {
     handleInputChange = e => this.setState({ searchValue: e.target.value })
 
     handleSubmit = () => {
+        this.setState({ isLoading: true })
         const query = this.state.searchValue
         if (query === "") {
-            return this.setState({ results: [] })
+            return this.setState({
+                results: [],
+                isLoading: false
+            })
         } else {
             return Client.search(query, results => {
                 const storeFilters = results
@@ -55,7 +56,8 @@ class SearchContainer extends Component {
                     .filter((category, index, self) => self.indexOf(category) === index)
                     .map(category => ({id: category, checked: true}))
 
-                return this.setState({ 
+                return this.setState({
+                    isLoading: false,
                     results: results,
                     storeFilters: storeFilters,
                     petFilters: petFilters,
@@ -103,29 +105,33 @@ class SearchContainer extends Component {
     }
 
     render() {
-        const { results, storeFilters, petFilters, categoryFilters } = this.state
+        const { isLoading, searchValue, results, storeFilters, petFilters, categoryFilters } = this.state
 
         return (
             <div className="main">
                 <SearchForm
-                    value={this.state.searchValue}
+                    value={searchValue}
                     onChange={this.handleInputChange}
                     onClick={this.handleSubmit} 
                     onKeyPress={this.handleInputKeyPress} />
-                {results.length > 0
-                ?<ProductGrid 
+                { isLoading
+                ? <LoadingScreen />
+                : <ProductGrid
                     results={results}
                     stores={storeFilters}
                     pets={petFilters}
                     categories={categoryFilters}
-                    handleFiltersDisplay={this.handleFiltersDisplay}
                     onStoreFilterChange={this.handleStoreFilterChange}
                     onPetFilterChange={this.handlePetFilterChange}
-                    onCategoryFilterChange={this.handleCategoryFilterChange}/>
-                :<span></span>}
+                    onCategoryFilterChange={this.handleCategoryFilterChange}/>}
             </div>
         ) 
     }
+}
+
+SearchContainer.propTypes = {
+    getActiveRoute: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired,
 }
 
 export default SearchContainer

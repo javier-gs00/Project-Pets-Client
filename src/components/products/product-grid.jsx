@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import ProductItem from './product-item'
 import ProductFilter from './product-filter'
 import './products.css'
 
-class ProductGrid extends React.Component {
+class ProductGrid extends Component {
     handleFiltersDisplay = e => {
         if (this.props.results.length > 0) {
             if (document.getElementById('filters').classList.contains('hidden')){
@@ -54,10 +55,10 @@ class ProductGrid extends React.Component {
             .filter(product => activeStoreFilters.indexOf(product.store) !== -1)
             .filter(product => activePetFilters.indexOf(product.animal) !== -1)
             .filter(product => activeCategoryFilters.indexOf(product.category) !== -1)
-            .map(product => <ProductItem key={product.id} result={product}/>)
+            .map(product => <ProductItem key={product._id} result={product}/>)
 
-        return (
-            <div>
+        return (  products.length > 0
+            ? <div>
                 <button className="btn filter-toggle bg-darkamber" onClick={this.handleFiltersDisplay}>FILTROS</button>
                 <ProductFilter 
                     stores={stores}
@@ -67,11 +68,22 @@ class ProductGrid extends React.Component {
                     handlePetFilterChange={this.handlePetFilterChange}
                     handleCategoryFilterChange={this.handleCategoryFilterChange}/> 
                 <div className="products-container">
-                    {products}
+                    { products }
                 </div>
             </div>
+            : <div></div>
         )
     }
+}
+
+ProductGrid.propTypes = {
+    results: PropTypes.arrayOf(PropTypes.object),
+    stores: PropTypes.arrayOf(PropTypes.object),
+    pets: PropTypes.arrayOf(PropTypes.object),
+    categories: PropTypes.arrayOf(PropTypes.object),
+    onStoreFilterChange: PropTypes.func.isRequired,
+    onPetFilterChange: PropTypes.func.isRequired,
+    onCategoryFilterChange: PropTypes.func.isRequired
 }
 
 export default ProductGrid

@@ -252,3 +252,12 @@
   color: rgba(70, 70, 70, 1);
   border-bottom: 2px solid #c7c7c7;
 }
+.loading {
+  margin: 60px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+}
+.loading svg {
+  color: #ffa000;
+}
