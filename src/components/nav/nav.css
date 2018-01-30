@@ -41,11 +41,11 @@
     display: flex;
     display: -ms-flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center;;
   }
   .navbar-link-container svg {
     width: 3rem;
-    height: 3rem;
+    height: 3rem;;
   }
   .navbar-link-container .navbar-text {
     margin-left: 5px;
