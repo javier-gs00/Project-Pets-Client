@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import './nav.css'
 
 // import NavSearchIcon from '../../assets/svg/nav.search.js';
@@ -12,9 +13,14 @@ import NavItem from './nav-item'
 const strokeWidth = '.53'
 
 class Nav extends Component {
-    constructor() {
-        super();
+    static propTypes = {
+        activeRoute: PropTypes.string.isRequired
+    }
+
+    constructor(props) {
+        super(props);
         this.state = {
+            activeRoute: this.props.activeRoute || '',
             links: [
                 {
                     to: '/productos',
@@ -33,13 +39,39 @@ class Nav extends Component {
         }
     }
 
+    // componentDidMount() {
+    //     return console.log(this.props.activeRoute)
+    // }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.activeRoute !== nextProps.activeRoute) {
+            return this.setState({ activeRoute: nextProps.activeRoute })
+        }
+    }
+
     render() {
-        const links = this.state.links.map(link => (
-            <NavItem 
-                to={link.to}
-                textDisplay={link.textDisplay}
-                svg={link.svg}/>
-        ))
+        const { activeRoute } = this.state 
+        const links = this.state.links.map((link, index) => {
+            if (activeRoute === link.to) {
+                return (
+                    <NavItem
+                        match={true}
+                        key={index}
+                        to={link.to}
+                        textDisplay={link.textDisplay}
+                        svg={link.svg}/>
+                )
+            } else {
+                return (
+                    <NavItem
+                        match={false}
+                        key={index}
+                        to={link.to}
+                        textDisplay={link.textDisplay}
+                        svg={link.svg}/>
+                )
+            }
+        })
 
         return (
             <div className="navbar bg-white">

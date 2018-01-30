@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import './search.css'
 import Client from '../../api.js'
 import ProductGrid from './product-grid.jsx'
@@ -7,6 +8,11 @@ import SearchForm from './search-form'
 // import { loadProducts } from '../../actions/actions'
 
 class SearchContainer extends Component {
+    static propTypes = {
+        getActiveRoute: PropTypes.func.isRequired,
+        location: PropTypes.object.isRequired,
+    }
+
     constructor(props) {
         super(props)
         this.state = {
@@ -16,6 +22,11 @@ class SearchContainer extends Component {
             petFilters: [],
             categoryFilters: []
         }
+    }
+
+    componentDidMount() {
+        const { location } = this.props
+        return this.props.getActiveRoute(location.pathname)
     }
 
     handleInputChange = e => this.setState({ searchValue: e.target.value })
