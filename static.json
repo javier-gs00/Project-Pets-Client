@@ -10,5 +10,8 @@
         "/api/": {
             "origin": "https://project-pets-api.herokuapp.com/api"
         } 
+    },
+    "routes": {
+        "/*": "index.html"
     }
 }
