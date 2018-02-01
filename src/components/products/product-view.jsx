@@ -6,26 +6,30 @@ class ProductView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: props.match.params.id,
-            product: {}
+            product: ''
         }
     }
 
-    componentWillMount() {
-        const { location } = this.props
+    componentDidMount() {
+        const { location, match } = this.props
         this.props.getActiveRoute("/" + location.pathname.split("/")[1])
 
-        return Client.findOne(this.state.id, product => {
-            product.price = parsePrice(product.price)
-            this.setState({ product: product })
+        return Client.findOne(match.params.id, product => {
+            return this.setState({
+                product: product
+            })
         })
     }
 
     render() {
         const { product } = this.state
+        console.log('...loading')
+        console.log(this.state.product)
+        console.log(typeof product.price)
 
         return (
-            <div className="products-container">
+            this.state.product 
+            ? <div className="products-container">
                 <div className="product-container">
                     <div className="product-image">
                         <img src={product.imageUrl} alt={'Sin Imagen :('}/>
@@ -38,7 +42,7 @@ class ProductView extends React.Component {
                             <span className="product-store">{product.store}</span>
                         </div>
                         <div className="product-data-block">
-                            <span className="product-price">{product.price}</span>
+                            <span className="product-price">{parsePrice(product.price)}</span>
                         </div>
                         <div className="product-data-block">
                             <a>IR</a><a>VOLVER</a>
@@ -46,6 +50,7 @@ class ProductView extends React.Component {
                     </div>
                 </div>            
             </div>
+            : null
         )
     }
 }

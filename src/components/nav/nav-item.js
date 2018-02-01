@@ -12,8 +12,7 @@ const normalColor = '#c67100'
 // const highlightColor = '#ffa000'
 
 const NavItem = props => {
-    const { route, routeMatch, stroke } = props
-    const svgIcon = getSvgIcon(route, routeMatch, stroke)
+    const svgIcon = getSvgIcon({...props })
 
     return (
         <NavLink 
@@ -35,7 +34,7 @@ NavItem.propTypes = {
 
 export default NavItem
 
-function getSvgIcon (route, routeMatch, stroke) {
+function getSvgIcon ({ route, routeMatch, stroke }) {
     const strokeWidth = ".53"
 
     switch (route) {

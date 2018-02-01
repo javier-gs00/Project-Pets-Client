@@ -5,11 +5,6 @@ import StoreGrid from './store-grid'
 import './stores.css'
 
 class StoreContainer extends Component {
-    static propTypes = {
-        getActiveRoute: PropTypes.func.isRequired,
-        location: PropTypes.object.isRequired,
-    }
-
     constructor(props) {
         super(props)
         this.state = {
@@ -28,8 +23,6 @@ class StoreContainer extends Component {
         })    
     }
 
-    handleInputChange = e => this.setState({ searchValue: e.target.value })
-
     render() {
         return (
             <div className="main">
@@ -37,6 +30,11 @@ class StoreContainer extends Component {
             </div>
         )
     }
+}
+
+StoreContainer.propTypes = {
+    getActiveRoute: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired,
 }
 
 export default StoreContainer
