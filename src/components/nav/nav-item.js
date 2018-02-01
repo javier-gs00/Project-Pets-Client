@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
 // import NavSearchIcon from '../../assets/svg/nav.search.js';
@@ -11,7 +12,8 @@ const normalColor = '#c67100'
 // const highlightColor = '#ffa000'
 
 const NavItem = props => {
-    const svgIcon = getSvgIcon(props.route, props.routeMatch, props.stroke)
+    const { route, routeMatch, stroke } = props
+    const svgIcon = getSvgIcon(route, routeMatch, stroke)
 
     return (
         <NavLink 
@@ -24,11 +26,18 @@ const NavItem = props => {
     )
 }
 
+NavItem.propTypes = {
+    route: PropTypes.string.isRequired,
+    routeMatch: PropTypes.bool.isRequired,
+    textDisplay: PropTypes.string.isRequired,
+    stroke: PropTypes.bool.isRequired
+}
+
 export default NavItem
 
-const strokeWidth = ".53"
-
 function getSvgIcon (route, routeMatch, stroke) {
+    const strokeWidth = ".53"
+
     switch (route) {
         case '/productos':
             return <NavProductsIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />

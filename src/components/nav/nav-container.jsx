@@ -6,10 +6,6 @@ import NavItem from './nav-item'
 
 
 class Nav extends Component {
-    static propTypes = {
-        activeRoute: PropTypes.string.isRequired
-    }
-
     constructor(props) {
         super(props);
         this.state = {
@@ -50,6 +46,10 @@ class Nav extends Component {
             </div>
         )
     }
+}
+
+Nav.propTypes = {
+    activeRoute: PropTypes.string.isRequired
 }
 
 export default Nav

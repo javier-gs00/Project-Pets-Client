@@ -1,0 +1,30 @@
+.menus-container {
+    margin: 5px auto;
+    margin-bottom: 10px;
+    max-width: 599px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.menus-container .menu-container {
+    margin: 0;
+    padding: 5px;
+    height: auto;
+    max-width: 100%;
+    /* display: flex; */
+    /* justify-content: center; */
+}
+.menu-container .menu {
+    display: flex;
+    flex-direction: column;
+}
+.menu-container h2 {
+    font-size: 24px;
+}
+.menu-container h2:first-child {
+    margin-top: 0px;
+}
+.menu-container p {
+    margin: 5px 0;
+    font-size: 16px;
+}
