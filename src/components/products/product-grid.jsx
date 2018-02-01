@@ -37,7 +37,7 @@ class ProductGrid extends Component {
     )
 
     render() {
-        const { stores, pets, categories } = this.props
+        const { results, stores, pets, categories } = this.props
         // Get the checked store filters and put them in an array
         const activeStoreFilters = stores
             .filter(store => store.checked)
@@ -57,7 +57,7 @@ class ProductGrid extends Component {
             .filter(product => activeCategoryFilters.indexOf(product.category) !== -1)
             .map(product => <ProductItem key={product._id} result={product}/>)
 
-        return (  products.length > 0
+        return (  results.length > 0
             ? <div>
                 <button className="btn filter-toggle bg-darkamber" onClick={this.handleFiltersDisplay}>FILTROS</button>
                 <ProductFilter 
