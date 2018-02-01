@@ -6,7 +6,6 @@ import App from './components/App'
 import './style.css'
 
 import fontawesome from '@fortawesome/fontawesome'
-// import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import { faSearch, faSpinner } from '@fortawesome/fontawesome-free-solid'
 
 fontawesome.library.add(faSearch, faSpinner)

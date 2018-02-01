@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Client from '../../api'
 
 class ProductView extends React.Component {
@@ -10,16 +11,18 @@ class ProductView extends React.Component {
         }
     }
 
-    componentDidMount() {
-        console.log(this.state.id)
-        Client.findOne(this.state.id, product => {
+    componentWillMount() {
+        const { location } = this.props
+        this.props.getActiveRoute("/" + location.pathname.split("/")[1])
+
+        return Client.findOne(this.state.id, product => {
             product.price = parsePrice(product.price)
             this.setState({ product: product })
         })
     }
 
     render() {
-        const product = this.state.product
+        const { product } = this.state
 
         return (
             <div className="products-container">
@@ -45,6 +48,11 @@ class ProductView extends React.Component {
             </div>
         )
     }
+}
+
+ProductView.propTypes = {
+    getActiveRoute: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired,
 }
 
 export default ProductView

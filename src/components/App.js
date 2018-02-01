@@ -16,10 +16,7 @@ class App extends Component {
     }
   }
 
-  getActiveRoute = currentRoute => {
-    // console.log(currentRoute)
-    return this.setState({ activeRoute: currentRoute })
-  }
+  getActiveRoute = currentRoute => this.setState({ activeRoute: currentRoute })
 
   render() {
     const { activeRoute } = this.state
@@ -30,7 +27,7 @@ class App extends Component {
         <Switch>
           <Redirect exact from="/" to="/productos" />
           <Route exact path='/productos' render={ props => <ProductContainer getActiveRoute={this.getActiveRoute} {...props} />} />
-          <Route path='/productos/:id' component={ProductView} />
+          <Route path='/productos/:id' render={ props => <ProductView getActiveRoute={this.getActiveRoute} {...props} />} />
           <Route exact path='/tiendas' render={ props => <StoreContainer getActiveRoute={this.getActiveRoute} {...props} />}  />
           <Route exact path="/menu" render={ props => <MenusContainer getActiveRoute={this.getActiveRoute} {...props} />} />
         </Switch>
