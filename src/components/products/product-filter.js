@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const ProductFilter = props => {
+    const disableStoreFilters = props.stores.length > 1 ? false : true
     let storeFilters = props.stores.map((store, index) => {
         return (
             <div key={index} className="filter">
@@ -11,12 +12,14 @@ const ProductFilter = props => {
                     id={store.id} 
                     className="cbx hidden"
                     checked={store.checked}
-                    onChange={props.handleStoreFilterChange}/>
+                    onChange={props.handleStoreFilterChange}
+                    disabled={disableStoreFilters} />
                 <label htmlFor={store.id} className="lbl"></label>
             </div>
         )
     })
 
+    const disablePetFilters = props.pets.length > 1 ? false : true
     let petFilters = props.pets.map((pet, index) => {
         // Check if the product has a registered pet kind. This is because not
         // all products are for a specific kind a pet
@@ -29,7 +32,8 @@ const ProductFilter = props => {
                         id={pet.id} 
                         className="cbx hidden"
                         checked={pet.checked}
-                        onChange={props.handlePetFilterChange}/>
+                        onChange={props.handlePetFilterChange}
+                        disabled={disablePetFilters} />
                     <label htmlFor={pet.id} className="lbl"></label>
                 </div>
             )
@@ -42,13 +46,15 @@ const ProductFilter = props => {
                         id={pet.id} 
                         className="cbx hidden"
                         checked={pet.checked}
-                        onChange={props.handlePetFilterChange}/>
+                        onChange={props.handlePetFilterChange}
+                        disabled={disablePetFilters} />
                     <label htmlFor={pet.id} className="lbl"></label>
                 </div>
             )
         }
     })
 
+    const disableCategoryFilters = props.categories.length > 1 ? false : true
     let categoryFilters = props.categories.map((category, index) => {
         return (
             <div key={index} className="filter">
@@ -58,7 +64,8 @@ const ProductFilter = props => {
                     id={category.id} 
                     className="cbx hidden"
                     checked={category.checked}
-                    onChange={props.handleCategoryFilterChange}/>
+                    onChange={props.handleCategoryFilterChange}
+                    disabled={disableCategoryFilters} />
                 <label htmlFor={category.id} className="lbl"></label>
             </div>
         )
