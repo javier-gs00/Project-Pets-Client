@@ -27,6 +27,18 @@ function search(query, cb) {
     .then(cb)
 }
 
+function findProductById(id) {
+    console.log("search query sent...")
+    let promise = Promise.resolve()
+    promise = fetch(`/api/product/id/${id}`, {
+        accept: "application/json"
+    })
+    .then(checkStatus)
+    .then(parseJSON)
+
+    return promise.then(product => product)
+}
+
 // Used to fetch one product by its id
 function findOne(id, cb) {
     console.log('Search query sent...')
@@ -49,5 +61,18 @@ function getStores(cb) {
     .then(cb)
 }
 
-const Client = { search, findOne, getStores }
+function getStoreByName(name) {
+    console.log("Search query sent...")
+    let promise = Promise.resolve()
+    promise = fetch(`/api/store/${name}`, {
+        accept: "application/json"
+    })
+    .then(checkStatus)
+    .then(parseJSON)
+
+    return promise.then(store => store)
+}
+
+const Client = { search, findOne, findProductById, getStores, getStoreByName }
+
 export default Client

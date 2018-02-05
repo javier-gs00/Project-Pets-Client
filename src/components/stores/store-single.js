@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const StoreSingle = props => {
     let store = props.store
@@ -20,6 +21,12 @@ const StoreSingle = props => {
                 </div>
                 <div className="store-data-block">
                     {tags.map((tag, index) => <span key={index}>{tag}</span>)}                    
+                </div>
+                <div className="store-data-block">
+                    <Link to={{
+                        pathname: `tiendas/${store.name}`,
+                        state: { store: store }
+                    }}>Ver Detalles</Link>       
                 </div>
             </div>
         </div>

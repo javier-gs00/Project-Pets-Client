@@ -1,6 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+// import Loadable from 'react-loadable'
+import Loading from './loading'
+import ProductItem from './product-item'
 import Client from '../../api'
+import './products.css'
+
+// const LoadableComponent = Loadable({
+//     loader: () => import('./product-item'),
+//     loading: Loading,
+//     render(loaded, props) {
+//         let Component = loaded.NamedExport
+//         return <Component {...props} />
+//     }
+// })
 
 class ProductView extends React.Component {
     constructor(props) {
@@ -14,11 +27,8 @@ class ProductView extends React.Component {
         const { location, match } = this.props
         this.props.getActiveRoute("/" + location.pathname.split("/")[1])
 
-        return Client.findOne(match.params.id, product => {
-            return this.setState({
-                product: product
-            })
-        })
+        return Client.findProductById(match.params.id)
+        .then(product => this.setState({ product: product }))
     }
 
     render() {
@@ -28,29 +38,12 @@ class ProductView extends React.Component {
         console.log(typeof product.price)
 
         return (
-            this.state.product 
-            ? <div className="products-container">
-                <div className="product-container">
-                    <div className="product-image">
-                        <img src={product.imageUrl} alt={'Sin Imagen :('}/>
-                    </div>
-                    <div className="product-data">
-                        <div className="product-data-block">
-                            <span className="product-name">{product.name}</span>
-                        </div>
-                        <div className="product-data-block">
-                            <span className="product-store">{product.store}</span>
-                        </div>
-                        <div className="product-data-block">
-                            <span className="product-price">{parsePrice(product.price)}</span>
-                        </div>
-                        <div className="product-data-block">
-                            <a>IR</a><a>VOLVER</a>
-                        </div>
-                    </div>
-                </div>            
+            <div className="products-container">
+                {product
+                ? <ProductItem result={product} />
+                : <Loading />}
             </div>
-            : null
+            // <LoadableComponent result={product} />
         )
     }
 }
@@ -62,14 +55,14 @@ ProductView.propTypes = {
 
 export default ProductView
 
-function parsePrice(intPrice) {
-    let price = intPrice.toString()
-    if (price.length > 5) {
-        price = "$" + price.slice(0, 3) + "." + price.slice(-3)
-    } else if (price.length > 4) {
-        price = "$" + price.slice(0, 2) + "." + price.slice(-3)
-    } else {
-        price = "$" + price.slice(0, 1) + "." + price.slice(-3)
-    }
-    return price
-}
+// function parsePrice(intPrice) {
+//     let price = intPrice.toString()
+//     if (price.length > 5) {
+//         price = "$" + price.slice(0, 3) + "." + price.slice(-3)
+//     } else if (price.length > 4) {
+//         price = "$" + price.slice(0, 2) + "." + price.slice(-3)
+//     } else {
+//         price = "$" + price.slice(0, 1) + "." + price.slice(-3)
+//     }
+//     return price
+// }
