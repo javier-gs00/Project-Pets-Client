@@ -13,11 +13,21 @@ const StoreSingle = props => {
     return (
         <div className="store-container">
             <div className="store-image">
-                <img src={store.image_url} alt={store.name + ' image no encontrada'}/>
+                <Link to={{
+                    pathname: `tiendas/${store.name}`,
+                    state: { store: store }
+                }}>
+                    <img src={store.image_url} alt={store.name + ' imagen no encontrada'}/>
+                </Link>
             </div>
             <div className="store-data">
                 <div className="store-data-block">
-                    <span className="store-name">{store.name}</span>
+                    <Link to={{
+                        pathname: `tiendas/${store.name}`,
+                        state: { store: store }
+                    }}>
+                        <span className="store-name">{store.name}</span>
+                    </Link>
                 </div>
                 <div className="store-data-block">
                     {tags.map((tag, index) => <span key={index}>{tag}</span>)}                    
@@ -26,7 +36,9 @@ const StoreSingle = props => {
                     <Link to={{
                         pathname: `tiendas/${store.name}`,
                         state: { store: store }
-                    }}>Ver Detalles</Link>       
+                    }}>
+                        Ver Detalles
+                    </Link>       
                 </div>
             </div>
         </div>

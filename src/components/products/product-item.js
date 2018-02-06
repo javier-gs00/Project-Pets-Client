@@ -7,12 +7,20 @@ const ProductItem = props => {
     return (
         <div className="product-container">
             <div className="product-image">
+                <Link to={{
+                        pathname: `/productos/${product._id}`,
+                        state: { product: product }}}
+                        className="product-name">
                 <img src={product.imageUrl} alt={'Sin Imagen :('}/>
+                </Link>
             </div>
             <div className="product-data">
                 <div className="product-data-block">
                     {/* <span className="product-name">{product.name}</span> */}
-                    <Link to={"/productos/" + product._id} className="product-name">{product.name}</Link>
+                    <Link to={{
+                        pathname: `/productos/${product._id}`,
+                        state: { product: product }}}
+                        className="product-name">{product.name}</Link>
                 </div>
                 <div className="product-data-block">
                     <span className="product-store">{product.store}</span>
