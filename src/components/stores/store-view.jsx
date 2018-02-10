@@ -87,7 +87,7 @@ class StoreView extends React.Component {
                             <div className="store-single-title-container">{name}</div>
                             <div className="store-single-title-container">
                                 <FontAwesome icon="globe" style={store.url ? {color: '#ffa000'} : {color: '#ddd'}}/>
-                                <a href={store.uri} target="_blank" rel="noopener">Ir a sitio oficial</a>
+                                <a href={store.url} target="_blank" rel="noopener">Ir a sitio oficial</a>
                             </div>
                             <div className="store-single-title-container">
                                 <FontAwesome icon="shower" style={store.gromming ? {color: '#ffa000'} : {color: '#ddd'}}/>
