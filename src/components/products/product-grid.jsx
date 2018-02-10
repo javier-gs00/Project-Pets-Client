@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ProductItem from './product-item'
 import ProductFilter from './product-filter'
-import './products.css'
 
 class ProductGrid extends Component {
     handleFiltersDisplay = e => {

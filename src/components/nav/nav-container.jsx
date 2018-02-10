@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import './nav.css'
+// import './nav.css'
 
 import NavItem from './nav-item'
-
 
 class Nav extends Component {
     constructor(props) {

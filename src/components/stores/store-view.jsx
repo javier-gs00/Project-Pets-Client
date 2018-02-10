@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import FontAwesome from '@fortawesome/react-fontawesome'
 import Loading from '../products/loading'
 import Client from '../../api'
 
@@ -25,71 +26,128 @@ class StoreView extends React.Component {
         }
     }
 
+    toggleContent = e => {
+        const id = e.currentTarget.id
+        const title = document.getElementById(id)
+        const content = document.getElementById(id.replace('title', 'content'))
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null
+            content.style.borderTop = null
+            title.classList.remove('store-rotated')
+            title.classList.add('store-not-rotated')
+        } else {
+            content.style.maxHeight = content.scrollHeight + "px"
+            content.style.borderTop = "1px solid #ddd"
+            title.classList.remove('store-not-rotated')
+            title.classList.add('store-rotated')
+        }
+    }
+
     render() {
         const { store } = this.state
         console.log(store)
-        let name, uri, imageUrl, imageFileName,
-            email, phone, addresses, openHours,
-            grooming, veterinary, urgency, physicalStore, productShipping
+        let name, imageUrl, email, phone, addresses, openHours
 
-        if (!!store) {
+        if (store) {
             // Strings
-            name = store.name
-            uri = store.uri
-            imageUrl = store.image_url
-            imageFileName = store.image_file_name
-            // Booleans
-            grooming = store.grooming ? 'Servicio de peluqueria' : 'Sin servicio de peluqueria'
-            veterinary = store.veterinary ? "Veterinaria" : "Sin Veterinaria"
-            urgency = store.urgency ? "Con servicio de urgencias" : "Sin servicio de urgencias"
-            physicalStore = store.physical_store ? 'Posee tienda' : 'Sin tienda'
-            productShipping = store.product_shipping ? 'Envío a domicilio' : 'Sin envío a domicilio'
+            imageUrl = <img src={store.image_url} alt={store.name} />
+            name = <h1>{store.name}</h1>
 
-            email = store.email.map((email, index) => (<li key={index}>
-                {email.name} - {email.uri}
-            </li>))
-
-            phone = store.phone.map((phone, index) => (<li key={index}>
-                {phone.name} - {phone.number}
-            </li>))
-
-            addresses = store.address.map((address, index) => (<li key={index}>
-                {address.street} - {address.commune} - {address.cityTown} / {address.region}
-            </li>))
-
-            openHours = store.open_hours.map((hours, index) => (<li key={index}>
-                {hours.range} - {hours.open} - {hours.close}
-            </li>))
-        }
-
-        return (
-            <div className='main'>
-                {store 
-                ? <div>
-                    <img src={imageUrl} alt={imageFileName} />
-                    <p>{name}</p>
-                    <p>Sitio web: {uri}</p>
-                    <p>{grooming}</p>
-                    <p>{veterinary}</p>
-                    <p>{urgency}</p>
-                    <p>{physicalStore}</p>
-                    <p>{productShipping}</p>
-                    <ul>
-                        {phone}
-                    </ul>
-                    <ul>
-                        {email}
-                    </ul>
-                    <ul>
-                        {addresses}
-                    </ul>
-                    <ul>
-                        {openHours}
-                    </ul>
+            phone = store.phone.map((phone, index) => (
+                <div key={index} className="store-single-item-container phone-content">
+                    <div><span>{phone.name}:</span></div>
+                    <div><span className="must-be-legible">{parsePhoneNumber(phone.number)}</span></div>
                 </div>
-                : <Loading />}
-            </div>
-        )
+            ))
+
+            email = store.email.map((email, index) => (
+                <div key={index} className="store-single-item-container email-content">
+                    <span className="must-be-legible">{email.uri}</span>
+                </div>
+            ))
+
+            addresses = store.address.map((address, index) => (
+                <div key={index} className="store-single-item-container addresses-content">
+                    <span className="must-be-legible">{address.street}, {address.commune}, {address.cityTown}, {address.region}</span>
+                </div>
+            ))
+
+            openHours = store.open_hours.map((hours, index) => (
+                <div key={index} className="store-single-item-container openhours-content">
+                    <div><span>{hours.range}:</span></div>
+                    <div><span>{hours.open} - {hours.close}</span></div>
+                </div>
+            ))
+
+            return (
+                <div className="main">
+                    <div className="store-single-main-container">
+                        <div className="store-single-container" >
+                            <div className="store-single-image">{imageUrl}</div>
+                            <div className="store-single-title-container">{name}</div>
+                            <div className="store-single-title-container">
+                                <FontAwesome icon="globe" style={store.uri ? {color: '#ffa000'} : {color: '#ddd'}}/>
+                                <a href={store.uri} target="_blank" rel="noopener">Ir a sitio oficial</a>
+                            </div>
+                            <div className="store-single-title-container">
+                                <FontAwesome icon="shower" style={store.gromming ? {color: '#ffa000'} : {color: '#ddd'}}/>
+                                <span>{store.gromming ? 'Servicio de peluqueria' : 'Sin servicio de peluqueria' }</span>
+                            </div> 
+                            <div className="store-single-title-container">
+                                <FontAwesome icon="user-md" style={store.veterinary ? {color: '#ffa000'} : {color: '#ddd'}}/>
+                                <span>{store.veterinary ? 'Veterinaria' : 'Sin servicio de Veterinaria' }</span>
+                            </div>
+                            <div className="store-single-title-container">
+                                <FontAwesome icon="ambulance" style={store.urgency ? {color: '#ffa000'} : {color: '#ddd'}}/>
+                                <span>{store.urgency ? 'Urgencia' : 'Sin servicio de Urgencia' }</span>
+                            </div>
+                            <div className="store-single-title-container">
+                                <FontAwesome icon="building" style={store.physical_store ? {color: '#ffa000'} : {color: '#ddd'}}/>
+                                <span>{store.physical_store ? 'Tienda Física' : 'Sin tienda física' }</span>
+                            </div>
+                            <div className="store-single-title-container">
+                                <FontAwesome icon="car" style={store.product_shipping ? {color: '#ffa000'} : {color: '#ddd'}}/>
+                                <span>{store.product_shipping ? 'Envío a domicilio' : 'Sin envío a domicilio' }</span>
+                            </div>
+                            <div id="phone-title" className="store-single-title-container-svg" onClick={this.toggleContent}>
+                                <FontAwesome icon="phone" />
+                                <span>Teléfono</span>
+                                <FontAwesome icon="angle-down" />
+                            </div>
+                            <div id="phone-content" className="store-single-content-container">
+                                {phone}
+                            </div>
+                            <div id="email-title" className="store-single-title-container-svg" onClick={this.toggleContent}>
+                                <FontAwesome icon="envelope" />
+                                <span>Email</span>
+                                <FontAwesome icon="angle-down" />
+                            </div>
+                            <div id="email-content" className="store-single-content-container">
+                                {email}
+                            </div>
+                            <div id="addresses-title" className="store-single-title-container-svg" onClick={this.toggleContent}>
+                                <FontAwesome icon="map-marker" />
+                                <span>Ubicación</span>
+                                <FontAwesome icon="angle-down" />
+                            </div>
+                            <div id="addresses-content" className="store-single-content-container">
+                                {addresses}
+                            </div>
+                            <div id="openhours-title" className="store-single-title-container-svg" onClick={this.toggleContent}>
+                                <FontAwesome icon="clock" />
+                                <span>Horarios</span>
+                                <FontAwesome icon="angle-down" />
+                            </div>
+                            <div id="openhours-content" className="store-single-content-container">
+                                {openHours}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else {
+            return <Loading />
+        }
     }
 
 }
@@ -100,3 +158,14 @@ StoreView.propTypes = {
 }
 
 export default StoreView
+
+function parsePhoneNumber(number) {
+    let newNumber = number.toString()
+    if (newNumber.length === 11) {
+        return '+' + newNumber.slice(0, 2) + ' ' + newNumber.slice(2, 4) + ' ' + newNumber.slice(4, 8) + ' ' + newNumber.slice(8, 11)
+    } else if (newNumber.length === 9) {
+        return '+56 ' + newNumber.slice(0, 2) + ' ' + newNumber.slice(2, 6) + ' ' + newNumber.slice(6, 9)
+    } else {
+        return newNumber
+    }
+}

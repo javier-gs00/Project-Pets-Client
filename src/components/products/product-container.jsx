@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './search.css'
+// import './search.css'
 import Client from '../../api.js'
 import ProductGrid from './product-grid.jsx'
 import SearchForm from './search-form'

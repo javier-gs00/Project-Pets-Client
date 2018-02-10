@@ -4,6 +4,7 @@ import Loadable from 'react-loadable'
 import Loading from './products/loading'
 
 // Containers
+import Header from './header/header'
 import NavContainer from './nav/nav-container.jsx'
 // import ProductContainer from './products/product-container.jsx'
 // import ProductView from './products/product-view.jsx'
@@ -12,7 +13,7 @@ import NavContainer from './nav/nav-container.jsx'
 import MenusContainer from './menus/menus-container.jsx'
 
 const AsyncProductContainer = Loadable({
-  loader: () => import('./products/product-container.jsx'),
+  loader: () => import('./products/product-container'),
   loading: Loading
 })
 
@@ -46,6 +47,7 @@ class App extends Component {
 
     return (
       <div>
+        <Header activeRoute={activeRoute}/>
         <NavContainer activeRoute={activeRoute} />
         <Switch>
           <Redirect exact from="/" to="/productos" />

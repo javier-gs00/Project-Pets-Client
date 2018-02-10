@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Client from '../../api'
 import StoreGrid from './store-grid'
-import './stores.css'
+// import './stores.css'
 
 class StoreContainer extends Component {
     constructor(props) {
