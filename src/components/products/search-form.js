@@ -18,7 +18,6 @@ const SearchForm = props => {
                     className="icon-search"
                     onClick={props.onClick}>
                     <FontAwesomeIcon icon="search" />
-                    {/* <FontAwesomeIcon icon="spinner" spin /> */}
                 </button>
             </div>
         </div>

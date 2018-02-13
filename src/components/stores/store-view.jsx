@@ -90,10 +90,6 @@ class StoreView extends React.Component {
                                 <a href={store.url} target="_blank" rel="noopener">Ir a sitio oficial</a>
                             </div>
                             <div className="store-single-title-container">
-                                <FontAwesome icon="shower" style={store.gromming ? {color: '#ffa000'} : {color: '#ddd'}}/>
-                                <span>{store.gromming ? 'Servicio de peluqueria' : 'Sin servicio de peluqueria' }</span>
-                            </div> 
-                            <div className="store-single-title-container">
                                 <FontAwesome icon="user-md" style={store.veterinary ? {color: '#ffa000'} : {color: '#ddd'}}/>
                                 <span>{store.veterinary ? 'Veterinaria' : 'Sin servicio de Veterinaria' }</span>
                             </div>
@@ -109,6 +105,10 @@ class StoreView extends React.Component {
                                 <FontAwesome icon="car" style={store.product_shipping ? {color: '#ffa000'} : {color: '#ddd'}}/>
                                 <span>{store.product_shipping ? 'Envío a domicilio' : 'Sin envío a domicilio' }</span>
                             </div>
+                            <div className="store-single-title-container">
+                                <FontAwesome icon="shower" style={store.grooming ? {color: '#ffa000'} : {color: '#ddd'}}/>
+                                <span>{store.grooming ? 'Servicio de peluqueria' : 'Sin servicio de peluqueria' }</span>
+                            </div> 
                             <div id="phone-title" className="store-single-title-container-svg" onClick={this.toggleContent}>
                                 <FontAwesome icon="phone" />
                                 <span>Teléfono</span>

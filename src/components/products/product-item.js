@@ -5,28 +5,26 @@ import { Link } from 'react-router-dom'
 const ProductItem = props => {
     let product = props.result
     return (
-        <div className="product-container">
-            <div className="product-image">
+        <div className="product-item-container">
+            <div className="product-item-image">
                 <Link to={{
                         pathname: `/productos/${product._id}`,
-                        state: { product: product }}}
-                        className="product-name">
-                <img src={product.imageUrl} alt={'Sin Imagen :('}/>
+                        state: { product: product }}}>
+                    <img src={product.imageUrl} alt="Producto sin imagen"/>
                 </Link>
             </div>
-            <div className="product-data">
-                <div className="product-data-block">
-                    {/* <span className="product-name">{product.name}</span> */}
+            <div className="product-item-data">
+                <div className="product-item-data-block">
                     <Link to={{
                         pathname: `/productos/${product._id}`,
                         state: { product: product }}}
-                        className="product-name">{product.name}</Link>
+                        className="product-item-name">{product.name}</Link>
                 </div>
-                <div className="product-data-block">
-                    <span className="product-store">{product.store}</span>
+                <div className="product-item-data-block">
+                    <span className="product-item-store">{product.store}</span>
                 </div>
-                <div className="product-data-block">
-                    <span className="product-price">{parsePrice(product.price)}</span>
+                <div className="product-item-data-block">
+                    <span className="product-item-price">{parsePrice(product.price)}</span>
                 </div>
             </div>
         </div>     

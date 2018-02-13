@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import FontAwesome from '@fortawesome/react-fontawesome'
 
 const ProductFilter = props => {
     const disableStoreFilters = props.stores.length > 1 ? false : true
@@ -73,27 +74,36 @@ const ProductFilter = props => {
 
     // Determine if the viewport is wide enough to show the filters div open
     // Right now is set to show it only for hd notebook displays and above
-    let showFiltersDiv = document.getElementById("main").offsetWidth > 1200 ? true : false
+    // let showFiltersDiv = document.getElementById("main").offsetWidth > 1200 ? true : false
+    // let toggleFiltersText = document.getElementsByClassName('filters-show-toggle')[0].classList.contains('filters-not-rotated')
 
     return (
-        <div id="filters" className={"filters-container " + (showFiltersDiv ? '' : 'hidden')} >
-            <span className="filter-title">Tiendas</span>
-            {storeFilters}
-            <span className="filter-title">Mascotas</span>
-            {petFilters}
-            <span className="filter-title">Categoría</span>
-            {categoryFilters}
-            {/* <span className="filter-title">Ordenar</span>
-            <div className="filter">
-                <input type="checkbox" id="alphabet-filter" className="cbx hidden"/>
-                <label for="alphabet-filter" className="lbl"></label>
-                <span className="filter-name" onClick={props.handleFilterClick}>A-z</span>
+        <div className="filters-table-container">
+            <div className="filters-show-toggle" onClick={props.handleFiltersDisplay}>
+                <FontAwesome icon="filter"/>
+                <span id="filter-toggle-text">Mostrar Filtros</span>
+                <FontAwesome icon="angle-down"/>
             </div>
-            <div className="filter">
-                <input type="checkbox" id="price-filter" className="cbx hidden"/>
-                <label for="price-filter" className="lbl"></label>
-                <span className="filter-name" onClick={props.handleFilterClick}>Precio: Mayor a menor</span>
-            </div> */}
+            {/* <div id="filters" className={"filters-container " + (showFiltersDiv ? '' : 'hidden')} > */}
+            <div id="filters" className="filters-container">
+                <span className="filter-title">Tiendas</span>
+                {storeFilters}
+                <span className="filter-title">Mascotas</span>
+                {petFilters}
+                <span className="filter-title">Categorías</span>
+                {categoryFilters}
+                {/* <span className="filter-title">Ordenar</span>
+                <div className="filter">
+                    <input type="checkbox" id="alphabet-filter" className="cbx hidden"/>
+                    <label for="alphabet-filter" className="lbl"></label>
+                    <span className="filter-name" onClick={props.handleFilterClick}>A-z</span>
+                </div>
+                <div className="filter">
+                    <input type="checkbox" id="price-filter" className="cbx hidden"/>
+                    <label for="price-filter" className="lbl"></label>
+                    <span className="filter-name" onClick={props.handleFilterClick}>Precio: Mayor a menor</span>
+                </div> */}
+            </div>
         </div>
     )
 }

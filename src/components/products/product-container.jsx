@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-// import './search.css'
 import Client from '../../api.js'
 import ProductGrid from './product-grid.jsx'
 import SearchForm from './search-form'
@@ -27,13 +26,13 @@ class SearchContainer extends Component {
 
         return Client.search('royal canin maxi', results => {
             const storeFilters = results
-            // retrieve the store values from the results
-            .map(result => result.store)
-            // get an array with only the resulting stores
-            .filter((store, index, self) => self.indexOf(store) === index)
-            // Create the filter objects defaulting to true to show all the results at first
-            .map(storeName => ({id: storeName, checked: true}))
-        
+                // retrieve the store values from the results
+                .map(result => result.store)
+                // get an array with only the resulting stores
+                .filter((store, index, self) => self.indexOf(store) === index)
+                // Create the filter objects defaulting to true to show all the results at first
+                .map(storeName => ({id: storeName, checked: true}))
+            
             const petFilters = results
                 .map(result => result.animal)
                 .filter((pet, index, self) => self.indexOf(pet) === index)
@@ -49,7 +48,7 @@ class SearchContainer extends Component {
                 results: results,
                 storeFilters: storeFilters,
                 petFilters: petFilters,
-                categoryFilters: categoryFilters        
+                categoryFilters: categoryFilters
             })
         })
     }
@@ -137,21 +136,23 @@ class SearchContainer extends Component {
 
         return (
             <div id="main" className="main">
-                <SearchForm
-                    value={searchValue}
-                    onChange={this.handleInputChange}
-                    onClick={this.handleSubmit} 
-                    onKeyPress={this.handleInputKeyPress} />
-                { isLoading
-                ? <LoadingScreen />
-                : <ProductGrid
-                    results={results}
-                    stores={storeFilters}
-                    pets={petFilters}
-                    categories={categoryFilters}
-                    onStoreFilterChange={this.handleStoreFilterChange}
-                    onPetFilterChange={this.handlePetFilterChange}
-                    onCategoryFilterChange={this.handleCategoryFilterChange}/>}
+                <div className="products-main-container" >
+                    <SearchForm
+                        value={searchValue}
+                        onChange={this.handleInputChange}
+                        onClick={this.handleSubmit} 
+                        onKeyPress={this.handleInputKeyPress} />
+                    { isLoading
+                    ? <LoadingScreen />
+                    : <ProductGrid
+                        results={results}
+                        stores={storeFilters}
+                        pets={petFilters}
+                        categories={categoryFilters}
+                        onStoreFilterChange={this.handleStoreFilterChange}
+                        onPetFilterChange={this.handlePetFilterChange}
+                        onCategoryFilterChange={this.handleCategoryFilterChange}/>}
+                </div>
             </div>
         ) 
     }

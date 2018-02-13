@@ -6,7 +6,7 @@ const StoreSingle = props => {
     // Create tags list
     let tags = []
     if (store.veterinary) tags.push('Veterinaria')
-    if (store.urgencia) tags.push('Urgencia')
+    if (store.urgency) tags.push('Urgencia')
     if (store.grooming) tags.push('Peluquería')
     if (store.physical_store) tags.push('Tienda')
     if (store.product_shipping) tags.push('Envíos')
@@ -31,14 +31,6 @@ const StoreSingle = props => {
                 </div>
                 <div className="store-data-block">
                     {tags.map((tag, index) => <span key={index}>{tag}</span>)}                    
-                </div>
-                <div className="store-data-block">
-                    <Link to={{
-                        pathname: `tiendas/${store.name}`,
-                        state: { store: store }
-                    }}>
-                        Ver Detalles
-                    </Link>       
                 </div>
             </div>
         </div>

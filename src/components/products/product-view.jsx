@@ -53,7 +53,7 @@ class ProductView extends React.Component {
                         pathname: `/tiendas/${product.store}`,
                         state: { store: store }
                     }}>
-                        {product.store + ' '}
+                        {'Ver perfil de ' + product.store + ' '}
                         <FontAwesome icon="sign-in-alt" />
                     </Link>
                 </div>)

@@ -5,12 +5,19 @@ import ProductFilter from './product-filter'
 
 class ProductGrid extends Component {
     handleFiltersDisplay = e => {
-        if (this.props.results.length > 0) {
-            if (document.getElementById('filters').classList.contains('hidden')){
-                return document.getElementById('filters').classList.remove('hidden')
-            } else {
-                return document.getElementById('filters').classList.add('hidden')
-            }
+        const filters = document.getElementById('filters')
+        const toggleFilters = document.getElementsByClassName('filters-show-toggle')[0]
+        const toggleFiltersText = document.getElementById('filter-toggle-text')
+        if (filters.style.maxHeight) {
+            filters.style.maxHeight = null
+            toggleFilters.classList.remove('filters-rotated')
+            toggleFilters.classList.add('filters-not-rotated')
+            toggleFiltersText.innerHTML = 'Mostrar Filtros'
+        } else {
+            filters.style.maxHeight = filters.scrollHeight + "px"
+            toggleFilters.classList.remove('filters-not-rotated')
+            toggleFilters.classList.add('filters-rotated')
+            toggleFiltersText.innerHTML = 'Ocultar Filtros'
         }
     }
 
@@ -57,18 +64,22 @@ class ProductGrid extends Component {
             .map(product => <ProductItem key={product._id} result={product}/>)
 
         return (  results.length > 0
-            ? <div>
-                <button className="btn filter-toggle bg-darkamber" onClick={this.handleFiltersDisplay}>FILTROS</button>
+            ? <div className="products-container">
                 <ProductFilter 
                     stores={stores}
                     pets={pets}
                     categories={categories}
+                    handleFiltersDisplay={this.handleFiltersDisplay}
                     handleStoreFilterChange={this.handleStoreFilterChange}
                     handlePetFilterChange={this.handlePetFilterChange}
-                    handleCategoryFilterChange={this.handleCategoryFilterChange}/> 
-                <div className="products-container">
-                    { products }
+                    handleCategoryFilterChange={this.handleCategoryFilterChange}/>
+                <div className="products-display-container" >
+                    <div className="products-grid-container">
+                        { products }
+                    </div>
+                    <div className="products-nav-container"></div>
                 </div>
+                {/* <div className="ads-banner-container"></div> */}
             </div>
             : <div></div>
         )
