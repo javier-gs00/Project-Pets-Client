@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 const ProductItem = props => {
-    let product = props.result
+    let { product } = props
     return (
         <div className="product-item-container">
             <div className="product-item-image">
@@ -44,7 +44,7 @@ function parsePrice(intPrice) {
 }
 
 ProductItem.propTypes = {
-    result: PropTypes.object
+    product: PropTypes.object
 }
 
 export default ProductItem
