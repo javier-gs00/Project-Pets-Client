@@ -13,6 +13,7 @@ class SearchContainer extends Component {
         this.state = {
             isLoading: false,
             results: [],
+            activePage: 0,
             searchValue: "",
             storeFilters: [],
             petFilters: [],
@@ -86,6 +87,7 @@ class SearchContainer extends Component {
                 return this.setState({
                     isLoading: false,
                     results: results,
+                    activePage: 0,
                     storeFilters: storeFilters,
                     petFilters: petFilters,
                     categoryFilters: categoryFilters
@@ -99,6 +101,8 @@ class SearchContainer extends Component {
             return this.handleSubmit()
         }
     }
+
+    changePage = newPage => this.setState({ activePage: newPage })
 
     // Receives an object containing the the filter name(id) and its new checked value
     handleStoreFilterChange = newStoreFilter => {
@@ -132,7 +136,7 @@ class SearchContainer extends Component {
     }
 
     render() {
-        const { isLoading, searchValue, results, storeFilters, petFilters, categoryFilters } = this.state
+        const { isLoading, searchValue, results, activePage, storeFilters, petFilters, categoryFilters } = this.state
 
         return (
             <div id="main" className="main">
@@ -146,6 +150,8 @@ class SearchContainer extends Component {
                     ? <LoadingScreen />
                     : <ProductGrid
                         results={results}
+                        activePage={activePage}
+                        changePage={this.changePage}
                         stores={storeFilters}
                         pets={petFilters}
                         categories={categoryFilters}

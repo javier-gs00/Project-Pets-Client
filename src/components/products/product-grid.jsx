@@ -4,6 +4,55 @@ import ProductItem from './product-item'
 import ProductFilter from './product-filter'
 
 class ProductGrid extends Component {
+    navigate = e => {
+        const { activePage, changePage } = this.props
+        const newPage = e.currentTarget.innerHTML
+        console.log(newPage)
+        if (newPage === '&lt;') {
+            window.scrollTo(0, 0)
+            return changePage(activePage - 1)
+        } else if (newPage === '&gt;') {
+            window.scrollTo(0, 0)
+            return changePage(activePage + 1)
+        } else {
+            window.scrollTo(0, 0)
+            return changePage(newPage - 1)
+        }
+    }
+    calculatePages = () => {
+        // !!!! Peding: display just up to three page numbers
+        const { results, activePage } = this.props
+        console.log(results.length)
+        if (results.length <= 20) return [<button>1</button>]
+
+        // calculate the number of pages
+        const quantity = (Math.floor(results.length / 20)) + 1
+        let buttonsArray = []
+        // calculate the values of each navigation button
+        buttonsArray.push(activePage !== 0
+            ? <button onClick={this.navigate}>{'<'}</button>
+            : null)
+        buttonsArray.push(<button
+            className={activePage === 0 ? 'products-nav-active' : null }
+            onClick={this.navigate}>{activePage === 0 ? '1' : activePage}</button>) 
+        buttonsArray.push(quantity < 3
+            ? <button 
+                className={activePage !== 0 && activePage === quantity - 1 ? 'products-nav-active' : null }
+                onClick={this.navigate}>{activePage === 0 ? '2' : activePage + 1}</button>
+            : <button 
+                className={activePage !== 0 && activePage !== quantity - 1 ? 'products-nav-active' : null }
+                onClick={this.navigate}>{activePage === 0 ? '2' : activePage + 1}</button>) 
+        buttonsArray.push(quantity >= 3
+            ? <button
+                className={activePage === quantity - 1 ? 'products-nav-active' : null }
+                onClick={this.navigate}>{activePage === 0 ? '3' : activePage + 2}</button>
+            : null)
+        buttonsArray.push(activePage !== quantity - 1
+            ? <button onClick={this.navigate}>{'>'}</button>
+            : null)
+        return buttonsArray
+    }
+
     handleFiltersDisplay = e => {
         const filters = document.getElementById('filters')
         const toggleFilters = document.getElementsByClassName('filters-show-toggle')[0]
@@ -43,7 +92,7 @@ class ProductGrid extends Component {
     )
 
     render() {
-        const { results, stores, pets, categories } = this.props
+        const { results, activePage, stores, pets, categories } = this.props
         // Get the checked store filters and put them in an array
         const activeStoreFilters = stores
             .filter(store => store.checked)
@@ -56,12 +105,17 @@ class ProductGrid extends Component {
         const activeCategoryFilters = categories
             .filter(category => category.checked)
             .map(category => category.id)
+        // Calculate page ranges
+        const start = activePage === 0 ? 0 : 20*activePage
+        const end = activePage === 0 ? 20 : 20*activePage + 20 
         // Get the products matching the active store filters
-        const products = this.props.results
+        const products = this.props.results.slice(start, end)
             .filter(product => activeStoreFilters.indexOf(product.store) !== -1)
             .filter(product => activePetFilters.indexOf(product.animal) !== -1)
             .filter(product => activeCategoryFilters.indexOf(product.category) !== -1)
             .map(product => <ProductItem key={product._id} result={product}/>)
+
+        const pages = this.calculatePages()
 
         return (  results.length > 0
             ? <div className="products-container">
@@ -77,7 +131,18 @@ class ProductGrid extends Component {
                     <div className="products-grid-container">
                         { products }
                     </div>
-                    <div className="products-nav-container"></div>
+                    <div className="products-nav-container">
+                        <div className="products-nav">
+                            {/* <button>{'<'}</button>
+                            <button className="products-nav-active">{'1'}</button>
+                            <button>{'2'}</button>
+                            <button>{'3'}</button>
+                            <button>{'4'}</button>
+                            <button>{'5'}</button>
+                            <button>{'>'}</button> */}
+                            {pages.map(button => button)}
+                        </div>
+                    </div>
                 </div>
                 {/* <div className="ads-banner-container"></div> */}
             </div>
