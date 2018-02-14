@@ -112,7 +112,7 @@ class SearchContainer extends Component {
             }
             return store
         })
-        return this.setState({ storeFilter: newStoreFilters })
+        return this.setState({ storeFilter: newStoreFilters, activePage: 0 })
     }
 
     handlePetFilterChange = newPetFilter => {
@@ -122,7 +122,7 @@ class SearchContainer extends Component {
             }
             return pet
         })
-        return this.setState({ petFilters: newPetFilters})
+        return this.setState({ petFilters: newPetFilters, activePage: 0 })
     }
 
     handleCategoryFilterChange = newCategoryFilter => {
@@ -132,7 +132,7 @@ class SearchContainer extends Component {
             }
             return category
         })
-        return this.setState({ categoryFilters: newCategoryFilters})
+        return this.setState({ categoryFilters: newCategoryFilters, activePage: 0 })
     }
 
     render() {

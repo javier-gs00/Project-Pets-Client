@@ -19,14 +19,13 @@ class ProductGrid extends Component {
             return changePage(newPage - 1)
         }
     }
-    calculatePages = () => {
-        // !!!! Peding: display just up to three page numbers
-        const { results, activePage } = this.props
-        console.log(results.length)
-        if (results.length <= 20) return [<button>1</button>]
+    calculatePages = products => {
+        const { activePage } = this.props
+        console.log(products.length)
+        if (products.length <= 20) return [<button onClick={this.navigate}>1</button>]
 
         // calculate the number of pages
-        const quantity = (Math.floor(results.length / 20)) + 1
+        const quantity = (Math.floor(products.length / 20)) + 1
         let buttonsArray = []
         // calculate the values of each navigation button
         buttonsArray.push(activePage !== 0
@@ -109,13 +108,14 @@ class ProductGrid extends Component {
         const start = activePage === 0 ? 0 : 20*activePage
         const end = activePage === 0 ? 20 : 20*activePage + 20 
         // Get the products matching the active store filters
-        const products = this.props.results.slice(start, end)
+        const totalProducts = this.props.results
             .filter(product => activeStoreFilters.indexOf(product.store) !== -1)
             .filter(product => activePetFilters.indexOf(product.animal) !== -1)
             .filter(product => activeCategoryFilters.indexOf(product.category) !== -1)
-            .map(product => <ProductItem key={product._id} result={product}/>)
-
-        const pages = this.calculatePages()
+            
+        const products = totalProducts.slice(start, end).map(product => <ProductItem key={product._id} result={product}/>)
+        
+        const pages = this.calculatePages(totalProducts)
 
         return (  results.length > 0
             ? <div className="products-container">
