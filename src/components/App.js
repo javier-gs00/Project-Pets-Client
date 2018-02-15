@@ -5,12 +5,8 @@ import Loading from './products/loading'
 
 // Containers
 import Header from './header/header'
-import NavContainer from './nav/nav-container.jsx'
-// import ProductContainer from './products/product-container.jsx'
-// import ProductView from './products/product-view.jsx'
-// import StoreContainer from './stores/store-container.jsx'
-// import SingleStoreContainer from './stores/store-view'
-import MenusContainer from './menus/menus-container.jsx'
+import NavContainer from './nav/nav-container'
+import MenusContainer from './menus/menus-container'
 
 const AsyncProductContainer = Loadable({
   loader: () => import('./products/product-container'),
@@ -18,17 +14,17 @@ const AsyncProductContainer = Loadable({
 })
 
 const AsyncSingleProductView = Loadable({
-  loader: () => import('./products/product-view.jsx'),
+  loader: () => import('./products/product-view'),
   loading: Loading
 })
 
 const AsyncStoreContainer = Loadable({
-  loader: () => import('./stores/store-container.jsx'),
+  loader: () => import('./stores/store-container'),
   loading: Loading
 })
 
 const AsyncSingleStoreView = Loadable({
-  loader: () => import('./stores/store-view.jsx'),
+  loader: () => import('./stores/store-view'),
   loading: Loading
 })
 

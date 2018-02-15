@@ -25,6 +25,7 @@ class SearchContainer extends Component {
         const { location } = this.props
         this.props.getActiveRoute(location.pathname)
 
+        this.setState({ isLoading: true })
         return Client.search('royal canin maxi', results => {
             const storeFilters = results
                 // retrieve the store values from the results
