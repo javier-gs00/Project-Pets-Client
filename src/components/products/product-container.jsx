@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Client from '../../api.js'
-import ProductGrid from './product-grid'
-import ProductItem from './product-item'
+import ProductsDisplay from './products-display'
 import SearchForm from './search-form'
 import LoadingScreen from './loading'
 // import { connect } from 'react-redux'
@@ -200,9 +199,7 @@ class SearchContainer extends Component {
         const end = activePage === 0 ? 20 : 20 * activePage + 20     
         const pages = calculatePages(activePage, totalProducts, this.navigate)
         // List of products to render
-        const products = totalProducts
-            .slice(start, end)
-            .map(product => <ProductItem key={product._id} product={product}/>)
+        const products = totalProducts.slice(start, end)
         
         return (
             <div id="main" className="main">
@@ -214,7 +211,7 @@ class SearchContainer extends Component {
                         onKeyPress={this.handleInputKeyPress} />
                     { isLoading
                     ? <LoadingScreen />
-                    : <ProductGrid
+                    : <ProductsDisplay
                         products={products}
                         pages={pages}
                         storeFilters={storeFilters}
