@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import FontAwesome from '@fortawesome/react-fontawesome'
 
 const ProductFilter = props => {
-    const disableStoreFilters = props.stores.length > 1 ? false : true
-    let storeFilters = props.stores.map((store, index) => {
+    const disableStoreFilters = props.storeFilters.length > 1 ? false : true
+    let storeFilters = props.storeFilters.map((store, index) => {
         return (
             <div key={index} className="filter">
                 <span className="filter-name">{store.id}</span>
@@ -20,8 +20,8 @@ const ProductFilter = props => {
         )
     })
 
-    const disablePetFilters = props.pets.length > 1 ? false : true
-    let petFilters = props.pets.map((pet, index) => {
+    const disablePetFilters = props.petFilters.length > 1 ? false : true
+    let petFilters = props.petFilters.map((pet, index) => {
         // Check if the product has a registered pet kind. This is because not
         // all products are for a specific kind a pet
         if (pet.id !== '') {
@@ -55,8 +55,8 @@ const ProductFilter = props => {
         }
     })
 
-    const disableCategoryFilters = props.categories.length > 1 ? false : true
-    let categoryFilters = props.categories.map((category, index) => {
+    const disableCategoryFilters = props.categoryFilters.length > 1 ? false : true
+    let categoryFilters = props.categoryFilters.map((category, index) => {
         return (
             <div key={index} className="filter">
                 <span className="filter-name">{capitalizeFirstLetter(category.id)}</span>
@@ -71,11 +71,6 @@ const ProductFilter = props => {
             </div>
         )
     })
-
-    // Determine if the viewport is wide enough to show the filters div open
-    // Right now is set to show it only for hd notebook displays and above
-    // let showFiltersDiv = document.getElementById("main").offsetWidth > 1200 ? true : false
-    // let toggleFiltersText = document.getElementsByClassName('filters-show-toggle')[0].classList.contains('filters-not-rotated')
 
     return (
         <div className="filters-table-container">
@@ -109,9 +104,9 @@ const ProductFilter = props => {
 }
 
 ProductFilter.propTypes = {
-    stores: PropTypes.arrayOf(PropTypes.object),
-    pets: PropTypes.arrayOf(PropTypes.object),
-    categories: PropTypes.arrayOf(PropTypes.object),
+    storeFilters: PropTypes.arrayOf(PropTypes.object),
+    petFilters: PropTypes.arrayOf(PropTypes.object),
+    categoryFilters: PropTypes.arrayOf(PropTypes.object),
     handleStoreFilterChange: PropTypes.func.isRequired,
     handlePetFilterChange: PropTypes.func.isRequired,
     handleCategoryFilterChange: PropTypes.func.isRequired,

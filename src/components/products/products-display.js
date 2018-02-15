@@ -5,18 +5,11 @@ import ProductGrid from './product-grid'
 import ProductNav from './product-nav'
 
 const ProductsDisplay = props => {
-    const { products, pages, storeFilters, petFilters, categoryFilters } = props
+    const { products, pages, ...rest } = props
 
     return ( products.length > 0
         ? <div className="products-container">
-            <ProductFilter 
-                stores={storeFilters}
-                pets={petFilters}
-                categories={categoryFilters}
-                handleFiltersDisplay={props.handleFiltersDisplay}
-                handleStoreFilterChange={props.handleStoreFilterChange}
-                handlePetFilterChange={props.handlePetFilterChange}
-                handleCategoryFilterChange={props.handleCategoryFilterChange}/>
+            <ProductFilter {...rest} />
             <div className="products-display-container" >
                 <ProductGrid products={products} />
                 <ProductNav pages={pages} />

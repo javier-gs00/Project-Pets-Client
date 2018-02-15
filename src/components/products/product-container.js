@@ -12,8 +12,7 @@ import Loadable from 'react-loadable'
 
 const AsyncProductsDisplay = Loadable({
     loader: () => import('./products-display'),
-    loading: LoadingScreen,
-    delay: 0,
+    loading: LoadingScreen
 })
 
 class SearchContainer extends Component {
@@ -224,16 +223,6 @@ class SearchContainer extends Component {
                         onChange={this.handleInputChange}
                         onClick={this.handleSubmit} 
                         onKeyPress={this.handleInputKeyPress} />
-                    <AsyncProductsDisplay 
-                        products={products}
-                        pages={pages}
-                        storeFilters={storeFilters}
-                        petFilters={petFilters}
-                        categoryFilters={categoryFilters}
-                        handleFiltersDisplay={this.handleFiltersDisplay}
-                        handleStoreFilterChange={this.handleStoreFilterChange}
-                        handlePetFilterChange={this.handlePetFilterChange}
-                        handleCategoryFilterChange={this.handleCategoryFilterChange}/>
                     {/* <Route exact path="/productos/resultados" render={ props => <ProductsDisplay                         
                         products={products}
                         pages={pages}
@@ -245,9 +234,9 @@ class SearchContainer extends Component {
                         handlePetFilterChange={this.handlePetFilterChange}
                         handleCategoryFilterChange={this.handleCategoryFilterChange}
                         {...props} />} /> */}
-                    {/* { isLoading
+                    { isLoading
                     ? <LoadingScreen />
-                    : <ProductsDisplay
+                    : <AsyncProductsDisplay 
                         products={products}
                         pages={pages}
                         storeFilters={storeFilters}
@@ -256,7 +245,7 @@ class SearchContainer extends Component {
                         handleFiltersDisplay={this.handleFiltersDisplay}
                         handleStoreFilterChange={this.handleStoreFilterChange}
                         handlePetFilterChange={this.handlePetFilterChange}
-                        handleCategoryFilterChange={this.handleCategoryFilterChange}/>} */}
+                        handleCategoryFilterChange={this.handleCategoryFilterChange}/> }
                 </div>
             </div>
         ) 

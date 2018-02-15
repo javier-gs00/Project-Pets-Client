@@ -47,11 +47,12 @@ class App extends Component {
         <NavContainer activeRoute={activeRoute} />
         <Switch>
           <Redirect exact from="/" to="/productos" />
-          <Route exact path='/productos' render={ props => <AsyncProductContainer getActiveRoute={this.getActiveRoute} {...props} />} />
           <Route path='/productos/:id' render={ props => <AsyncSingleProductView getActiveRoute={this.getActiveRoute} {...props} />} />
+          <Route path='/productos' render={ props => <AsyncProductContainer getActiveRoute={this.getActiveRoute} {...props} />} />
           <Route exact path='/tiendas' render={ props => <AsyncStoreContainer getActiveRoute={this.getActiveRoute} {...props} />}  />
           <Route path='/tiendas/:name' render={ props => <AsyncSingleStoreView getActiveRoute={this.getActiveRoute} {...props} />}  />
           <Route exact path="/menu" render={ props => <MenusContainer getActiveRoute={this.getActiveRoute} {...props} />} />
+          <Redirect to="/" />
         </Switch>
       </div>
     )
