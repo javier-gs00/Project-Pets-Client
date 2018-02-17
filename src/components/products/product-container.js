@@ -1,27 +1,43 @@
 import React, { Component } from 'react'
-// import { Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import queryString from 'query-string'
 import Client from '../../api.js'
-// import ProductsDisplay from './products-display'
-import SearchForm from './search-form'
-import LoadingScreen from './loading'
-// import queryString from 'query-string'
+
+// Components
 import Loadable from 'react-loadable'
+import Loading from './loading'
 // import { connect } from 'react-redux'
 // import { loadProducts } from '../../actions/actions'
 
+const AsyncSearchForm = Loadable({
+    loader: () => import('./search-form'),
+    loading: Loading
+})
+
+const AsyncProductGrid = Loadable({
+    loader: () => import('./product-grid'),
+    loading: Loading
+})
+
 const AsyncProductsDisplay = Loadable({
     loader: () => import('./products-display'),
-    loading: LoadingScreen
+    loading: Loading
+})
+
+const AsyncSingleProductView = Loadable({
+    loader: () => import('./product-view'),
+    loading: Loading
 })
 
 class SearchContainer extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            pathname: null,
             isLoading: false,
             results: [],
-            activePage: 0,
+            activePage: 1,
             searchValue: "",
             storeFilters: [],
             petFilters: [],
@@ -31,46 +47,68 @@ class SearchContainer extends Component {
 
     componentDidMount() {
         const { location } = this.props
-        this.props.getActiveRoute(location.pathname)
+        const fullRouteName = location.pathname + location.search
+        // this.setState({ pathname: fullRouteName })
 
-        // const parsed = queryString.parse(location.search)
-        // console.log(this.props)
+        const routeName = location.pathname === '/productos'
+            ? location.pathname
+            : "/" + location.pathname.split("/")[1]
+        this.props.getActiveRoute(routeName)
 
-        this.setState({ isLoading: true })
-        return Client.search('royal canin maxi', results => {
-            const storeFilters = results
-                // retrieve the store values from the results
-                .map(result => result.store)
-                // get an array with only the resulting stores
-                .filter((store, index, self) => self.indexOf(store) === index)
-                // Create the filter objects defaulting to true to show all the results at first
-                .map(storeName => ({id: storeName, checked: true}))
-            
-            const petFilters = results
-                .map(result => result.animal)
-                .filter((pet, index, self) => self.indexOf(pet) === index)
-                .map(petKind => ({id: petKind, checked: true}))
-            
-            const categoryFilters = results
-                .map(result => result.category)
-                .filter((category, index, self) => self.indexOf(category) === index)
-                .map(category => ({id: category, checked: true}))
-
-            return this.setState({
-                isLoading: false,
-                results: results,
-                storeFilters: storeFilters,
-                petFilters: petFilters,
-                categoryFilters: categoryFilters
+        const parsedUrlQuery = queryString.parse(location.search)
+        // Perform a custom API request if the URL contains a query parameter
+        if (parsedUrlQuery.query) {
+            this.setState({ isLoading: true })
+            return performApiRequest(parsedUrlQuery.query)
+            .then(results => {
+                this.setState({
+                    ...results,
+                    pathname: fullRouteName,
+                    isLoading: false,
+                    activePage: 1,
+                })
+            })            
+        } else {
+        // Perform a predefined API request if no query parameter received
+            this.setState({ isLoading: true })
+            return performApiRequest()
+            .then(results => {
+                this.setState({
+                    ...results,
+                    pathname: fullRouteName,
+                    isLoading: false,
+                    activePage: 1,
+                })
             })
-        })
-        // () => { history.push('/productos/resultados') 
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { pathname } = this.state
+        // ComponentWillReceiveProps will fire while ComponentDidMount is executing
+        // therefore, the pathname on the first request will be null since ComponentDidMount
+        // hasn't finished. So if  pathname is null just exit this method
+        if (pathname === null ) return false
+        const { location } = nextProps
+        const newPath = location.pathname + location.search
+        if (pathname !== newPath) {
+            const parsedUrlQuery = queryString.parse(location.search)
+            return performApiRequest(parsedUrlQuery.query)
+            .then(results => {
+                this.setState({
+                    ...results,
+                    pathname: newPath,
+                    isLoading: false,
+                    activePage: 1,
+                })
+            })
+        }
     }
 
     handleInputChange = e => this.setState({ searchValue: e.target.value })
 
     handleSubmit = () => {
-        // const { history } = this.props
+        const { history } = this.props
         this.setState({ isLoading: true })
         const query = this.state.searchValue
         if (query === "") {
@@ -79,35 +117,7 @@ class SearchContainer extends Component {
                 isLoading: false
             })
         } else {
-            return Client.search(query, results => {
-                const storeFilters = results
-                    // retrieve the store values from the results
-                    .map(result => result.store)
-                    // get an array with only the resulting stores
-                    .filter((store, index, self) => self.indexOf(store) === index)
-                    // Create the filter objects defaulting to true to show all the results at first
-                    .map(storeName => ({id: storeName, checked: true}))
-                
-                const petFilters = results
-                    .map(result => result.animal)
-                    .filter((pet, index, self) => self.indexOf(pet) === index)
-                    .map(petKind => ({id: petKind, checked: true}))
-                
-                const categoryFilters = results
-                    .map(result => result.category)
-                    .filter((category, index, self) => self.indexOf(category) === index)
-                    .map(category => ({id: category, checked: true}))
-
-                return this.setState({
-                    isLoading: false,
-                    results: results,
-                    activePage: 0,
-                    storeFilters: storeFilters,
-                    petFilters: petFilters,
-                    categoryFilters: categoryFilters
-                })
-            })
-            // , () => { history.push('/productos/resultados') }
+            return history.push(`/productos/resultados?query=${query}`)
         }
     }
 
@@ -121,16 +131,17 @@ class SearchContainer extends Component {
     // will be shown
     handleActivePageChange = e => {
         const { activePage } = this.state
-        const newPage = e.currentTarget.innerHTML
+        let newPage = e.currentTarget.innerHTML
         if (newPage === '&lt;') {
             window.scrollTo(0, 0)
             return this.setState({ activePage: activePage - 1 })
-        } else if (newPage === '&gt;') {
+          } else if (newPage === '&gt;') {
             window.scrollTo(0, 0)
             return this.setState({ activePage: activePage + 1 })
         } else {
             window.scrollTo(0, 0)
-            return this.setState({ activePage: newPage - 1})
+            newPage = parseInt(newPage, 10)
+            return this.setState({ activePage: newPage })
         }
     }
 
@@ -193,8 +204,8 @@ class SearchContainer extends Component {
 
         // Get the checked store filters and put them in an array
         const activeStoreFilters = storeFilters
-        .filter(store => store.checked)
-        .map(store => store.id)
+            .filter(store => store.checked)
+            .map(store => store.id)
         // Get the checked pet filters and put them in an array
         const activePetFilters = petFilters
             .filter(pet => pet.checked)
@@ -209,8 +220,8 @@ class SearchContainer extends Component {
             .filter(product => activePetFilters.indexOf(product.animal) !== -1)
             .filter(product => activeCategoryFilters.indexOf(product.category) !== -1)
         // Calculate page ranges
-        const start = activePage === 0 ? 0 : 20 * activePage
-        const end = activePage === 0 ? 20 : 20 * activePage + 20     
+        const start = activePage === 1 ? 0 : 20 * (activePage - 1)
+        const end = activePage === 1 ? 20 : 20 * (activePage - 1) + 20     
         const pages = calculatePages(activePage, totalProducts, this.handleActivePageChange)
         // List of products to render
         const products = totalProducts.slice(start, end)
@@ -218,34 +229,33 @@ class SearchContainer extends Component {
         return (
             <div id="main" className="main">
                 <div className="products-main-container" >
-                    <SearchForm
+                    <AsyncSearchForm
                         value={searchValue}
                         onChange={this.handleInputChange}
                         onClick={this.handleSubmit} 
                         onKeyPress={this.handleInputKeyPress} />
-                    {/* <Route exact path="/productos/resultados" render={ props => <ProductsDisplay                         
-                        products={products}
-                        pages={pages}
-                        storeFilters={storeFilters}
-                        petFilters={petFilters}
-                        categoryFilters={categoryFilters}
-                        handleFiltersDisplay={this.handleFiltersDisplay}
-                        handleStoreFilterChange={this.handleStoreFilterChange}
-                        handlePetFilterChange={this.handlePetFilterChange}
-                        handleCategoryFilterChange={this.handleCategoryFilterChange}
-                        {...props} />} /> */}
-                    { isLoading
-                    ? <LoadingScreen />
-                    : <AsyncProductsDisplay 
-                        products={products}
-                        pages={pages}
-                        storeFilters={storeFilters}
-                        petFilters={petFilters}
-                        categoryFilters={categoryFilters}
-                        handleFiltersDisplay={this.handleFiltersDisplay}
-                        handleStoreFilterChange={this.handleStoreFilterChange}
-                        handlePetFilterChange={this.handlePetFilterChange}
-                        handleCategoryFilterChange={this.handleCategoryFilterChange}/> }
+                    <Switch >
+                        <Route path="/productos/resultados/:id" render={ props => 
+                            <AsyncSingleProductView {...props} /> }
+                            />
+                        <Route path="/productos/resultados" render={ props =>                     
+                            <AsyncProductsDisplay {...props}
+                                isLoading={isLoading}
+                                products={products}
+                                pages={pages}
+                                storeFilters={storeFilters}
+                                petFilters={petFilters}
+                                categoryFilters={categoryFilters}
+                                handleFiltersDisplay={this.handleFiltersDisplay}
+                                handleStoreFilterChange={this.handleStoreFilterChange}
+                                handlePetFilterChange={this.handlePetFilterChange}
+                                handleCategoryFilterChange={this.handleCategoryFilterChange} /> }
+                            />
+                        <Route path="/productos" exact render={ props =>
+                            <AsyncProductGrid {...props}
+                                products={products} /> }
+                            />
+                    </Switch >
                 </div>
             </div>
         ) 
@@ -259,32 +269,62 @@ SearchContainer.propTypes = {
 
 export default SearchContainer
 
+// Performs the search request on the API and returns
+// an object containing the necessary objects for the state
+// Default query is for when the component first loads
+function performApiRequest(query = "royal canin maxi") {
+    return new Promise (function(resolve, reject) {
+        Client.search(query, function (results) {
+            const storeFilters = results
+            // retrieve the store values from the results
+            .map(result => result.store)
+            // get an array with only the resulting stores
+            .filter((store, index, self) => self.indexOf(store) === index)
+            // Create the filter objects defaulting to true to show all the results at first
+            .map(storeName => ({id: storeName, checked: true}))
+        
+            const petFilters = results
+                .map(result => result.animal)
+                .filter((pet, index, self) => self.indexOf(pet) === index)
+                .map(petKind => ({id: petKind, checked: true}))
+            
+            const categoryFilters = results
+                .map(result => result.category)
+                .filter((category, index, self) => self.indexOf(category) === index)
+                .map(category => ({id: category, checked: true}))
+
+            resolve({ results,  storeFilters, petFilters, categoryFilters })
+            reject({})
+        })
+    })
+}
+
 // Returns an array with HTML buttons for navigating between products pages
 function calculatePages(activePage, products, navigate) {
     if (products.length <= 20) return [<button key="0" onClick={navigate}>1</button>]
     // calculate the number of pages
-    const quantity = (Math.floor(products.length / 20)) + 1
+    const pageQuantity = Math.floor(products.length / 20) + 1
     let buttonsArray = []
     // calculate the values of each navigation button
-    buttonsArray.push(activePage !== 0
+    buttonsArray.push(activePage !== 1
         ? <button key="0" onClick={navigate}>{'<'}</button>
         : null)
     buttonsArray.push(<button key="1"
-        className={activePage === 0 ? 'products-nav-active' : null }
-        onClick={navigate}>{activePage === 0 ? '1' : activePage}</button>) 
-    buttonsArray.push(quantity < 3
+        className={activePage === 1 ? 'products-nav-active' : null }
+        onClick={navigate}>{activePage === 1 ? '1' : activePage - 1 }</button>) 
+    buttonsArray.push(pageQuantity < 3
         ? <button key="2"
-            className={activePage !== 0 && activePage === quantity - 1 ? 'products-nav-active' : null }
-            onClick={navigate}>{activePage === 0 ? '2' : activePage + 1}</button>
+            className={activePage !== 1 && activePage === pageQuantity ? 'products-nav-active' : null }
+            onClick={navigate}>{activePage === 1 ? '2' : activePage }</button>
         : <button key="2"
-            className={activePage !== 0 && activePage !== quantity - 1 ? 'products-nav-active' : null }
-            onClick={navigate}>{activePage === 0 ? '2' : activePage + 1}</button>) 
-    buttonsArray.push(quantity >= 3
+            className={activePage !== 1 && activePage !== pageQuantity ? 'products-nav-active' : null }
+            onClick={navigate}>{activePage === 1 ? '2' : activePage }</button>) 
+    buttonsArray.push(pageQuantity >= 3
         ? <button key="3"
-            className={activePage === quantity - 1 ? 'products-nav-active' : null }
-            onClick={navigate}>{activePage === 0 ? '3' : activePage + 2}</button>
+            className={activePage === pageQuantity ? 'products-nav-active' : null }
+            onClick={navigate}>{activePage === 1 ? '3' : activePage + 1 }</button>
         : null)
-    buttonsArray.push(activePage !== quantity - 1
+    buttonsArray.push(activePage !== pageQuantity
         ? <button key="4" onClick={navigate}>{'>'}</button>
         : null)
     return buttonsArray

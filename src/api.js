@@ -18,7 +18,7 @@ function parseJSON(response) {
 
 // Used to fetch products using a regular expression
 function search(query, cb) {
-    console.log('Search query sent...')
+    console.log(`Search query sent...`)
     return fetch(`/api/product?query=${query}`, {
         accept: "application/json"
     })

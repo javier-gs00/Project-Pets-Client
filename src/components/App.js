@@ -13,11 +13,6 @@ const AsyncProductContainer = Loadable({
   loading: Loading
 })
 
-const AsyncSingleProductView = Loadable({
-  loader: () => import('./products/product-view'),
-  loading: Loading
-})
-
 const AsyncStoreContainer = Loadable({
   loader: () => import('./stores/store-container'),
   loading: Loading
@@ -47,7 +42,6 @@ class App extends Component {
         <NavContainer activeRoute={activeRoute} />
         <Switch>
           <Redirect exact from="/" to="/productos" />
-          <Route path='/productos/:id' render={ props => <AsyncSingleProductView getActiveRoute={this.getActiveRoute} {...props} />} />
           <Route path='/productos' render={ props => <AsyncProductContainer getActiveRoute={this.getActiveRoute} {...props} />} />
           <Route exact path='/tiendas' render={ props => <AsyncStoreContainer getActiveRoute={this.getActiveRoute} {...props} />}  />
           <Route path='/tiendas/:name' render={ props => <AsyncSingleStoreView getActiveRoute={this.getActiveRoute} {...props} />}  />

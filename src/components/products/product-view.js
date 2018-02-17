@@ -16,14 +16,13 @@ class ProductView extends React.Component {
 
     componentDidMount() {
         const { location, match } = this.props
-        this.props.getActiveRoute("/" + location.pathname.split("/")[1])
 
+        // If props are received from the previous component (Link)
         if (location.state !== undefined) {
-            console.log('received props from previous component')
             return Client.getStoreByName(location.state.product.store)
             .then(store => this.setState({ product: location.state.product, store: store }))
         } else {
-            console.log('sent api request for product')
+        // If the route was navigated directly
             let product, store
             return Client.findProductById(match.params.id)
             .then(response => {
@@ -63,7 +62,7 @@ class ProductView extends React.Component {
                 <a href={product.url} target="_blank" rel="noopener">VER EN {product.store.toUpperCase()}</a>
                 </div>)
             return (
-                <div className="main">
+                // <div className="main">
                     <div className="single-product-main-container">
                         <div className="single-product-container">
                             {productImage}
@@ -75,7 +74,7 @@ class ProductView extends React.Component {
                             {productLink}
                         </div>
                     </div>
-                </div>
+                // </div>
             )
         } else {
             return <Loading />
@@ -84,7 +83,6 @@ class ProductView extends React.Component {
 }
 
 ProductView.propTypes = {
-    getActiveRoute: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
 }
 

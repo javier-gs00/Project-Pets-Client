@@ -6,7 +6,7 @@ const ProductItem = ({ product }) => (
     <div className="product-item-container">
         <div className="product-item-image">
             <Link to={{
-                    pathname: `/productos/${product._id}`,
+                    pathname: `/productos/resultados/${product._id}`,
                     state: { product: product }}}>
                 <img src={product.imageUrl} alt="Producto sin imagen"/>
             </Link>
@@ -14,7 +14,7 @@ const ProductItem = ({ product }) => (
         <div className="product-item-data">
             <div className="product-item-data-block">
                 <Link to={{
-                    pathname: `/productos/${product._id}`,
+                    pathname: `/productos/resultados/${product._id}`,
                     state: { product: product }}}
                     className="product-item-name">{product.name}</Link>
             </div>
