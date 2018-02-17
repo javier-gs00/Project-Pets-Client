@@ -237,7 +237,7 @@ class SearchContainer extends Component {
                     <Switch >
                         <Route path="/productos/resultados/:id" render={ props => 
                             <AsyncSingleProductView {...props} /> }
-                            />
+                        />
                         <Route path="/productos/resultados" render={ props =>                     
                             <AsyncProductsDisplay {...props}
                                 isLoading={isLoading}
@@ -250,11 +250,17 @@ class SearchContainer extends Component {
                                 handleStoreFilterChange={this.handleStoreFilterChange}
                                 handlePetFilterChange={this.handlePetFilterChange}
                                 handleCategoryFilterChange={this.handleCategoryFilterChange} /> }
-                            />
+                        />
                         <Route path="/productos" exact render={ props =>
-                            <AsyncProductGrid {...props}
-                                products={products} /> }
-                            />
+                            <div className="products-container">
+                                <div className="products-display-container">
+                                    {isLoading
+                                    ? <Loading />
+                                    : <AsyncProductGrid {...props}
+                                    products={products} />} 
+                                </div>
+                            </div>}
+                        />
                     </Switch >
                 </div>
             </div>
