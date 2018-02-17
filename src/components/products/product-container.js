@@ -48,7 +48,6 @@ class SearchContainer extends Component {
     componentDidMount() {
         const { location } = this.props
         const fullRouteName = location.pathname + location.search
-        // this.setState({ pathname: fullRouteName })
 
         const routeName = location.pathname === '/productos'
             ? location.pathname
@@ -155,7 +154,7 @@ class SearchContainer extends Component {
             }
             return store
         })
-        return this.setState({ storeFilter: newStoreFilters, activePage: 0 })
+        return this.setState({ storeFilter: newStoreFilters, activePage: 1 })
     }
 
     handlePetFilterChange = e => {
@@ -167,7 +166,7 @@ class SearchContainer extends Component {
             }
             return pet
         })
-        return this.setState({ petFilters: newPetFilters, activePage: 0 })
+        return this.setState({ petFilters: newPetFilters, activePage: 1 })
     }
 
     handleCategoryFilterChange = e => {
@@ -179,7 +178,7 @@ class SearchContainer extends Component {
             }
             return category
         })
-        return this.setState({ categoryFilters: newCategoryFilters, activePage: 0 })
+        return this.setState({ categoryFilters: newCategoryFilters, activePage: 1 })
     }
 
     handleFiltersDisplay = e => {
