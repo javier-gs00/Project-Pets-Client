@@ -3,74 +3,45 @@ import PropTypes from 'prop-types'
 import FontAwesome from '@fortawesome/react-fontawesome'
 
 const ProductFilter = props => {
-    const disableStoreFilters = props.storeFilters.length > 1 ? false : true
-    let storeFilters = props.storeFilters.map((store, index) => {
+    function createFilter(index, filter, disableFilter, handleFilterChange) {
         return (
             <div key={index} className="filter">
-                <span className="filter-name">{store.id}</span>
+                <span className="filter-name">
+                    {filter.id !== ''
+                        ? capitalizeFirstLetter(filter.id)
+                        : 'No especifica'}
+                </span>
                 <input 
                     type="checkbox" 
-                    id={store.id} 
+                    id={filter.id} 
                     className="cbx hidden"
-                    checked={store.checked}
-                    onChange={props.handleStoreFilterChange}
-                    disabled={disableStoreFilters} />
-                <label htmlFor={store.id} className="lbl"></label>
+                    checked={filter.checked}
+                    onChange={handleFilterChange}
+                    disabled={disableFilter} />
+                <label htmlFor={filter.id} className="lbl"></label>
             </div>
         )
-    })
+    }
 
-    const disablePetFilters = props.petFilters.length > 1 ? false : true
-    let petFilters = props.petFilters.map((pet, index) => {
-        // Check if the product has a registered pet kind. This is because not
-        // all products are for a specific kind a pet
-        if (pet.id !== '') {
-            return (
-                <div key={index} className="filter">
-                    <span className="filter-name">{capitalizeFirstLetter(pet.id)}</span>
-                    <input 
-                        type="checkbox" 
-                        id={pet.id} 
-                        className="cbx hidden"
-                        checked={pet.checked}
-                        onChange={props.handlePetFilterChange}
-                        disabled={disablePetFilters} />
-                    <label htmlFor={pet.id} className="lbl"></label>
-                </div>
-            )
-        } else {
-            return (
-                <div key={index} className="filter">
-                    <span className="filter-name">{"Indefinido"}</span>
-                    <input 
-                        type="checkbox" 
-                        id={pet.id} 
-                        className="cbx hidden"
-                        checked={pet.checked}
-                        onChange={props.handlePetFilterChange}
-                        disabled={disablePetFilters} />
-                    <label htmlFor={pet.id} className="lbl"></label>
-                </div>
-            )
-        }
-    })
+    const disableStoreFilters = props.filters
+        .filter(filter => filter.filterType === 'store').length > 1 ? false : true
+    let storeFilters = props.filters
+        .filter(filter => filter.filterType === 'store')
+        .map((store, index) => createFilter(index, store, disableStoreFilters, props.handleFilterChange)
+    )
 
-    const disableCategoryFilters = props.categoryFilters.length > 1 ? false : true
-    let categoryFilters = props.categoryFilters.map((category, index) => {
-        return (
-            <div key={index} className="filter">
-                <span className="filter-name">{capitalizeFirstLetter(category.id)}</span>
-                <input 
-                    type="checkbox" 
-                    id={category.id} 
-                    className="cbx hidden"
-                    checked={category.checked}
-                    onChange={props.handleCategoryFilterChange}
-                    disabled={disableCategoryFilters} />
-                <label htmlFor={category.id} className="lbl"></label>
-            </div>
-        )
-    })
+    const disablePetFilters = props.filters
+        .filter(filter => filter.filterType === 'pet').length > 1 ? false : true
+    let petFilters = props.filters
+        .filter(filter => filter.filterType === 'pet')
+        .map((pet, index) => createFilter(index, pet, disablePetFilters, props.handleFilterChange)
+    )
+
+    const disableCategoryFilters = props.filters
+        .filter(filter => filter.filterType === 'category').length > 1 ? false : true
+    let categoryFilters = props.filters
+        .filter(filter => filter.filterType === 'category')
+        .map((category, index) => createFilter(index, category, disableCategoryFilters, props.handleFilterChange))
 
     return (
         <div className="filters-table-container">
@@ -104,12 +75,9 @@ const ProductFilter = props => {
 }
 
 ProductFilter.propTypes = {
-    storeFilters: PropTypes.arrayOf(PropTypes.object),
-    petFilters: PropTypes.arrayOf(PropTypes.object),
-    categoryFilters: PropTypes.arrayOf(PropTypes.object),
-    handleStoreFilterChange: PropTypes.func.isRequired,
-    handlePetFilterChange: PropTypes.func.isRequired,
-    handleCategoryFilterChange: PropTypes.func.isRequired,
+    handleFiltersDisplay: PropTypes.func.isRequired,
+    handleFilterChange: PropTypes.func.isRequired,
+    filters: PropTypes.arrayOf(PropTypes.object)
 }
 
 export default ProductFilter

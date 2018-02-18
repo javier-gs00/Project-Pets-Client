@@ -36,13 +36,9 @@ ProductsDisplay.propTypes = {
     isLoading: PropTypes.bool.isRequired,
     pages: PropTypes.arrayOf(PropTypes.object),
     products: PropTypes.arrayOf(PropTypes.object),
-    storeFilters: PropTypes.arrayOf(PropTypes.object),
-    petFilters: PropTypes.arrayOf(PropTypes.object),
-    categoryFilters: PropTypes.arrayOf(PropTypes.object),
     handleFiltersDisplay: PropTypes.func.isRequired,
-    handleStoreFilterChange: PropTypes.func.isRequired,
-    handlePetFilterChange: PropTypes.func.isRequired,
-    handleCategoryFilterChange: PropTypes.func.isRequired
+    handleFilterChange: PropTypes.func.isRequired,
+    filters: PropTypes.arrayOf(PropTypes.object)
 }
 
 export default ProductsDisplay

@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import Loadable from 'react-loadable'
 import queryString from 'query-string'
+import { connect } from 'react-redux'
 import Client from '../../api.js'
 
-// Components
-import Loadable from 'react-loadable'
-import Loading from './loading'
-// import { connect } from 'react-redux'
-// import { loadProducts } from '../../actions/actions'
+// Redux Actions
+import { loadProducts } from '../../actions/actions'
 
-const AsyncSearchForm = Loadable({
-    loader: () => import('./search-form'),
-    loading: Loading
-})
+// Components
+import SearchForm from './search-form'
+import Loading from './loading'
 
 const AsyncProductGrid = Loadable({
     loader: () => import('./product-grid'),
@@ -30,6 +28,10 @@ const AsyncSingleProductView = Loadable({
     loading: Loading
 })
 
+const mapStateToProps = state => ({ reduxProducts: state.products })
+
+const mapDispatchToProps = { loadProducts: loadProducts }
+
 class SearchContainer extends Component {
     constructor(props) {
         super(props)
@@ -41,11 +43,13 @@ class SearchContainer extends Component {
             searchValue: "",
             storeFilters: [],
             petFilters: [],
-            categoryFilters: []
+            categoryFilters: [],
+            filters: []
         }
     }
 
     componentDidMount() {
+        // console.log(this.props.reduxProducts)
         const { location } = this.props
         const fullRouteName = location.pathname + location.search
 
@@ -60,6 +64,8 @@ class SearchContainer extends Component {
             this.setState({ isLoading: true })
             return performApiRequest(parsedUrlQuery.query)
             .then(results => {
+                this.props.loadProducts(results.results)
+                // console.log(this.props.reduxProducts)
                 this.setState({
                     ...results,
                     pathname: fullRouteName,
@@ -82,26 +88,32 @@ class SearchContainer extends Component {
         }
     }
 
+    // REVIEW THE OPTION OF MAKING THE API CALL ON SUBMIT AND REMOVING IT 
+    // FROM COMPONENT WILL RECEIVE PROPS TO AVOID PERFORMANCE ISSUES
+    // ONE OPTION IS TO MAKE IT ON SUBMIT, SET THE STATE AND THEN CHANGE THE URL
+
     componentWillReceiveProps(nextProps) {
+        console.log('ComponentWillReceiveProps')
         const { pathname } = this.state
         // ComponentWillReceiveProps will fire while ComponentDidMount is executing
         // therefore, the pathname on the first request will be null since ComponentDidMount
         // hasn't finished. So if  pathname is null just exit this method
-        if (pathname === null ) return false
         const { location } = nextProps
         const newPath = location.pathname + location.search
-        if (pathname !== newPath) {
-            const parsedUrlQuery = queryString.parse(location.search)
-            return performApiRequest(parsedUrlQuery.query)
-            .then(results => {
-                this.setState({
-                    ...results,
-                    pathname: newPath,
-                    isLoading: false,
-                    activePage: 1,
-                })
+        if (pathname === null) return false
+        console.log('pass first check')
+        const parsedUrlQuery = queryString.parse(location.search)
+        return performApiRequest(parsedUrlQuery.query)
+        .then(results => {
+            // this.props.loadProducts(results.results)
+            // console.log(this.props.reduxProducts)
+            this.setState({
+                ...results,
+                pathname: newPath,
+                isLoading: false,
+                activePage: 1,
             })
-        }
+        })
     }
 
     handleInputChange = e => this.setState({ searchValue: e.target.value })
@@ -144,42 +156,13 @@ class SearchContainer extends Component {
         }
     }
 
-    // Listens for an event that comes from a input type checkbox that provides and id and checked value
-    handleStoreFilterChange = e => {
-        const newFilterId = e.target.id
-        const newFilterCheck = e.target.checked
-        const newStoreFilters = this.state.storeFilters.map(store => {
-            if (store.id === newFilterId) {
-                store.checked = newFilterCheck
-            }
-            return store
-        })
-        return this.setState({ storeFilter: newStoreFilters, activePage: 1 })
-    }
-
-    handlePetFilterChange = e => {
-        const newFilterId = e.target.id
-        const newFilterCheck = e.target.checked
-        const newPetFilters = this.state.petFilters.map(pet => {
-            if (pet.id === newFilterId) {
-                pet.checked = newFilterCheck
-            }
-            return pet
-        })
-        return this.setState({ petFilters: newPetFilters, activePage: 1 })
-    }
-
-    handleCategoryFilterChange = e => {
-        const newFilterId = e.target.id
-        const newFilterCheck = e.target.checked
-        const newCategoryFilters = this.state.categoryFilters.map(category => {
-            if (category.id === newFilterId) {
-                category.checked = newFilterCheck
-            }
-            return category
-        })
-        return this.setState({ categoryFilters: newCategoryFilters, activePage: 1 })
-    }
+    handleFilterChange = e => this.setState({
+        filters: this.state.filters.map(filter => filter.id === e.target.id
+            ? { ...filter, checked: !filter.checked }
+            : filter),
+        activePage: 1
+    })
+    
 
     handleFiltersDisplay = e => {
         const filters = document.getElementById('filters')
@@ -199,18 +182,26 @@ class SearchContainer extends Component {
     }
 
     render() {
-        const { isLoading, searchValue, results, activePage, storeFilters, petFilters, categoryFilters } = this.state
+        const { 
+            isLoading,
+            searchValue,
+            results,
+            activePage,
+            filters } = this.state
 
         // Get the checked store filters and put them in an array
-        const activeStoreFilters = storeFilters
+        const activeStoreFilters = filters
+            .filter(filter => filter.filterType === 'store')
             .filter(store => store.checked)
             .map(store => store.id)
         // Get the checked pet filters and put them in an array
-        const activePetFilters = petFilters
+        const activePetFilters = filters
+            .filter(filter => filter.filterType === 'pet')
             .filter(pet => pet.checked)
             .map(pet => pet.id)
         // Get the checked category filters and put them in an array
-        const activeCategoryFilters = categoryFilters
+        const activeCategoryFilters = filters
+            .filter(filter => filter.filterType === 'category')
             .filter(category => category.checked)
             .map(category => category.id)
         // Get the products matching the active store filters
@@ -228,7 +219,7 @@ class SearchContainer extends Component {
         return (
             <div id="main" className="main">
                 <div className="products-main-container" >
-                    <AsyncSearchForm
+                    <SearchForm
                         value={searchValue}
                         onChange={this.handleInputChange}
                         onClick={this.handleSubmit} 
@@ -242,13 +233,9 @@ class SearchContainer extends Component {
                                 isLoading={isLoading}
                                 products={products}
                                 pages={pages}
-                                storeFilters={storeFilters}
-                                petFilters={petFilters}
-                                categoryFilters={categoryFilters}
                                 handleFiltersDisplay={this.handleFiltersDisplay}
-                                handleStoreFilterChange={this.handleStoreFilterChange}
-                                handlePetFilterChange={this.handlePetFilterChange}
-                                handleCategoryFilterChange={this.handleCategoryFilterChange} /> }
+                                handleFilterChange={this.handleFilterChange}
+                                filters={filters} /> }
                         />
                         <Route path="/productos" exact render={ props =>
                             <div className="products-container">
@@ -272,7 +259,11 @@ SearchContainer.propTypes = {
     location: PropTypes.object.isRequired,
 }
 
-export default SearchContainer
+const ProductsContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps)(SearchContainer)
+
+export default ProductsContainer
 
 // Performs the search request on the API and returns
 // an object containing the necessary objects for the state
@@ -280,25 +271,33 @@ export default SearchContainer
 function performApiRequest(query = "royal canin maxi") {
     return new Promise (function(resolve, reject) {
         Client.search(query, function (results) {
+            // Define a text for the animal property of the products that have ""
+            // This must be fixed in the spider that scrapes the content preferably
+            // or in the back end before sending the results
+            results = results.map(product => product.animal === ""
+                ? { ...product, animal: "no especifica"}
+                : product)
             const storeFilters = results
-            // retrieve the store values from the results
-            .map(result => result.store)
-            // get an array with only the resulting stores
-            .filter((store, index, self) => self.indexOf(store) === index)
-            // Create the filter objects defaulting to true to show all the results at first
-            .map(storeName => ({id: storeName, checked: true}))
+                // retrieve the store values from the results
+                .map(result => result.store)
+                // get an array with only the resulting stores
+                .filter((store, index, self) => self.indexOf(store) === index)
+                // Create the filter objects defaulting to true to show all the results at first
+                .map(storeName => ({id: storeName, checked: true, filterType: 'store'}))
         
             const petFilters = results
                 .map(result => result.animal)
                 .filter((pet, index, self) => self.indexOf(pet) === index)
-                .map(petKind => ({id: petKind, checked: true}))
+                .map(petKind => ({id: petKind, checked: true, filterType: 'pet'}))
             
             const categoryFilters = results
                 .map(result => result.category)
                 .filter((category, index, self) => self.indexOf(category) === index)
-                .map(category => ({id: category, checked: true}))
+                .map(category => ({id: category, checked: true, filterType: 'category'}))
 
-            resolve({ results,  storeFilters, petFilters, categoryFilters })
+            const filters = [...storeFilters, ...petFilters, ...categoryFilters]
+
+            resolve({ results, filters })
             reject({})
         })
     })

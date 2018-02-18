@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import { Provider } from 'react-redux'
 import Loadable from 'react-loadable'
 import Loading from './products/loading'
 
@@ -37,18 +38,22 @@ class App extends Component {
     const { activeRoute } = this.state
 
     return (
-      <div>
-        <Header activeRoute={activeRoute}/>
-        <NavContainer activeRoute={activeRoute} />
-        <Switch>
-          <Redirect exact from="/" to="/productos" />
-          <Route path='/productos' render={ props => <AsyncProductContainer getActiveRoute={this.getActiveRoute} {...props} />} />
-          <Route exact path='/tiendas' render={ props => <AsyncStoreContainer getActiveRoute={this.getActiveRoute} {...props} />}  />
-          <Route path='/tiendas/:name' render={ props => <AsyncSingleStoreView getActiveRoute={this.getActiveRoute} {...props} />}  />
-          <Route exact path="/menu" render={ props => <MenusContainer getActiveRoute={this.getActiveRoute} {...props} />} />
-          <Redirect to="/" />
-        </Switch>
-      </div>
+      <Provider store={this.props.store}>
+        <BrowserRouter>
+          <div>
+              <Header activeRoute={activeRoute}/>
+              <NavContainer activeRoute={activeRoute} />
+              <Switch>
+                <Redirect exact from="/" to="/productos" />
+                <Route path='/productos' render={ props => <AsyncProductContainer getActiveRoute={this.getActiveRoute} {...props} />} />
+                <Route exact path='/tiendas' render={ props => <AsyncStoreContainer getActiveRoute={this.getActiveRoute} {...props} />}  />
+                <Route path='/tiendas/:name' render={ props => <AsyncSingleStoreView getActiveRoute={this.getActiveRoute} {...props} />}  />
+                <Route exact path="/menu" render={ props => <MenusContainer getActiveRoute={this.getActiveRoute} {...props} />} />
+                <Redirect to="/" />
+              </Switch>
+          </div>
+        </BrowserRouter>
+      </Provider>
     )
   }
 }
