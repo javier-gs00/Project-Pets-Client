@@ -41,9 +41,6 @@ class SearchContainer extends Component {
             results: [],
             activePage: 1,
             searchValue: "",
-            storeFilters: [],
-            petFilters: [],
-            categoryFilters: [],
             filters: []
         }
     }
@@ -98,22 +95,27 @@ class SearchContainer extends Component {
         // ComponentWillReceiveProps will fire while ComponentDidMount is executing
         // therefore, the pathname on the first request will be null since ComponentDidMount
         // hasn't finished. So if  pathname is null just exit this method
-        const { location } = nextProps
-        const newPath = location.pathname + location.search
+        const { location, newState = location.state } = nextProps
+        // const newPath = location.pathname + location.search
         if (pathname === null) return false
         console.log('pass first check')
-        const parsedUrlQuery = queryString.parse(location.search)
-        return performApiRequest(parsedUrlQuery.query)
-        .then(results => {
-            // this.props.loadProducts(results.results)
-            // console.log(this.props.reduxProducts)
-            this.setState({
-                ...results,
-                pathname: newPath,
-                isLoading: false,
-                activePage: 1,
-            })
-        })
+        console.log(newState)
+        this.setState({
+            ...newState,
+            isLoading: false,
+        }, () => console.log(this.state))
+        // const parsedUrlQuery = queryString.parse(location.search)
+        // return performApiRequest(parsedUrlQuery.query)
+        // .then(results => {
+        //     // this.props.loadProducts(results.results)
+        //     // console.log(this.props.reduxProducts)
+        //     this.setState({
+        //         ...results,
+        //         pathname: newPath,
+        //         isLoading: false,
+        //         activePage: 1,
+        //     })
+        // })
     }
 
     handleInputChange = e => this.setState({ searchValue: e.target.value })
@@ -128,7 +130,18 @@ class SearchContainer extends Component {
                 isLoading: false
             })
         } else {
-            return history.push(`/productos/resultados?query=${query}`)
+            // history.push(`/productos/resultados?query=${query}`)
+            this.setState({ isLoading: true })
+            return performApiRequest(query)
+            .then(results => history.push({
+                pathname: `/productos/resultados`,
+                search: `?query=${query}`,
+                state: {
+                    ...results,
+                    pathname: `/productos/resultados?query=${query}`,
+                    activePage: 1,
+                }
+            }))
         }
     }
 
