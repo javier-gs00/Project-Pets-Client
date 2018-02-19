@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-// import './nav.css'
+import { connect } from 'react-redux'
 
 import NavItem from './nav-item'
+
+const mapStateToProps = state => ({
+    pathname: state.pathname
+})
 
 class Nav extends Component {
     constructor(props) {
@@ -29,19 +33,19 @@ class Nav extends Component {
         : false
 
     render() {
-        const { activeRoute } = this.state 
-        const links = this.state.links.map((link, index) => (
-            <NavItem
-                routeMatch={activeRoute === link.to ? true : false}
-                key={index}
-                route={link.to}
-                textDisplay={link.textDisplay}
-                stroke={activeRoute === link.to ? true : false} />
-        ))
+        const { activeRoute, links } = this.state 
+        const { pathname } = this.props
 
         return (
             <div className="navbar bg-white">
-                { links }
+                { links.map((link, index) => (
+                    <NavItem
+                        routeMatch={activeRoute === link.to ? true : false}
+                        key={index}
+                        route={link.to === '/productos' ? pathname : link.to}
+                        textDisplay={link.textDisplay}
+                        stroke={activeRoute === link.to ? true : false} />
+                )) }
             </div>
         )
     }
@@ -51,4 +55,6 @@ Nav.propTypes = {
     activeRoute: PropTypes.string.isRequired
 }
 
-export default Nav
+const NavContainer = connect(mapStateToProps)(Nav)
+
+export default NavContainer

@@ -7,7 +7,12 @@ import { connect } from 'react-redux'
 import Client from '../../api.js'
 
 // Redux Actions
-import { loadProducts } from '../../actions/actions'
+import { loadProducts,
+    startRotatingSpinner,
+    stopRotatingSpinner,
+    handleInputTextChange,
+    handleFilterChange,
+    handleActivePageChange } from '../../actions/actions'
 
 // Components
 import SearchForm from './search-form'
@@ -28,153 +33,112 @@ const AsyncSingleProductView = Loadable({
     loading: Loading
 })
 
-const mapStateToProps = state => ({ reduxProducts: state.products })
+const mapStateToProps = state => ({
+    pathname: state.pathname,
+    products: state.products,
+    isLoading: state.isLoading,
+    activePage: state.activePage,
+    searchValue: state.searchValue,
+    filters: state.filters
+})
 
-const mapDispatchToProps = { loadProducts: loadProducts }
+const mapDispatchToProps = {
+    startRotatingSpinner: startRotatingSpinner,
+    stopRotatingSpinner: stopRotatingSpinner,
+    loadProducts: loadProducts,
+    handleInputTextChange: handleInputTextChange,
+    handleFilterChange: handleFilterChange,
+    handleActivePageChange: handleActivePageChange
+}
 
 class SearchContainer extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            pathname: null,
-            isLoading: false,
-            results: [],
-            activePage: 1,
-            searchValue: "",
-            filters: []
-        }
-    }
-
     componentDidMount() {
-        // console.log(this.props.reduxProducts)
-        const { location } = this.props
+        const { location,
+            history,
+            pathname,
+            products,
+            startRotatingSpinner,
+            stopRotatingSpinner,
+            loadProducts,
+            getActiveRoute } = this.props
         const fullRouteName = location.pathname + location.search
 
         const routeName = location.pathname === '/productos'
             ? location.pathname
             : "/" + location.pathname.split("/")[1]
-        this.props.getActiveRoute(routeName)
+        getActiveRoute(routeName)
 
         const parsedUrlQuery = queryString.parse(location.search)
-        // Perform a custom API request if the URL contains a query parameter
-        if (parsedUrlQuery.query) {
-            this.setState({ isLoading: true })
+        startRotatingSpinner()
+        // Check for products in the store, in case the user has already navigated in the app
+         if (products.length > 0) {
+            stopRotatingSpinner()
+            return history.push(pathname)
+         } else if (parsedUrlQuery.query) {
+            // Perform a custom API request if the URL contains a query parameter
+            // This is in case someone navigates directly through the URL
             return performApiRequest(parsedUrlQuery.query)
             .then(results => {
-                this.props.loadProducts(results.results)
-                // console.log(this.props.reduxProducts)
-                this.setState({
-                    ...results,
-                    pathname: fullRouteName,
-                    isLoading: false,
-                    activePage: 1,
-                })
+                loadProducts(fullRouteName, results.products, results.filters)
             })            
         } else {
         // Perform a predefined API request if no query parameter received
-            this.setState({ isLoading: true })
+        // This is for when someone first loads this page (navigates directly to "/")
             return performApiRequest()
             .then(results => {
-                this.setState({
-                    ...results,
-                    pathname: fullRouteName,
-                    isLoading: false,
-                    activePage: 1,
-                })
+                loadProducts(fullRouteName, results.products, results.filters)
             })
         }
     }
 
-    // REVIEW THE OPTION OF MAKING THE API CALL ON SUBMIT AND REMOVING IT 
-    // FROM COMPONENT WILL RECEIVE PROPS TO AVOID PERFORMANCE ISSUES
-    // ONE OPTION IS TO MAKE IT ON SUBMIT, SET THE STATE AND THEN CHANGE THE URL
+    handleInputChange = e => this.props.handleInputTextChange(e.target.value)
 
-    componentWillReceiveProps(nextProps) {
-        console.log('ComponentWillReceiveProps')
-        const { pathname } = this.state
-        // ComponentWillReceiveProps will fire while ComponentDidMount is executing
-        // therefore, the pathname on the first request will be null since ComponentDidMount
-        // hasn't finished. So if  pathname is null just exit this method
-        const { location, newState = location.state } = nextProps
-        // const newPath = location.pathname + location.search
-        if (pathname === null) return false
-        console.log('pass first check')
-        console.log(newState)
-        this.setState({
-            ...newState,
-            isLoading: false,
-        }, () => console.log(this.state))
-        // const parsedUrlQuery = queryString.parse(location.search)
-        // return performApiRequest(parsedUrlQuery.query)
-        // .then(results => {
-        //     // this.props.loadProducts(results.results)
-        //     // console.log(this.props.reduxProducts)
-        //     this.setState({
-        //         ...results,
-        //         pathname: newPath,
-        //         isLoading: false,
-        //         activePage: 1,
-        //     })
-        // })
-    }
-
-    handleInputChange = e => this.setState({ searchValue: e.target.value })
+    handleInputKeyPress = e => e.key === 'Enter' ? this.handleSubmit() : false
 
     handleSubmit = () => {
-        const { history } = this.props
-        this.setState({ isLoading: true })
-        const query = this.state.searchValue
-        if (query === "") {
-            return this.setState({
-                results: [],
-                isLoading: false
-            })
+        const { history, startRotatingSpinner, searchValue, loadProducts } = this.props
+        if (searchValue === "") {
+            return false
+            // return this.setState({
+            //     results: [],
+            //     isLoading: false
+            // })
         } else {
-            // history.push(`/productos/resultados?query=${query}`)
-            this.setState({ isLoading: true })
-            return performApiRequest(query)
-            .then(results => history.push({
-                pathname: `/productos/resultados`,
-                search: `?query=${query}`,
-                state: {
-                    ...results,
-                    pathname: `/productos/resultados?query=${query}`,
-                    activePage: 1,
-                }
-            }))
-        }
-    }
-
-    handleInputKeyPress = e => {
-        if (e.key === 'Enter') {
-            return this.handleSubmit()
+            startRotatingSpinner()
+            return performApiRequest(searchValue)
+            .then(results => {
+                loadProducts(
+                    `/productos/resultados?query=${searchValue}`,
+                    results.products,
+                    results.filters
+                )
+                return history.push({
+                    pathname: `/productos/resultados`,
+                    search: `?query=${searchValue}`,
+                })
+            })
         }
     }
 
     // Function to change the activePage, which determines what range of the products array
     // will be shown
     handleActivePageChange = e => {
-        const { activePage } = this.state
+        const { activePage, handleActivePageChange } = this.props
         let newPage = e.currentTarget.innerHTML
         if (newPage === '&lt;') {
             window.scrollTo(0, 0)
-            return this.setState({ activePage: activePage - 1 })
+            return handleActivePageChange(activePage - 1)
           } else if (newPage === '&gt;') {
             window.scrollTo(0, 0)
-            return this.setState({ activePage: activePage + 1 })
+            return handleActivePageChange(activePage + 1)
         } else {
             window.scrollTo(0, 0)
             newPage = parseInt(newPage, 10)
-            return this.setState({ activePage: newPage })
+            return handleActivePageChange(newPage)
         }
     }
 
-    handleFilterChange = e => this.setState({
-        filters: this.state.filters.map(filter => filter.id === e.target.id
-            ? { ...filter, checked: !filter.checked }
-            : filter),
-        activePage: 1
-    })
+    handleFilterChange = e => this.props.handleFilterChange(e.target.id)
     
 
     handleFiltersDisplay = e => {
@@ -195,12 +159,12 @@ class SearchContainer extends Component {
     }
 
     render() {
-        const { 
+        const {
+            products,
             isLoading,
-            searchValue,
-            results,
             activePage,
-            filters } = this.state
+            searchValue,
+            filters } = this.props
 
         // Get the checked store filters and put them in an array
         const activeStoreFilters = filters
@@ -218,7 +182,7 @@ class SearchContainer extends Component {
             .filter(category => category.checked)
             .map(category => category.id)
         // Get the products matching the active store filters
-        const totalProducts = results
+        const totalProducts = products
             .filter(product => activeStoreFilters.indexOf(product.store) !== -1)
             .filter(product => activePetFilters.indexOf(product.animal) !== -1)
             .filter(product => activeCategoryFilters.indexOf(product.category) !== -1)
@@ -227,7 +191,7 @@ class SearchContainer extends Component {
         const end = activePage === 1 ? 20 : 20 * (activePage - 1) + 20     
         const pages = calculatePages(activePage, totalProducts, this.handleActivePageChange)
         // List of products to render
-        const products = totalProducts.slice(start, end)
+        const results = totalProducts.slice(start, end)
         
         return (
             <div id="main" className="main">
@@ -244,7 +208,7 @@ class SearchContainer extends Component {
                         <Route path="/productos/resultados" render={ props =>                     
                             <AsyncProductsDisplay {...props}
                                 isLoading={isLoading}
-                                products={products}
+                                products={results}
                                 pages={pages}
                                 handleFiltersDisplay={this.handleFiltersDisplay}
                                 handleFilterChange={this.handleFilterChange}
@@ -256,7 +220,7 @@ class SearchContainer extends Component {
                                     {isLoading
                                     ? <Loading />
                                     : <AsyncProductGrid {...props}
-                                    products={products} />} 
+                                        products={results} />} 
                                 </div>
                             </div>}
                         />
@@ -283,14 +247,14 @@ export default ProductsContainer
 // Default query is for when the component first loads
 function performApiRequest(query = "royal canin maxi") {
     return new Promise (function(resolve, reject) {
-        Client.search(query, function (results) {
+        Client.search(query, function (products) {
             // Define a text for the animal property of the products that have ""
             // This must be fixed in the spider that scrapes the content preferably
             // or in the back end before sending the results
-            results = results.map(product => product.animal === ""
+            products = products.map(product => product.animal === ""
                 ? { ...product, animal: "no especifica"}
                 : product)
-            const storeFilters = results
+            const storeFilters = products
                 // retrieve the store values from the results
                 .map(result => result.store)
                 // get an array with only the resulting stores
@@ -298,19 +262,19 @@ function performApiRequest(query = "royal canin maxi") {
                 // Create the filter objects defaulting to true to show all the results at first
                 .map(storeName => ({id: storeName, checked: true, filterType: 'store'}))
         
-            const petFilters = results
+            const petFilters = products
                 .map(result => result.animal)
                 .filter((pet, index, self) => self.indexOf(pet) === index)
                 .map(petKind => ({id: petKind, checked: true, filterType: 'pet'}))
             
-            const categoryFilters = results
+            const categoryFilters = products
                 .map(result => result.category)
                 .filter((category, index, self) => self.indexOf(category) === index)
                 .map(category => ({id: category, checked: true, filterType: 'category'}))
 
             const filters = [...storeFilters, ...petFilters, ...categoryFilters]
 
-            resolve({ results, filters })
+            resolve({ products, filters })
             reject({})
         })
     })
