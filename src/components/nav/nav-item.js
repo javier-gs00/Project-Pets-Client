@@ -34,15 +34,15 @@ NavItem.propTypes = {
 
 export default NavItem
 
-function getSvgIcon ({ route, routeMatch, stroke }) {
+function getSvgIcon ({ svg, routeMatch, stroke }) {
     const strokeWidth = ".53"
 
-    switch (route) {
-        case '/productos':
+    switch (svg) {
+        case 'productos':
             return <NavProductsIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
-        case '/tiendas':
+        case 'tiendas':
             return <NavStoresIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
-        case '/menu':
+        case 'menu':
             return <NavMenuIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
         default:
             return false

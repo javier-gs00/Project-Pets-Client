@@ -16,12 +16,15 @@ class Nav extends Component {
             links: [
                 {
                     to: '/productos',
+                    svg: 'productos',
                     textDisplay: 'Productos',
                 },{
                     to: '/tiendas',
+                    svg: 'tiendas',
                     textDisplay: 'Tiendas',
                 },{
                     to: '/menu',
+                    svg: 'menu',
                     textDisplay: 'Menú',
                 }
             ]
@@ -44,6 +47,7 @@ class Nav extends Component {
                         key={index}
                         route={link.to === '/productos' ? pathname : link.to}
                         textDisplay={link.textDisplay}
+                        svg={link.svg}
                         stroke={activeRoute === link.to ? true : false} />
                 )) }
             </div>

@@ -208,6 +208,7 @@ class SearchContainer extends Component {
                         <Route path="/productos/resultados" render={ props =>                     
                             <AsyncProductsDisplay {...props}
                                 isLoading={isLoading}
+                                searchValue={searchValue}
                                 products={results}
                                 pages={pages}
                                 handleFiltersDisplay={this.handleFiltersDisplay}
