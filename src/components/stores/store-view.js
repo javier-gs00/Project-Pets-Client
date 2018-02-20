@@ -45,7 +45,6 @@ class StoreView extends React.Component {
 
     render() {
         const { store } = this.state
-        console.log(store)
         let name, imageUrl, email, phone, addresses, openHours
 
         if (store) {

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import NavItem from './nav-item'
 
 const mapStateToProps = state => ({
-    pathname: state.pathname
+    pathname: state.products.pathname
 })
 
 class Nav extends Component {

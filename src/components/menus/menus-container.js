@@ -68,7 +68,7 @@ class Menus extends Component {
                         <FontAwesomeIcon icon="angle-down" />
                     </div>
                     <div className="menu-content-container" id={index} >
-                        { menu.paragraphs.map(paragraph => <p>{ paragraph }</p>) }
+                        { menu.paragraphs.map((paragraph, index) => <p key={index}>{ paragraph }</p>) }
                     </div>
                 </li>
             )

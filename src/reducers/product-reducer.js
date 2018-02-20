@@ -1,4 +1,4 @@
-import { LOAD_PRODUCTS,
+import { ADD_PRODUCTS,
     START_ROTATING_SPINNER,
     STOP_ROTATING_SPINNER,
     HANDLE_INPUT_TEXT_CHANGE,
@@ -32,7 +32,7 @@ const products = (state = initialState, action) => {
                 ...state,
                 searchValue: action.text
             }
-        case LOAD_PRODUCTS:
+        case ADD_PRODUCTS:
             return {
                 ...state,
                 pathname: action.pathname,

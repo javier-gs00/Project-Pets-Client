@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 // import { BrowserRouter } from 'react-router-dom'
 import { createStore } from 'redux'
-import products from './reducers/product-reducer'
+import projectPetsApp from './reducers/reducers'
 
 import App from './components/App'
 // import './style.css'
@@ -17,10 +17,6 @@ fontawesome.library.add(faAngleDown, faBuilding, faAmbulance, faCar, faClock, fa
     faGlobe, faMapMarker, faPhone, faSearch, faSignInAlt, faSpinner, faShower,
     faUserMd)
 
-let store = createStore(products)
+let store = createStore(projectPetsApp)
 
-ReactDOM.render(
-    // <BrowserRouter>
-        <App store={store}/>
-    // </BrowserRouter>
-    , document.getElementById('root'))
+ReactDOM.render(<App store={store}/>, document.getElementById('root'))

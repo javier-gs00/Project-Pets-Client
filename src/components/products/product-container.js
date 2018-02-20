@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import Client from '../../api.js'
 
 // Redux Actions
-import { loadProducts,
+import { addProducts,
     startRotatingSpinner,
     stopRotatingSpinner,
     handleInputTextChange,
@@ -33,19 +33,19 @@ const AsyncSingleProductView = Loadable({
     loading: Loading
 })
 
-const mapStateToProps = state => ({
-    pathname: state.pathname,
-    products: state.products,
-    isLoading: state.isLoading,
-    activePage: state.activePage,
-    searchValue: state.searchValue,
-    filters: state.filters
+const mapStateToProps = ({ products }) => ({
+    pathname: products.pathname,
+    products: products.products,
+    isLoading: products.isLoading,
+    activePage: products.activePage,
+    searchValue: products.searchValue,
+    filters: products.filters
 })
 
 const mapDispatchToProps = {
     startRotatingSpinner: startRotatingSpinner,
     stopRotatingSpinner: stopRotatingSpinner,
-    loadProducts: loadProducts,
+    addProducts: addProducts,
     handleInputTextChange: handleInputTextChange,
     handleFilterChange: handleFilterChange,
     handleActivePageChange: handleActivePageChange
@@ -59,7 +59,7 @@ class SearchContainer extends Component {
             products,
             startRotatingSpinner,
             stopRotatingSpinner,
-            loadProducts,
+            addProducts,
             getActiveRoute } = this.props
         const fullRouteName = location.pathname + location.search
 
@@ -79,14 +79,14 @@ class SearchContainer extends Component {
             // This is in case someone navigates directly through the URL
             return performApiRequest(parsedUrlQuery.query)
             .then(results => {
-                loadProducts(fullRouteName, results.products, results.filters)
+                addProducts(fullRouteName, results.products, results.filters)
             })            
         } else {
         // Perform a predefined API request if no query parameter received
         // This is for when someone first loads this page (navigates directly to "/")
             return performApiRequest()
             .then(results => {
-                loadProducts(fullRouteName, results.products, results.filters)
+                addProducts(fullRouteName, results.products, results.filters)
             })
         }
     }
@@ -96,7 +96,7 @@ class SearchContainer extends Component {
     handleInputKeyPress = e => e.key === 'Enter' ? this.handleSubmit() : false
 
     handleSubmit = () => {
-        const { history, startRotatingSpinner, searchValue, loadProducts } = this.props
+        const { history, startRotatingSpinner, searchValue, addProducts } = this.props
         if (searchValue === "") {
             return false
             // return this.setState({
@@ -107,7 +107,7 @@ class SearchContainer extends Component {
             startRotatingSpinner()
             return performApiRequest(searchValue)
             .then(results => {
-                loadProducts(
+                addProducts(
                     `/productos/resultados?query=${searchValue}`,
                     results.products,
                     results.filters
@@ -234,11 +234,15 @@ class SearchContainer extends Component {
 SearchContainer.propTypes = {
     getActiveRoute: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
+    pathname: PropTypes.string.isRequired,
+    products: PropTypes.array.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    activePage: PropTypes.number.isRequired,
+    searchValue: PropTypes.string.isRequired,
+    filters: PropTypes.array.isRequired
 }
 
-const ProductsContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps)(SearchContainer)
+const ProductsContainer = connect(mapStateToProps, mapDispatchToProps)(SearchContainer)
 
 export default ProductsContainer
 

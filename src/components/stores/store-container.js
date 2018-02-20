@@ -1,40 +1,45 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { addStores } from '../../actions/actions'
 import Client from '../../api'
 import StoreGrid from './store-grid'
-// import './stores.css'
 
-class StoreContainer extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            stores: []
-        }
-    }
+const mapStateToProps = ({ stores }) => ({
+    stores: stores.stores
+})
 
+const mapDispatchToProps = {
+    addStores: addStores
+}
+
+class storeContainer extends Component {
     componentDidMount() {
-        const { location } = this.props
+        const { stores, addStores, location } = this.props
         this.props.getActiveRoute(location.pathname)
 
-        return Client.getStores(results => {
-            this.setState({ 
-                stores: results
-             })
-        })    
+        if (stores.length > 0) {
+            return false
+        } else {
+            return Client.getStores(results => addStores(results))
+        }    
     }
 
     render() {
         return (
             <div className="main">
-                <StoreGrid stores={this.state.stores} />
+                <StoreGrid stores={this.props.stores} />
             </div>
         )
     }
 }
 
-StoreContainer.propTypes = {
+const StoreContainer = connect(mapStateToProps, mapDispatchToProps)(storeContainer)
+
+storeContainer.propTypes = {
     getActiveRoute: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
+    stores: PropTypes.array.isRequired
 }
 
 export default StoreContainer

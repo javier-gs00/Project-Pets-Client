@@ -1,9 +1,8 @@
 import * as types from './action-types'
 
-// Redux Action Creators
-// load the products to the redux store
-export const loadProducts = (pathname, products, filters) => ({
-    type: types.LOAD_PRODUCTS,
+// Actions creators for Products
+export const addProducts = (pathname, products, filters) => ({
+    type: types.ADD_PRODUCTS,
     pathname,
     products,
     filters
@@ -34,4 +33,10 @@ export const handleFilterChange = id => ({
 export const handleActivePageChange = pageNumber => ({
     type: types.HANDLE_ACTIVE_PAGE_CHANGE,
     pageNumber
+})
+
+// Actions creators for Stores
+export const addStores = stores => ({
+    type: types.ADD_STORES,
+    stores
 })
