@@ -79,14 +79,22 @@ class SearchContainer extends Component {
             // This is in case someone navigates directly through the URL
             return performApiRequest(parsedUrlQuery.query)
             .then(results => {
-                addProducts(fullRouteName, results.products, results.filters)
+                addProducts(
+                    fullRouteName,
+                    parsedUrlQuery.query,
+                    results.products,
+                    results.filters)
             })            
         } else {
         // Perform a predefined API request if no query parameter received
         // This is for when someone first loads this page (navigates directly to "/")
             return performApiRequest()
             .then(results => {
-                addProducts(fullRouteName, results.products, results.filters)
+                addProducts(
+                    fullRouteName,
+                    "royal canin maxi",
+                    results.products,
+                    results.filters)
             })
         }
     }
@@ -96,19 +104,17 @@ class SearchContainer extends Component {
     handleInputKeyPress = e => e.key === 'Enter' ? this.handleSubmit() : false
 
     handleSubmit = () => {
-        const { history, startRotatingSpinner, searchValue, addProducts } = this.props
+        const { history, startRotatingSpinner, addProducts } = this.props
+        const searchValue = document.getElementById('search').value
         if (searchValue === "") {
-            return false
-            // return this.setState({
-            //     results: [],
-            //     isLoading: false
-            // })
+            return this.props.handleInputTextChange(searchValue)
         } else {
             startRotatingSpinner()
             return performApiRequest(searchValue)
             .then(results => {
                 addProducts(
                     `/productos/resultados?query=${searchValue}`,
+                    searchValue,
                     results.products,
                     results.filters
                 )
@@ -181,11 +187,13 @@ class SearchContainer extends Component {
             .filter(filter => filter.filterType === 'category')
             .filter(category => category.checked)
             .map(category => category.id)
+        const totalProductsFoundLength = products.length
         // Get the products matching the active store filters
         const totalProducts = products
             .filter(product => activeStoreFilters.indexOf(product.store) !== -1)
             .filter(product => activePetFilters.indexOf(product.animal) !== -1)
             .filter(product => activeCategoryFilters.indexOf(product.category) !== -1)
+        const filteredProductsFoundLength = totalProducts.length
         // Calculate page ranges
         const start = activePage === 1 ? 0 : 20 * (activePage - 1)
         const end = activePage === 1 ? 20 : 20 * (activePage - 1) + 20     
@@ -197,8 +205,8 @@ class SearchContainer extends Component {
             <div id="main" className="main">
                 <div className="products-main-container" >
                     <SearchForm
-                        value={searchValue}
-                        onChange={this.handleInputChange}
+                        totalProductsFoundLength={totalProductsFoundLength}
+                        filteredProductsFoundLength={filteredProductsFoundLength}
                         onClick={this.handleSubmit} 
                         onKeyPress={this.handleInputKeyPress} />
                     <Switch >
@@ -209,6 +217,8 @@ class SearchContainer extends Component {
                             <AsyncProductsDisplay {...props}
                                 isLoading={isLoading}
                                 searchValue={searchValue}
+                                totalProductsFoundLength={totalProductsFoundLength}
+                                filteredProductsFoundLength={filteredProductsFoundLength}
                                 products={results}
                                 pages={pages}
                                 handleFiltersDisplay={this.handleFiltersDisplay}

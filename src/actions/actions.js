@@ -1,9 +1,10 @@
 import * as types from './action-types'
 
 // Actions creators for Products
-export const addProducts = (pathname, products, filters) => ({
+export const addProducts = (pathname, searchValue, products, filters) => ({
     type: types.ADD_PRODUCTS,
     pathname,
+    searchValue,
     products,
     filters
 })

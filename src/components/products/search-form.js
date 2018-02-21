@@ -11,8 +11,6 @@ const SearchForm = props => {
                     id="search" 
                     placeholder="¿Qué buscas?"
                     autoFocus
-                    value={props.value}
-                    onChange={props.onChange} 
                     onKeyPress={props.onKeyPress} />
                 <button 
                     className="icon-search"
@@ -20,6 +18,15 @@ const SearchForm = props => {
                     <FontAwesomeIcon icon="search" />
                 </button>
             </div>
+            {props.totalProductsFoundLength
+            ? <div className="search-text-container">
+                <span>
+                    {props.filteredProductsFoundLength < props.totalProductsFoundLength
+                    ? `Mostrando ${props.filteredProductsFoundLength} de ${props.totalProductsFoundLength} resultados`
+                    : `Se encontraron ${props.totalProductsFoundLength} resultados para tú busqueda`}                    
+                </span>
+            </div>
+            : null}
         </div>
     )
 }

@@ -36,6 +36,7 @@ const products = (state = initialState, action) => {
             return {
                 ...state,
                 pathname: action.pathname,
+                searchValue: action.searchValue,
                 products: action.products,
                 activePage: 1,
                 isLoading: false,
