@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import FontAwesome from '@fortawesome/react-fontawesome'
 
 const ProductFilter = props => {
-    function createFilter(index, filter, disableFilter, handleFilterChange) {
+    function createFilter(index, filter, handleFilterChange) {
         return (
             <div key={index} className="filter">
                 <span className="filter-name">
@@ -16,32 +16,25 @@ const ProductFilter = props => {
                     id={filter.id} 
                     className="cbx hidden"
                     checked={filter.checked}
-                    onChange={handleFilterChange}
-                    disabled={disableFilter} />
+                    onChange={handleFilterChange} />
                 <label htmlFor={filter.id} className="lbl"></label>
             </div>
         )
     }
 
-    const disableStoreFilters = props.filters
-        .filter(filter => filter.filterType === 'store').length > 1 ? false : true
     let storeFilters = props.filters
         .filter(filter => filter.filterType === 'store')
-        .map((store, index) => createFilter(index, store, disableStoreFilters, props.handleFilterChange)
+        .map((store, index) => createFilter(index, store, props.handleFilterChange)
     )
 
-    const disablePetFilters = props.filters
-        .filter(filter => filter.filterType === 'pet').length > 1 ? false : true
     let petFilters = props.filters
         .filter(filter => filter.filterType === 'pet')
-        .map((pet, index) => createFilter(index, pet, disablePetFilters, props.handleFilterChange)
+        .map((pet, index) => createFilter(index, pet, props.handleFilterChange)
     )
 
-    const disableCategoryFilters = props.filters
-        .filter(filter => filter.filterType === 'category').length > 1 ? false : true
     let categoryFilters = props.filters
         .filter(filter => filter.filterType === 'category')
-        .map((category, index) => createFilter(index, category, disableCategoryFilters, props.handleFilterChange))
+        .map((category, index) => createFilter(index, category, props.handleFilterChange))
 
     return (
         <div className="filters-table-container">

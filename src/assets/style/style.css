@@ -5,7 +5,7 @@ html {
 body {
   margin: 0px;
   font-family: 'Raleway', sans-serif;
-  background: #fafafa;
+  background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
 }
 a {
   text-decoration: none;
@@ -112,11 +112,11 @@ a {
     top: 0px;
     width: 100%;
     text-align: center;
-    background-color: #ffffff;
+    background-color: #ffa000;
     display: block;
     padding: 10px 0px;
     font-size: 2.5rem;
-    color: #c67100;
+    color: #ffffff;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.3);
   }
 }
@@ -255,7 +255,7 @@ a {
   background: #c67100;
   height: 40px;
   width: 50px;
-  color: #fff;
+  color: #ffffff;
   opacity: 1;
   font-size: 1.6rem;
   margin-left: -50px;
@@ -385,6 +385,9 @@ a {
   .product-item-image {
     height: 210px;
   }
+}
+.product-item-image a {
+  text-align: center;
 }
 .product-item-image a img {
   max-width: 100%;
@@ -721,6 +724,8 @@ button.products-nav-active {
 .single-product-img {
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 .single-product-name {
   display: flex;
@@ -763,10 +768,15 @@ button.products-nav-active {
 }
 .single-product-store a {
   font-size: 1.8rem;
-  color: black;
+  color: #464646;
   padding: 10px;
-  background-color: #ddd;
+  background-color: #DCD9D4;
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), radial-gradient(at 50% 0%, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.5) 50%);
+  background-blend-mode: soft-light, screen;
   border-radius: 30px;
+}
+.single-product-store:hover {
+  top: 5px;
 }
 .single-product-store a svg {
   color: #464646;
@@ -795,16 +805,7 @@ button.products-nav-active {
   width: 100%;
   text-align: center;
   color: #ffffff;
-  /* background-color: #c67100; */
-  /* background: linear-gradient(to right,
-    #c67100,
-    #ffa000,
-    #ffd149
-  ); */
-  /* background-image: linear-gradient( 135deg, #FCCF31 10%, #F55555 100%); */
-  background-image: linear-gradient( 135deg, #FEC163 10%, #DE4313 100%);
-  /* background-image: linear-gradient(to right, #FF8008 0%, #FFC837 51%, #FF8008 100%); */
-  /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
+  background-image: linear-gradient(135deg, #FEC163 10%, #DE4313 100%);
   border-radius: 30px;
   -webkit-transition: all .2s ease;
   -moz-transition: all .2s ease;
@@ -813,9 +814,7 @@ button.products-nav-active {
   transition: all .2s ease;
 }
 .single-product-link a:hover {
-  /* background-color: #ffa000; */
-  background-image: linear-gradient( 135deg, #FEC163 20%, #DE4313 90%);
-  /* background-position: right center; */
+  background-color: #ffa000;
 }
 .stores-container {
   margin: 10px auto;

@@ -85,13 +85,14 @@ class SearchContainer extends Component {
                     results.products,
                     results.filters)
             })            
-        } else {
+        }
+        else {
         // Perform a predefined API request if no query parameter received
         // This is for when someone first loads this page (navigates directly to "/")
             return performApiRequest()
             .then(results => {
                 addProducts(
-                    fullRouteName,
+                    routeName,
                     "royal canin maxi",
                     results.products,
                     results.filters)
@@ -144,8 +145,7 @@ class SearchContainer extends Component {
         }
     }
 
-    handleFilterChange = e => this.props.handleFilterChange(e.target.id)
-    
+    handleFilterChange = e => this.props.handleFilterChange(e.target.id)  
 
     handleFiltersDisplay = e => {
         const filters = document.getElementById('filters')
@@ -193,6 +193,39 @@ class SearchContainer extends Component {
             .filter(product => activeStoreFilters.indexOf(product.store) !== -1)
             .filter(product => activePetFilters.indexOf(product.animal) !== -1)
             .filter(product => activeCategoryFilters.indexOf(product.category) !== -1)
+        
+        // Calculate the available stores, pets and categories after applying filters
+        // to create a new filter object with the modified checked attributes
+        // This is done to enable or disable the check prop of the input automatically
+        const storesAfterFilters = totalProducts
+            .map(product => product.store)
+            .filter((store, index, self) => self.indexOf(store) === index)
+        const petsAfterFilters = totalProducts
+            .map(product => product.animal)
+            .filter((pet, index, self) => self.indexOf(pet) === index)
+        const categoriesAfterFilters = totalProducts
+            .map(product => product.category)
+            .filter((pet, index, self) => self.indexOf(pet) === index)
+        const newFilters = filters
+            .map(filter => {
+                if (filter.filterType === 'store') {
+                    return ({
+                        ...filter,
+                        checked: storesAfterFilters.indexOf(filter.id) !== -1 ? true : false
+                    })   
+                } else if (filter.filterType === 'pet') {
+                    return ({
+                        ...filter,
+                        checked: petsAfterFilters.indexOf(filter.id) !== -1 ? true : false
+                    })
+                } else if (filter.filterType === 'category') {
+                    return ({
+                        ...filter,
+                        checked: categoriesAfterFilters.indexOf(filter.id) !== -1 ? true : false
+                    })
+                }
+            })
+
         const filteredProductsFoundLength = totalProducts.length
         // Calculate page ranges
         const start = activePage === 1 ? 0 : 20 * (activePage - 1)
@@ -223,7 +256,7 @@ class SearchContainer extends Component {
                                 pages={pages}
                                 handleFiltersDisplay={this.handleFiltersDisplay}
                                 handleFilterChange={this.handleFilterChange}
-                                filters={filters} /> }
+                                filters={newFilters} /> }
                         />
                         <Route path="/productos" exact render={ props =>
                             <div className="products-container">
