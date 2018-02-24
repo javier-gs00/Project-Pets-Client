@@ -36,6 +36,12 @@ const ProductFilter = props => {
         .filter(filter => filter.filterType === 'category')
         .map((category, index) => createFilter(index, category, props.handleFilterChange))
 
+    // const undoFilters = document.getElementById('desc_sort').classList.contains('filter-svg-item-active') ||  document.getElementById('asc_sort').classList.contains('filter-svg-item-active')
+    //     ? <div id="null_sort"
+    //         className="filter-svg-item"
+    //         onClick={props.handleSort}><FontAwesome icon="undo-alt" /></div>
+    //     : null
+
     return (
         <div className="filters-table-container">
             <div className="filters-show-toggle" onClick={props.handleFiltersDisplay}>
@@ -45,19 +51,31 @@ const ProductFilter = props => {
             </div>
             {/* <div id="filters" className={"filters-container " + (showFiltersDiv ? '' : 'hidden')} > */}
             <div id="filters" className="filters-container">
+                <span className="filter-title">Ordenar</span>
+                <div className="filter">
+                    <span className="filter-name" onClick={props.handleFilterClick}>Precio</span>
+                    <div className="filter-svg-container">
+                        <div id="null_sort"
+                            className="filter-svg-item"
+                            onClick={props.handleSort}>
+                            <FontAwesome icon="undo-alt" /></div>
+                        <div id="desc_sort" 
+                            className="filter-svg-item"
+                            onClick={props.handleSort}>
+                            <FontAwesome icon="sort-numeric-down" /></div>
+                        <div id="asc_sort"
+                            className="filter-svg-item"
+                            onClick={props.handleSort}>
+                            <FontAwesome icon="sort-numeric-up" /></div>
+                    </div>
+                </div>
                 <span className="filter-title">Tiendas</span>
                 {storeFilters}
                 <span className="filter-title">Mascotas</span>
                 {petFilters}
                 <span className="filter-title">Categorías</span>
                 {categoryFilters}
-                {/* <span className="filter-title">Ordenar</span>
-                <div className="filter">
-                    <input type="checkbox" id="alphabet-filter" className="cbx hidden"/>
-                    <label for="alphabet-filter" className="lbl"></label>
-                    <span className="filter-name" onClick={props.handleFilterClick}>A-z</span>
-                </div>
-                <div className="filter">
+                {/* <div className="filter">
                     <input type="checkbox" id="price-filter" className="cbx hidden"/>
                     <label for="price-filter" className="lbl"></label>
                     <span className="filter-name" onClick={props.handleFilterClick}>Precio: Mayor a menor</span>

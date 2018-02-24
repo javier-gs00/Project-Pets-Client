@@ -12,7 +12,10 @@ import { addProducts,
     stopRotatingSpinner,
     handleInputTextChange,
     handleFilterChange,
-    handleActivePageChange } from '../../actions/actions'
+    handleActivePageChange,
+    sortProductsDescByPrice,
+    sortProductsAscByPrice,
+    nullSort } from '../../actions/actions'
 
 // Components
 import SearchForm from './search-form'
@@ -48,7 +51,10 @@ const mapDispatchToProps = {
     addProducts: addProducts,
     handleInputTextChange: handleInputTextChange,
     handleFilterChange: handleFilterChange,
-    handleActivePageChange: handleActivePageChange
+    handleActivePageChange: handleActivePageChange,
+    sortProductsDescByPrice: sortProductsDescByPrice,
+    sortProductsAscByPrice: sortProductsAscByPrice,
+    nullSort: nullSort
 }
 
 class SearchContainer extends Component {
@@ -133,19 +139,57 @@ class SearchContainer extends Component {
         const { activePage, handleActivePageChange } = this.props
         let newPage = e.currentTarget.innerHTML
         if (newPage === '&lt;') {
-            window.scrollTo(0, 0)
+            // window.scrollTo(0, 0)
+            window.scroll({top: 0, left: 0, behavior: 'smooth'})
             return handleActivePageChange(activePage - 1)
           } else if (newPage === '&gt;') {
-            window.scrollTo(0, 0)
+            // window.scrollTo(0, 0)
+            window.scroll({top: 0, left: 0, behavior: 'smooth'})
             return handleActivePageChange(activePage + 1)
         } else {
-            window.scrollTo(0, 0)
+            // window.scrollTo(0, 0)
+            window.scroll({top: 0, left: 0, behavior: 'smooth'})
             newPage = parseInt(newPage, 10)
             return handleActivePageChange(newPage)
         }
     }
 
-    handleFilterChange = e => this.props.handleFilterChange(e.target.id)  
+    handleFilterChange = e => this.props.handleFilterChange(e.target.id)
+
+    handleSort = e => {
+        const filterName = e.currentTarget.id
+        const nullSort = document.getElementById('null_sort')
+        const descSort = document.getElementById('desc_sort')
+        const ascSort = document.getElementById('asc_sort')
+        switch (filterName) {
+            case 'null_sort':
+                if (nullSort.classList.contains('filter-svg-item-active')) return false
+                descSort.classList.remove('filter-svg-item-active')
+                ascSort.classList.remove('filter-svg-item-active')
+                nullSort.style.display = 'none'
+                nullSort.classList.add('filter-svg-item-active')
+                return this.props.nullSort()
+            case 'desc_sort':
+                if (descSort.classList.contains('filter-svg-item-active')) return false
+                descSort.classList.add('filter-svg-item-active')
+                descSort.style.transform = 'scale(1.15, 1.15)'
+                ascSort.classList.remove('filter-svg-item-active')
+                nullSort.style.display = 'flex'
+                nullSort.classList.remove('filter-svg-item-active')
+                return this.props.sortProductsDescByPrice()
+            case 'asc_sort':
+                if (ascSort.classList.contains('filter-svg-item-active')) return false
+                descSort.classList.remove('filter-svg-item-active')
+                descSort.style.transform = 'scale(1, 1)'
+                ascSort.classList.add('filter-svg-item-active')
+                ascSort.style.transform = 'scale(1.15, 1.15)'
+                nullSort.style.display = 'flex'
+                nullSort.classList.remove('filter-svg-item-active')
+                return this.props.sortProductsAscByPrice()
+            default:
+                return false
+        }
+    }
 
     handleFiltersDisplay = e => {
         const filters = document.getElementById('filters')
@@ -223,6 +267,8 @@ class SearchContainer extends Component {
                         ...filter,
                         checked: categoriesAfterFilters.indexOf(filter.id) !== -1 ? true : false
                     })
+                } else {
+                    return false
                 }
             })
 
@@ -256,6 +302,7 @@ class SearchContainer extends Component {
                                 pages={pages}
                                 handleFiltersDisplay={this.handleFiltersDisplay}
                                 handleFilterChange={this.handleFilterChange}
+                                handleSort={this.handleSort}
                                 filters={newFilters} /> }
                         />
                         <Route path="/productos" exact render={ props =>

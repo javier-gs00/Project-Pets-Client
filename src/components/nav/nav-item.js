@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
 // import NavSearchIcon from '../../assets/svg/nav.search.js';
-import NavProductsIcon from '../../assets/svg/nav.products.js'
-import NavStoresIcon from '../../assets/svg/nav.stores.js'
-import NavMenuIcon from '../../assets/svg/nav.menu.js'
+// import NavProductsIcon from '../../assets/svg/nav.products.js'
+// import NavStoresIcon from '../../assets/svg/nav.stores.js'
+// import NavMenuIcon from '../../assets/svg/nav.menu.js'
 
-const textColor = '#464646'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+
+const textColor = '#c7c7c7'
 const normalColor = '#c67100'
-// const highlightColor = '#ffa000'
+const highlightColor = '#ffa000'
 
 const NavItem = props => {
     const svgIcon = getSvgIcon({...props })
@@ -19,7 +21,7 @@ const NavItem = props => {
             to={props.route}>
             <div className="navbar-link-container">
                 { svgIcon }
-                <div className="navbar-text font-darkgrey font-bold font-large" style={props.routeMatch ? {color: normalColor} : {}}>{props.textDisplay}</div>
+                <div className="navbar-text" style={props.routeMatch ? {color: normalColor} : {}}>{props.textDisplay}</div>
             </div>
         </NavLink>
     )
@@ -35,15 +37,33 @@ NavItem.propTypes = {
 export default NavItem
 
 function getSvgIcon ({ svg, routeMatch, stroke }) {
-    const strokeWidth = ".53"
+    // const strokeWidth = ".53"
 
     switch (svg) {
         case 'productos':
-            return <NavProductsIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
+            return <FontAwesomeIcon 
+                icon="search"
+                size="2x" 
+                style={{
+                    color: stroke ? highlightColor : textColor,
+                    transform: stroke ? 'scale(1.15, 1.15)' : 'scale(1, 1)'}}/>
+            // return <NavProductsIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
         case 'tiendas':
-            return <NavStoresIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
+            return <FontAwesomeIcon
+                icon="building"
+                size="2x" 
+                style={{
+                    color: stroke ? highlightColor : textColor,
+                    transform: stroke ? 'scale(1.15, 1.15)' : 'scale(1, 1)'}}/>
+            // return <NavStoresIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
         case 'menu':
-            return <NavMenuIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
+            return <FontAwesomeIcon
+                icon="bars"
+                size="2x" 
+                style={{
+                    color: stroke ? highlightColor : textColor,
+                    transform: stroke ? 'scale(1.15, 1.15)' : 'scale(1, 1)'}}/>
+            // return <NavMenuIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
         default:
             return false
     }

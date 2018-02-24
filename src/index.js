@@ -7,15 +7,16 @@ import projectPetsApp from './reducers/reducers'
 import App from './components/App'
 // import './style.css'
 import './assets/style/style.css'
+// import './style/style.less'
 
 import fontawesome from '@fortawesome/fontawesome'
-import { faAngleDown, faAmbulance, faBuilding, faCar, faClock, faEnvelope,
-    faGlobe, faMapMarker, faPhone, faSearch, faSignInAlt, faSpinner, faShower,
-    faUserMd } from '@fortawesome/fontawesome-free-solid'
+import { faAngleDown, faAmbulance, faBars, faBuilding, faCar, faClock, faEnvelope,
+    faGlobe, faMapMarker, faPaw, faPhone, faSearch, faSignInAlt, faSpinner, faShower,
+    faSortNumericDown, faSortNumericUp, faThLarge, faUndoAlt, faUserMd } from '@fortawesome/fontawesome-free-solid'
 
-fontawesome.library.add(faAngleDown, faBuilding, faAmbulance, faCar, faClock, faEnvelope,
-    faGlobe, faMapMarker, faPhone, faSearch, faSignInAlt, faSpinner, faShower,
-    faUserMd)
+fontawesome.library.add(faAngleDown, faAmbulance, faBars, faBuilding, faCar, faClock, faEnvelope,
+    faGlobe, faMapMarker, faPaw, faPhone, faSearch, faSignInAlt, faSpinner, faShower,
+    faSortNumericDown, faSortNumericUp, faThLarge, faUndoAlt, faUserMd)
 
 let store = createStore(projectPetsApp)
 

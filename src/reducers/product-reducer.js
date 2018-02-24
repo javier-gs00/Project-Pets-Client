@@ -4,7 +4,10 @@ import { ADD_PRODUCTS,
     HANDLE_INPUT_TEXT_CHANGE,
     HANDLE_FILTER_CHANGE,
     HANDLE_ACTIVE_PAGE_CHANGE, 
-    REMOVE_PRODUCTS} from '../actions/action-types'
+    REMOVE_PRODUCTS,
+    SORT_PRODUCTS_DESC_BY_PRICE,
+    SORT_PRODUCTS_ASC_BY_PRICE,
+    NULL_SORT } from '../actions/action-types'
 
 const initialState = {
     pathname: '/productos',
@@ -12,7 +15,8 @@ const initialState = {
     isLoading: false,
     activePage: 1,
     searchValue: "",
-    filters: []
+    filters: [],
+    originalOrder: []
 }
 
 const products = (state = initialState, action) => {
@@ -40,7 +44,8 @@ const products = (state = initialState, action) => {
                 products: action.products,
                 activePage: 1,
                 isLoading: false,
-                filters: action.filters
+                filters: action.filters,
+                originalOrder: action.products.map(product => product._id)
             }
         case REMOVE_PRODUCTS:
             return {
@@ -61,6 +66,24 @@ const products = (state = initialState, action) => {
             return {
                 ...state,
                 activePage: action.pageNumber
+            }
+        case SORT_PRODUCTS_DESC_BY_PRICE:
+            return {
+                ...state,
+                products: state.products.slice().sort((a, b) => a.price - b.price),
+                activePage: 1
+            }
+        case SORT_PRODUCTS_ASC_BY_PRICE:
+            return {
+                ...state,
+                products: state.products.slice().sort((a, b) => b.price - a.price),
+                activePage: 1
+            }
+        case NULL_SORT:
+            return {
+                ...state,
+                products: state.products.slice().sort((a, b) => state.originalOrder.indexOf(a._id) > state.originalOrder.indexOf(b._id) ? 1 : -1),
+                activePage: 1
             }
         default:
             return state

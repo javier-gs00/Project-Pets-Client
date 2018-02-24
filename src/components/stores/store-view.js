@@ -55,19 +55,19 @@ class StoreView extends React.Component {
             phone = store.phone.map((phone, index) => (
                 <div key={index} className="store-single-item-container phone-content">
                     <div><span>{phone.name}:</span></div>
-                    <div><span className="must-be-legible">{parsePhoneNumber(phone.number)}</span></div>
+                    <div><span>{parsePhoneNumber(phone.number)}</span></div>
                 </div>
             ))
 
             email = store.email.map((email, index) => (
                 <div key={index} className="store-single-item-container email-content">
-                    <span className="must-be-legible">{email.uri}</span>
+                    <span>{email.uri}</span>
                 </div>
             ))
 
             addresses = store.address.map((address, index) => (
                 <div key={index} className="store-single-item-container addresses-content">
-                    <span className="must-be-legible">{address.street}, {address.commune}, {address.cityTown}, {address.region}</span>
+                    <span>{address.street}, {address.commune}, {address.cityTown}, {address.region}</span>
                 </div>
             ))
 

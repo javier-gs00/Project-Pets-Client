@@ -36,6 +36,21 @@ export const handleActivePageChange = pageNumber => ({
     pageNumber
 })
 
+export const sortProductsDescByPrice = () => ({
+    type: types.SORT_PRODUCTS_DESC_BY_PRICE
+    // products
+})
+
+export const sortProductsAscByPrice = () => ({
+    type: types.SORT_PRODUCTS_ASC_BY_PRICE
+    // products
+})
+
+export const nullSort = () => ({
+    type: types.NULL_SORT
+    // products
+})
+
 // Actions creators for Stores
 export const addStores = stores => ({
     type: types.ADD_STORES,
