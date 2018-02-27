@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { parsePrice } from '../../utils'
 
-const ProductItem = ({ product }) => (
+const ProductItem = ({ product, path }) => (
     <div className="product-item-container">
         <div className="product-item-image">
             <Link to={{
-                    pathname: `/productos/resultados/${product._id}`,
+                    // pathname: `/productos/resultados/${product._id}`,
+                    pathname: `${path}/${product._id}`,
                     state: { product: product }}}>
                 <img src={product.imageUrl} alt="Producto sin imagen"/>
             </Link>
@@ -14,7 +16,7 @@ const ProductItem = ({ product }) => (
         <div className="product-item-data">
             <div className="product-item-data-block">
                 <Link to={{
-                    pathname: `/productos/resultados/${product._id}`,
+                    pathname: `${path}/${product._id}`,
                     state: { product: product }}}
                     className="product-item-name">{product.name}</Link>
             </div>
@@ -27,22 +29,6 @@ const ProductItem = ({ product }) => (
         </div>
     </div>     
 )
-
-function parsePrice(intPrice) {
-    let price = intPrice.toString()
-    if (price.length > 6) {
-        price = "$" + price.slice(0, 1) + "." + price.slice(1, 4) + "." + price.slice(-3)
-    } else if (price.length > 5) {
-        price = "$" + price.slice(0, 3) + "." + price.slice(-3)
-    } else if (price.length > 4) {
-        price = "$" + price.slice(0, 2) + "." + price.slice(-3)
-    } else if (price.length > 3) {
-        price = "$" + price.slice(0, 1) + "." + price.slice(-3)
-    } else {
-        price = "$" + price
-    }
-    return price
-}
 
 ProductItem.propTypes = {
     product: PropTypes.object

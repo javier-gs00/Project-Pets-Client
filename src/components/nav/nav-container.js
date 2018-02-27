@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom'
 import NavItem from './nav-item'
 
 const mapStateToProps = state => ({
-    pathname: state.products.pathname
+    productPathname: state.products.pathname,
+    categoryPathname: state.categories.pathname
 })
 
 class Nav extends Component {
@@ -18,7 +19,11 @@ class Nav extends Component {
                 {
                     to: '/productos',
                     svg: 'productos',
-                    textDisplay: 'Productos',
+                    textDisplay: 'Buscar',
+                },{
+                    to: '/categorias',
+                    svg: 'categorias',
+                    textDisplay: 'Vitrina',
                 },{
                     to: '/tiendas',
                     svg: 'tiendas',
@@ -38,7 +43,7 @@ class Nav extends Component {
 
     render() {
         const { activeRoute, links } = this.state 
-        const { pathname } = this.props
+        const { productPathname, categoryPathname } = this.props
 
         return (
             <div className="navbar">
@@ -50,7 +55,11 @@ class Nav extends Component {
                         <NavItem
                             routeMatch={activeRoute === link.to ? true : false}
                             key={index}
-                            route={link.to === '/productos' ? pathname : link.to}
+                            route={ link.to === '/productos'
+                                ? productPathname
+                                : link.to === '/categorias'
+                                ? categoryPathname
+                                : link.to }
                             textDisplay={link.textDisplay}
                             svg={link.svg}
                             stroke={activeRoute === link.to ? true : false} />

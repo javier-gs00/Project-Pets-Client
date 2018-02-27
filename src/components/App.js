@@ -9,12 +9,17 @@ import Header from './header/header'
 import NavContainer from './nav/nav-container'
 import MenusContainer from './menus/menus-container'
 
-const AsyncProductContainer = Loadable({
+const AsyncProductsContainer = Loadable({
   loader: () => import('./products/product-container'),
   loading: Loading
 })
 
-const AsyncStoreContainer = Loadable({
+const AsyncCategoriesContainer = Loadable({
+  loader: () => import('./categories/categories-container'),
+  loading: Loading
+})
+
+const AsyncStoresContainer = Loadable({
   loader: () => import('./stores/store-container'),
   loading: Loading
 })
@@ -45,8 +50,9 @@ class App extends Component {
               <NavContainer activeRoute={activeRoute} />
               <Switch>
                 <Redirect exact from="/" to="/productos" />
-                <Route path='/productos' render={ props => <AsyncProductContainer getActiveRoute={this.getActiveRoute} {...props} />} />
-                <Route exact path='/tiendas' render={ props => <AsyncStoreContainer getActiveRoute={this.getActiveRoute} {...props} />}  />
+                <Route path='/productos' render={ props => <AsyncProductsContainer getActiveRoute={this.getActiveRoute} {...props} />} />
+                <Route path='/categorias' render={ props => <AsyncCategoriesContainer getActiveRoute={this.getActiveRoute} {...props} />} />
+                <Route exact path='/tiendas' render={ props => <AsyncStoresContainer getActiveRoute={this.getActiveRoute} {...props} />}  />
                 <Route path='/tiendas/:name' render={ props => <AsyncSingleStoreView getActiveRoute={this.getActiveRoute} {...props} />}  />
                 <Route exact path="/menu" render={ props => <MenusContainer getActiveRoute={this.getActiveRoute} {...props} />} />
                 <Redirect to="/" />

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import FontAwesome from '@fortawesome/react-fontawesome'
 import Loading from '../products/loading'
-import Client from '../../api'
+import { apiGetStoreByName } from '../../api'
 
 class StoreView extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class StoreView extends React.Component {
         if (location.state !== undefined) {
             return this.setState({ store: location.state.store })
         } else {
-            return Client.getStoreByName(match.params.name)
+            return apiGetStoreByName(match.params.name)
             .then(store => this.setState({ store: store }))
         }
     }

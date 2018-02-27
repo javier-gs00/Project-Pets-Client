@@ -36,23 +36,44 @@ export const handleActivePageChange = pageNumber => ({
     pageNumber
 })
 
-export const sortProductsDescByPrice = () => ({
-    type: types.SORT_PRODUCTS_DESC_BY_PRICE
-    // products
-})
-
-export const sortProductsAscByPrice = () => ({
-    type: types.SORT_PRODUCTS_ASC_BY_PRICE
-    // products
-})
-
-export const nullSort = () => ({
-    type: types.NULL_SORT
-    // products
+export const handleSortByPrice = order => ({
+    type: types.HANDLE_SORT_BY_PRICE,
+    order
 })
 
 // Actions creators for Stores
 export const addStores = stores => ({
     type: types.ADD_STORES,
     stores
+})
+
+// Actions creators for categories products
+export const addCategoriesProducts = (pathname, products, filters) => ({
+    type: types.ADD_CATEGORIES_PRODUCTS,
+    pathname,
+    products,
+    filters
+})
+
+export const startCategoriesRotatingSpinner = () => ({
+    type: types.START_CATEGORIES_ROTATING_SPINNER
+})
+
+export const stopCategoriesRotatingSpinner = () => ({
+    type: types.STOP_CATEGORIES_ROTATING_SPINNER
+})
+
+export const handleCategoriesFilterChange = id => ({
+    type: types.HANDLE_CATEGORIES_FILTER_CHANGE,
+    id
+})
+
+export const handleCategoriesActivePageChange = pageNumber => ({
+    type: types.HANDLE_CATEGORIES_ACTIVE_PAGE_CHANGE,
+    pageNumber
+})
+
+export const handleCategoriesSortByPrice = order => ({
+    type: types.HANDLE_CATEGORIES_SORT_BY_PRICE,
+    order
 })

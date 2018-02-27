@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import FontAwesome from '@fortawesome/react-fontawesome'
 import Loading from './loading'
 import { Link } from 'react-router-dom'
-import Client from '../../api'
+import { apiFindProductById, apiGetStoreByName } from '../../api'
+import { parsePrice } from '../../utils'
 
 class ProductView extends React.Component {
     constructor(props) {
@@ -19,15 +20,15 @@ class ProductView extends React.Component {
 
         // If props are received from the previous component (Link)
         if (location.state !== undefined) {
-            return Client.getStoreByName(location.state.product.store)
+            return apiGetStoreByName(location.state.product.store)
             .then(store => this.setState({ product: location.state.product, store: store }))
         } else {
         // If the route was navigated directly
             let product, store
-            return Client.findProductById(match.params.id)
+            return apiFindProductById(match.params.id)
             .then(response => {
                 product = response
-                return Client.getStoreByName(product.store)
+                return apiGetStoreByName(product.store)
             })
             .then(response => {
                 store = response
@@ -87,19 +88,3 @@ ProductView.propTypes = {
 }
 
 export default ProductView
-
-function parsePrice(intPrice) {
-    let price = intPrice.toString()
-    if (price.length > 6) {
-        price = "$" + price.slice(0, 1) + "." + price.slice(1, 4) + "." + price.slice(-3)
-    } else if (price.length > 5) {
-        price = "$" + price.slice(0, 3) + "." + price.slice(-3)
-    } else if (price.length > 4) {
-        price = "$" + price.slice(0, 2) + "." + price.slice(-3)
-    } else if (price.length > 3) {
-        price = "$" + price.slice(0, 1) + "." + price.slice(-3)
-    } else {
-        price = "$" + price
-    }
-    return price
-}

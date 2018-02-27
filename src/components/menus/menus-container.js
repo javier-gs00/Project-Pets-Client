@@ -36,8 +36,8 @@ class Menus extends Component {
     }
 
     componentDidMount() {
-        const { location } = this.props
-        return this.props.getActiveRoute(location.pathname)
+        const { getActiveRoute } = this.props
+        return getActiveRoute('/menu')
     }
 
     handleInputChange = e => this.setState({ searchValue: e.target.value })

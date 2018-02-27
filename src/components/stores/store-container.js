@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { addStores } from '../../actions/actions'
-import Client from '../../api'
+import { apiGetStores } from '../../api'
 import StoreGrid from './store-grid'
 
 const mapStateToProps = ({ stores }) => ({
@@ -21,7 +21,7 @@ class storeContainer extends Component {
         if (stores.length > 0) {
             return false
         } else {
-            return Client.getStores(results => addStores(results))
+            return apiGetStores(results => addStores(results))
         }    
     }
 

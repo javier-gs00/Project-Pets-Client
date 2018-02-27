@@ -48,6 +48,13 @@ function getSvgIcon ({ svg, routeMatch, stroke }) {
                     color: stroke ? highlightColor : textColor,
                     transform: stroke ? 'scale(1.15, 1.15)' : 'scale(1, 1)'}}/>
             // return <NavProductsIcon strokeWidth={strokeWidth} stroke={stroke ? normalColor : textColor} />
+        case 'categorias':
+            return <FontAwesomeIcon 
+                icon="th-large"
+                size="2x" 
+                style={{
+                    color: stroke ? highlightColor : textColor,
+                    transform: stroke ? 'scale(1.15, 1.15)' : 'scale(1, 1)'}}/>
         case 'tiendas':
             return <FontAwesomeIcon
                 icon="building"

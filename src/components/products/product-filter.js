@@ -36,24 +36,17 @@ const ProductFilter = props => {
         .filter(filter => filter.filterType === 'category')
         .map((category, index) => createFilter(index, category, props.handleFilterChange))
 
-    // const undoFilters = document.getElementById('desc_sort').classList.contains('filter-svg-item-active') ||  document.getElementById('asc_sort').classList.contains('filter-svg-item-active')
-    //     ? <div id="null_sort"
-    //         className="filter-svg-item"
-    //         onClick={props.handleSort}><FontAwesome icon="undo-alt" /></div>
-    //     : null
-
     return (
         <div className="filters-table-container">
-            <div className="filters-show-toggle" onClick={props.handleFiltersDisplay}>
+            <div className="filters-show-toggle" onClick={handleFiltersDisplay}>
                 <FontAwesome icon="filter"/>
                 <span id="filter-toggle-text">Mostrar Filtros</span>
                 <FontAwesome icon="angle-down"/>
             </div>
-            {/* <div id="filters" className={"filters-container " + (showFiltersDiv ? '' : 'hidden')} > */}
             <div id="filters" className="filters-container">
                 <span className="filter-title">Ordenar</span>
                 <div className="filter">
-                    <span className="filter-name" onClick={props.handleFilterClick}>Precio</span>
+                    <span className="filter-name">Precio</span>
                     <div className="filter-svg-container">
                         <div id="null_sort"
                             className="filter-svg-item"
@@ -73,19 +66,18 @@ const ProductFilter = props => {
                 {storeFilters}
                 <span className="filter-title">Mascotas</span>
                 {petFilters}
-                <span className="filter-title">Categorías</span>
-                {categoryFilters}
-                {/* <div className="filter">
-                    <input type="checkbox" id="price-filter" className="cbx hidden"/>
-                    <label for="price-filter" className="lbl"></label>
-                    <span className="filter-name" onClick={props.handleFilterClick}>Precio: Mayor a menor</span>
-                </div> */}
+                { props.path.split('/')[1] === 'categorias'
+                    ? null : <span className="filter-title">Categorías</span> }
+                { props.path.split('/')[1] === 'categorias'
+                    ? null : categoryFilters }
             </div>
         </div>
     )
 }
 
 ProductFilter.propTypes = {
+    path: PropTypes.string.isRequired,
+    handleSort: PropTypes.func.isRequired,
     handleFiltersDisplay: PropTypes.func.isRequired,
     handleFilterChange: PropTypes.func.isRequired,
     filters: PropTypes.arrayOf(PropTypes.object)
@@ -95,4 +87,21 @@ export default ProductFilter
 
 function capitalizeFirstLetter(text) {
     return text.charAt(0).toUpperCase() + text.slice(1)
+}
+
+function handleFiltersDisplay(e) {
+    const filters = document.getElementById('filters')
+    const toggleFilters = document.getElementsByClassName('filters-show-toggle')[0]
+    const toggleFiltersText = document.getElementById('filter-toggle-text')
+    if (filters.style.maxHeight) {
+        filters.style.maxHeight = null
+        toggleFilters.classList.remove('filters-rotated')
+        toggleFilters.classList.add('filters-not-rotated')
+        toggleFiltersText.innerHTML = 'Mostrar Filtros'
+    } else {
+        filters.style.maxHeight = filters.scrollHeight + "px"
+        toggleFilters.classList.remove('filters-not-rotated')
+        toggleFilters.classList.add('filters-rotated')
+        toggleFiltersText.innerHTML = 'Ocultar Filtros'
+    }
 }

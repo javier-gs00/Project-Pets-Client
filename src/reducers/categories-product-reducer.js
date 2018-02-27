@@ -1,58 +1,44 @@
-import { ADD_PRODUCTS,
-    REMOVE_PRODUCTS,
-    START_ROTATING_SPINNER,
-    STOP_ROTATING_SPINNER,
-    HANDLE_INPUT_TEXT_CHANGE,
-    HANDLE_FILTER_CHANGE,
-    HANDLE_ACTIVE_PAGE_CHANGE, 
-    HANDLE_SORT_BY_PRICE } from '../actions/action-types'
+import { 
+    ADD_CATEGORIES_PRODUCTS,
+    START_CATEGORIES_ROTATING_SPINNER,
+    STOP_CATEGORIES_ROTATING_SPINNER,
+    HANDLE_CATEGORIES_FILTER_CHANGE,
+    HANDLE_CATEGORIES_SORT_BY_PRICE,
+    HANDLE_CATEGORIES_ACTIVE_PAGE_CHANGE
+} from '../actions/action-types'
 
 const initialState = {
-    pathname: '/productos',
+    pathname: '/categorias',
     products: [],
     isLoading: false,
     activePage: 1,
-    searchValue: "",
     filters: [],
     originalOrder: []
 }
 
-const products = (state = initialState, action) => {
-    switch (action.type) {
-        case START_ROTATING_SPINNER:
+const categories = ( state = initialState, action ) => {
+    switch(action.type) {
+        case START_CATEGORIES_ROTATING_SPINNER:
             return {
                 ...state,
                 isLoading: true
             }
-        case STOP_ROTATING_SPINNER:
+        case STOP_CATEGORIES_ROTATING_SPINNER:
             return {
                 ...state,
                 isLoading: false
             }
-        case HANDLE_INPUT_TEXT_CHANGE:
-            return {
-                ...state,
-                searchValue: action.text
-            }
-        case ADD_PRODUCTS:
+        case ADD_CATEGORIES_PRODUCTS:
             return {
                 ...state,
                 pathname: action.pathname,
-                searchValue: action.searchValue,
                 products: action.products,
                 activePage: 1,
                 isLoading: false,
                 filters: action.filters,
                 originalOrder: action.products.map(product => product._id)
             }
-        case REMOVE_PRODUCTS:
-            return {
-                ...state,
-                activePage: 1,
-                products: [],
-                filters: []
-            }
-        case HANDLE_FILTER_CHANGE:
+        case HANDLE_CATEGORIES_FILTER_CHANGE:
             return {
                 ...state,
                 activePage: 1,
@@ -60,7 +46,7 @@ const products = (state = initialState, action) => {
                     ? { ...filter, checked: !filter.checked }
                     : filter)
             }
-        case HANDLE_ACTIVE_PAGE_CHANGE:
+        case HANDLE_CATEGORIES_ACTIVE_PAGE_CHANGE:
             return {
                 ...state,
                 activePage: action.pageNumber === '&gt;'
@@ -69,7 +55,7 @@ const products = (state = initialState, action) => {
                     ? state.activePage - 1
                     : parseInt(action.pageNumber, 10)
             }
-        case HANDLE_SORT_BY_PRICE:
+        case HANDLE_CATEGORIES_SORT_BY_PRICE:
             return {
                 ...state,
                 activePage: 1,
@@ -84,4 +70,4 @@ const products = (state = initialState, action) => {
     }
 }
 
-export default products
+export default categories

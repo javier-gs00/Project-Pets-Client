@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ProductItem from './product-item'
 
-const ProductGrid = ({ products }) => (                 
+const ProductGrid = ({ products, path }) => (                 
     <div className="products-grid-container">
-        { products.map(product => <ProductItem key={product._id} product={product}/>) }
+        { products.map(product => <ProductItem key={product._id} product={product} path={path}/>) }
     </div>
 )
 
