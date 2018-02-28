@@ -1,6 +1,7 @@
 html {
   /* Set font to 10px for easier use of rem units. 1rem = 10px */
   font-size: 62.5%;
+  min-height: 100%;
 }
 body {
   margin: 0px;
