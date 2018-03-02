@@ -1055,7 +1055,7 @@ button.products-nav-active {
   font-size: 1.9rem;
 }
 .store-data-block:not(:first-child) span {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin: 5px 2px;
   padding: 1px 10px;
   -webkit-boder-radius: 10px;
@@ -1063,6 +1063,11 @@ button.products-nav-active {
   border-radius: 10px;
   color: #000;
   background: #f0f0f0;
+}
+@media only screen and (min-width: 1200px) {
+  .store-data-block:not(:first-child) {
+    font-size: 1.6rem;
+  }
 }
 .store-single-main-container {
   display: flex;
@@ -1264,5 +1269,10 @@ button.products-nav-active {
   transition: max-height 0.2s ease;
 }
 .menu-content-container p {
-  font-size: 1.7rem;
+  font-size: 1.5rem;
+}
+@media only screen and (min-width: 1200px) {
+  .menu-content-container p {
+    font-size: 1.6rem;
+  }
 }
