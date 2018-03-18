@@ -10,22 +10,22 @@ import NavContainer from './nav/nav-container'
 import MenusContainer from './menus/menus-container'
 
 const AsyncProductsContainer = Loadable({
-  loader: () => import('./products/product-container'),
+  loader: () => import(/* webpackChunkName: "product_container" */ './products/product-container'),
   loading: Loading
 })
 
 const AsyncCategoriesContainer = Loadable({
-  loader: () => import('./categories/categories-container'),
+  loader: () => import(/* webpackChunkName: "categories_container" */ './categories/categories-container'),
   loading: Loading
 })
 
 const AsyncStoresContainer = Loadable({
-  loader: () => import('./stores/store-container'),
+  loader: () => import(/* webpackChunkName: "store_container" */ './stores/store-container'),
   loading: Loading
 })
 
 const AsyncSingleStoreView = Loadable({
-  loader: () => import('./stores/store-view'),
+  loader: () => import(/* webpackChunkName: "store_view" */ './stores/store-view'),
   loading: Loading
 })
 

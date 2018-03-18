@@ -1,12 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
-
-// import NavSearchIcon from '../../assets/svg/nav.search.js';
-// import NavProductsIcon from '../../assets/svg/nav.products.js'
-// import NavStoresIcon from '../../assets/svg/nav.stores.js'
-// import NavMenuIcon from '../../assets/svg/nav.menu.js'
-
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 
 const textColor = '#c7c7c7'

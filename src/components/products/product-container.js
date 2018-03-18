@@ -20,17 +20,17 @@ import SearchForm from './search-form'
 import Loading from './loading'
 
 const AsyncProductGrid = Loadable({
-    loader: () => import('./product-grid'),
+    loader: () => import(/* webpackChunkName: "product_grid" */ './product-grid'),
     loading: Loading
 })
 
 const AsyncProductsDisplay = Loadable({
-    loader: () => import('./products-display'),
+    loader: () => import(/* webpackChunkName: "product_display" */ './products-display'),
     loading: Loading
 })
 
 const AsyncSingleProductView = Loadable({
-    loader: () => import('./product-view'),
+    loader: () => import(/* webpackChunkName: "product_view" */ './product-view'),
     loading: Loading
 })
 

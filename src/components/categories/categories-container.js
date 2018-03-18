@@ -17,12 +17,12 @@ import {
 } from '../../actions/actions'
 
 const AsyncProductsDisplay = Loadable({
-    loader: () => import('../products/products-display'),
+    loader: () => import(/* webpackChunkName: "product_display" */ '../products/products-display'),
     loading: Loading
 })
 
 const AsyncSingleProductView = Loadable({
-    loader: () => import('../products/product-view'),
+    loader: () => import(/* webpackChunkName: "product_view" */ '../products/product-view'),
     loading: Loading
 })
 
