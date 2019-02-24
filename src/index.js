@@ -7,15 +7,59 @@ import App from './components/App'
 import './assets/style/style.css'
 // import './style/style.less'
 
-import fontawesome from '@fortawesome/fontawesome'
-import { faAngleDown, faAmbulance, faBars, faBuilding, faCar, faClock, faEnvelope,
-    faFutbol, faGlobe, faMapMarker, faMedkit, faPaw, faPhone, faSearch, faSignInAlt, faSpinner, faShower,
-    faSortNumericDown, faSortNumericUp, faThLarge, faUndoAlt, faUserMd, faUtensils } from '@fortawesome/fontawesome-free-solid'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {
+  faAngleDown,
+  faAmbulance,
+  faBars,
+  faBuilding,
+  faCar,
+  faClock,
+  faEnvelope,
+  faFutbol,
+  faGlobe,
+  faMapMarker,
+  faMedkit,
+  faPaw,
+  faPhone,
+  faSearch,
+  faSignInAlt,
+  faSpinner,
+  faShower,
+  faSortNumericDown,
+  faSortNumericUp,
+  faThLarge,
+  faUndoAlt,
+  faUserMd,
+  faUtensils
+} from '@fortawesome/free-solid-svg-icons'
 
-fontawesome.library.add(faAngleDown, faAmbulance, faBars, faBuilding, faCar, faClock, faEnvelope,
-    faFutbol, faGlobe, faMapMarker, faMedkit, faPaw, faPhone, faSearch, faSignInAlt, faSpinner, faShower,
-    faSortNumericDown, faSortNumericUp, faThLarge, faUndoAlt, faUserMd, faUtensils)
+library.add(
+  faAngleDown,
+  faAmbulance,
+  faBars,
+  faBuilding,
+  faCar,
+  faClock,
+  faEnvelope,
+  faFutbol,
+  faGlobe,
+  faMapMarker,
+  faMedkit,
+  faPaw,
+  faPhone,
+  faSearch,
+  faSignInAlt,
+  faSpinner,
+  faShower,
+  faSortNumericDown,
+  faSortNumericUp,
+  faThLarge,
+  faUndoAlt,
+  faUserMd,
+  faUtensils
+)
 
 let store = createStore(projectPetsApp)
 
-ReactDOM.render(<App store={store}/>, document.getElementById('root'))
+ReactDOM.render(<App store={store} />, document.getElementById('root'))
