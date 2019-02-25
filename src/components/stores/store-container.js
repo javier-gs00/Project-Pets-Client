@@ -6,40 +6,44 @@ import { apiGetStores } from '../../api'
 import StoreGrid from './store-grid'
 
 const mapStateToProps = ({ stores }) => ({
-    stores: stores.stores
+  stores: stores.stores
 })
 
 const mapDispatchToProps = {
-    addStores: addStores
+  addStores: addStores
 }
 
 class storeContainer extends Component {
-    componentDidMount() {
-        const { stores, addStores, location } = this.props
-        this.props.getActiveRoute(location.pathname)
+  async componentDidMount() {
+    const { stores, addStores, location } = this.props
+    this.props.getActiveRoute(location.pathname)
 
-        if (stores.length > 0) {
-            return false
-        } else {
-            return apiGetStores(results => addStores(results))
-        }    
+    if (stores.length > 0) {
+      return false
+    } else {
+      const stores = await apiGetStores()
+      return addStores(stores)
     }
+  }
 
-    render() {
-        return (
-            <div className="main">
-                <StoreGrid stores={this.props.stores} />
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div className="main">
+        <StoreGrid stores={this.props.stores} />
+      </div>
+    )
+  }
 }
 
-const StoreContainer = connect(mapStateToProps, mapDispatchToProps)(storeContainer)
+const StoreContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(storeContainer)
 
 storeContainer.propTypes = {
-    getActiveRoute: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired,
-    stores: PropTypes.array.isRequired
+  getActiveRoute: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  stores: PropTypes.array.isRequired
 }
 
 export default StoreContainer
