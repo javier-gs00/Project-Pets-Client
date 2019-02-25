@@ -1,6 +1,8 @@
+const api = process.env.NODE_ENV === 'production' ? 'pending' : 'http://localhost:3001/api'
+
 export async function apiFindProductById(id) {
   try {
-    const response = await fetch(`http://localhost:3001/api/product/id/${id}`, {
+    const response = await fetch(`${api}/product/id/${id}`, {
       accept: 'application/json'
     })
     const product = await response.json()
@@ -14,7 +16,7 @@ export async function apiFindProductById(id) {
 // Used to fetch all the stores
 export async function apiGetStores(cb) {
   try {
-    const response = await fetch(`http://localhost:3001/api/store`, {
+    const response = await fetch(`${api}/store`, {
       accept: 'application/json'
     })
     const stores = await response.json()
@@ -27,7 +29,7 @@ export async function apiGetStores(cb) {
 
 export async function apiGetStoreByName(name) {
   try {
-    const response = await fetch(`http://localhost:3001/api/store/${name}`, {
+    const response = await fetch(`${api}/store/${name}`, {
       accept: 'application/json'
     })
     const store = await response.json()
@@ -43,7 +45,7 @@ export async function apiGetStoreByName(name) {
 // Default query is for when the component first loads
 export async function apiProductsSearch(query = 'royal canin maxi') {
   try {
-    const response = await fetch(`http://localhost:3001/api/product?query=${query}`, {
+    const response = await fetch(`${api}/product?query=${query}`, {
       accept: 'application/json'
     })
     const rawProducts = await response.json()
@@ -82,7 +84,7 @@ export async function apiProductsSearch(query = 'royal canin maxi') {
 
 export async function apiGetProductsByCategory(category) {
   try {
-    const response = await fetch(`http://localhost:3001/api/product/category/${category}`, {
+    const response = await fetch(`${api}/product/category/${category}`, {
       accept: 'application/json'
     })
     const rawProducts = await response.json()
