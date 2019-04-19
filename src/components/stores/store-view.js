@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Loading from '../products/loading'
 import { apiGetStoreByName } from '../../api'
+import './store-view.scss'
 
 class StoreView extends React.Component {
   constructor(props) {

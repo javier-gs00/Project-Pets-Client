@@ -5,6 +5,7 @@ import Loading from './loading'
 import { Link } from 'react-router-dom'
 import { apiFindProductById, apiGetStoreByName } from '../../api'
 import { parsePrice } from '../../utils'
+import './product-view.scss'
 
 class ProductView extends React.Component {
   constructor(props) {

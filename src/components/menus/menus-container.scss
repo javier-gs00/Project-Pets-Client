@@ -1,0 +1,57 @@
+.menu-container {
+  display: flex;
+  justify-content: center;
+}
+.ul-menu {
+  width: 599px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 0;
+  background-color: #ffffff;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.li-menu {
+  list-style-type: none;
+}
+.menu-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  font-size: 1.9rem;
+  background-color: #ffffff;
+  -webkit-tap-highlight-color: transparent;
+}
+.menu-title-container:hover {
+  cursor: pointer;
+}
+.not-rotated > svg {
+  transform: rotate(0deg);
+  transform-origin: 50% 50%;
+  animation: rotateInverse .2s ease;
+}
+.rotated > svg {
+  transform: rotate(180deg);
+  transform-origin: 50% 50%;
+  animation: rotate .2s ease;
+}
+.menu-content-container {
+  display: block;
+  max-height: 0;
+  border-bottom: 1px solid #ddd;
+  overflow: hidden;
+  padding: 0 10px;
+  -webkit-transition: max-height 0.2s ease;
+  -moz-transition: max-height 0.2s ease;
+  -ms-transition: max-height 0.2s ease;
+  -o-transition: max-height 0.2s ease;
+  transition: max-height 0.2s ease;
+}
+.menu-content-container p {
+  font-size: 1.5rem;
+}
+@media only screen and (min-width: 1200px) {
+  .menu-content-container p {
+    font-size: 1.6rem;
+  }
+}

@@ -1,0 +1,85 @@
+html {
+  /* Set font to 10px for easier use of rem units. 1rem = 10px */
+  font-size: 62.5%;
+  min-height: 100%;
+}
+body {
+  margin: 0px;
+  font-family: 'Roboto', sans-serif;
+  background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+}
+a {
+  text-decoration: none;
+}
+/* Responsive Mixins */
+/* Buttons */
+/* FILTER TOGGLE */
+.btn {
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+  padding: 0 16px;
+  height: 32px;
+  width: auto;
+  color: #fff;
+  font-size: 1.3rem;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+}
+.btn:hover {
+  cursor: pointer;
+  background: #ffa000;
+}
+.btn:focus {
+  outline: 0;
+}
+.btn:active {
+  background: #ffa000;
+}
+.filter-toggle {
+  margin-left: 5px;
+}
+.hidden {
+  display: none;
+}
+/* ------------------- MAIN CONTAINER FOR EVERY COMPONENT ----------------------*/
+.main {
+  padding: 5px 0px;
+  margin-bottom: 5rem;
+}
+/* ---------------- SEARCH FORM ICON OUTSIDE SEARCH BOX -------------- */
+
+
+/* draw a circle on top of the slider(label) */
+
+
+
+
+
+
+
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+  }
+  100% {
+    transform: rotate(-180deg);
+    transform-origin: 50% 50%;
+  }
+}
+@keyframes rotateInverse {
+  0% {
+    transform: rotate(-180deg);
+    transform-origin: 50% 50%;
+  }
+  100% {
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+  }
+}
+

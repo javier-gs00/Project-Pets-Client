@@ -1,4 +1,5 @@
-const api = process.env.NODE_ENV === 'production' ? 'pending' : 'http://localhost:3001/api'
+const api =
+  process.env.NODE_ENV === 'http://localhost:3001/api' ? 'pending' : 'http://localhost:3001/api'
 
 export async function apiFindProductById(id) {
   try {

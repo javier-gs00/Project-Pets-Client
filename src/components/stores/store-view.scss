@@ -1,0 +1,130 @@
+.store-single-main-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.store-single-container {
+  display: flex;
+  flex-direction: column;
+  width: 599px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+  -webkit-boder-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+.store-single-image {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 95%;
+  height: auto;
+  padding: 5px;
+}
+.store-single-image img {
+  max-width: 100%;
+}
+.store-single-title-container {
+  color: #464646;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 1.9rem;
+  border-top: 1px solid #ddd;
+}
+.store-single-title-container svg {
+  margin-right: 15px;
+}
+.store-single-title-container-svg {
+  display: block;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  font-size: 1.8rem;
+  -webkit-tap-highlight-color: transparent;
+}
+.store-single-title-container-svg:hover {
+  cursor: pointer;
+}
+.store-single-title-container-svg svg:first-child {
+  color: #ffa000;
+  margin-right: 15px;
+}
+.store-single-title-container-svg svg:nth-child(3) {
+  color: #464646;
+  float: right;
+}
+.store-single-container h1 {
+  margin: 0;
+  font-size: 1.9rem;
+}
+.store-single-container a {
+  font-size: 1.8rem;
+  color: black;
+}
+.store-single-container span {
+  font-size: 1.8rem;
+}
+.store-single-content-container {
+  padding: 0 10px 0;
+  display: block;
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: max-height 0.2s ease;
+  -moz-transition: max-height 0.2s ease;
+  -ms-transition: max-height 0.2s ease;
+  -o-transition: max-height 0.2s ease;
+  transition: max-height 0.2s ease;
+}
+.store-single-item-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+  display: flex;
+}
+.phone-content {
+  width: 100%;
+  justify-content: center;
+}
+.phone-content div {
+  flex: 1;
+}
+.phone-content div:first-child {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+.email-content {
+  justify-content: center;
+}
+.addresses-content {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.addresses-content:not(:last-child) {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+}
+.openhours-content {
+  justify-content: center;
+}
+.openhours-content div {
+  flex: 1;
+}
+.openhours-content div:first-child {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+.store-not-rotated > svg:nth-child(3) {
+  transform: rotate(0deg);
+  transform-origin: 50% 50%;
+  animation: rotateInverse .2s ease;
+}
+.store-rotated > svg:nth-child(3) {
+  transform: rotate(180deg);
+  transform-origin: 50% 50%;
+  animation: rotate .2s ease;
+}

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import { apiGetProductsByCategory } from '../../api'
 import { connect } from 'react-redux'
+import './categories-grid.scss'
 
 import { addCategoriesProducts, startCategoriesRotatingSpinner } from '../../actions/actions'
 
