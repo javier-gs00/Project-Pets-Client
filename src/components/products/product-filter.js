@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import './product-filter.scss'
 
 const ProductFilter = props => {
   function createFilter(index, filter, handleFilterChange) {

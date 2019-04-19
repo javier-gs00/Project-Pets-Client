@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
 import { apiProductsSearch } from '../../api'
 import { connect } from 'react-redux'
+import './search-form.scss'
 
 import { startRotatingSpinner, addProducts } from '../../actions/actions'
 

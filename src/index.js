@@ -4,7 +4,7 @@ import { createStore } from 'redux'
 import projectPetsApp from './reducers/reducers'
 import App from './components/App'
 import './font-awsesome-icons'
-import './assets/style/style.css'
+import './assets/style/style.scss'
 // import './style/style.less'
 
 let store = createStore(projectPetsApp)

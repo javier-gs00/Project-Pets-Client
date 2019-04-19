@@ -1,0 +1,74 @@
+.search-container {
+  margin: 10px auto 1px;
+  width: 100%;
+  max-width: 500px;
+}
+.search-input-container {
+  margin: 0px 5px;
+  overflow: hidden;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+  -webkit-boder-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+}
+.search-input-container:hover {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.15), 0 4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+.search-input-container input#search {
+  background-color: #ffffff;
+  font-size: 1.8rem;
+  color: #464646;
+  width: 100%;
+  /* max-width: 500px; */
+  height: 40px;
+  float: left;
+  padding-left: 15px;
+  border: none;
+  -webkit-appearance: none;
+}
+/*Disable blue outline on chrome*/
+.search-input-container input#search:focus {
+  outline: 0;
+}
+.search-input-container input#search:-webkit-input-placeholder {
+  color: #464646;
+}
+.search-input-container input#search:-moz-placeholder {
+  /* Firefox 19+ */
+  color: #464646;
+}
+.search-input-container input#search:-ms-input-placeholder {
+  color: #464646;
+}
+.search-input-container button.icon-search {
+  border: none;
+  background-color: transparent;
+  color: #c67100;
+  height: 40px;
+  width: 50px;
+  opacity: 1;
+  font-size: 1.6rem;
+  margin-left: -50px;
+  outline: 0;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+}
+.search-input-container button.icon-search:hover {
+  cursor: pointer;
+}
+.search-input-container input#search:focus + button.icon-search {
+  color: #ffa000;
+  transform: scale(1.2, 1.2);
+}

@@ -1,0 +1,64 @@
+.store-container {
+  margin: 5px;
+  background: #ffffff;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+  display: flex;
+  min-height: 150px;
+  max-width: 100%;
+  -webkit-boder-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+}
+@media only screen and (min-width: 1200px) {
+  .store-container:hover {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.15), 0 4px 4px 0 rgba(0, 0, 0, 0.3);
+  }
+}
+.store-image {
+  flex-basis: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.store-image img {
+  width: 100px;
+}
+@media only screen and (max-width: 599px) {
+  .store-image img {
+    margin: 5px;
+  }
+}
+.store-data {
+  flex-basis: 75%;
+  display: flex;
+  flex-direction: column;
+}
+.store-data-block {
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.store-name {
+  color: #464646;
+  font-size: 1.9rem;
+}
+.store-data-block:not(:first-child) span {
+  font-size: 1.5rem;
+  margin: 5px 2px;
+  padding: 1px 10px;
+  -webkit-boder-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  color: #000;
+  background: #f0f0f0;
+}
+@media only screen and (min-width: 1200px) {
+  .store-data-block:not(:first-child) {
+    font-size: 1.6rem;
+  }
+}

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import NavItem from './nav-item'
+import './nav-styles.scss'
 
 const mapStateToProps = state => ({
   productPathname: state.products.pathname,
