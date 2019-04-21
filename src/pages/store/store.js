@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Loading from '../products/loading'
+import Loading from '../../components/loader/loader'
 import { apiGetStoreByName } from '../../api'
-import './store-view.scss'
+import './store.scss'
 
-class StoreView extends React.Component {
+class StorePage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -202,12 +202,12 @@ class StoreView extends React.Component {
   }
 }
 
-StoreView.propTypes = {
+StorePage.propTypes = {
   getActiveRoute: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired
 }
 
-export default StoreView
+export default StorePage
 
 function parsePhoneNumber(number) {
   let newNumber = number.toString()

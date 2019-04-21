@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { addStores } from '../../actions/actions'
 import { apiGetStores } from '../../api'
-import StoreGrid from './store-grid'
+import StoreGrid from '../../components/stores/store-grid'
 
 const mapStateToProps = ({ stores }) => ({
   stores: stores.stores
@@ -13,7 +13,7 @@ const mapDispatchToProps = {
   addStores: addStores
 }
 
-class storeContainer extends Component {
+class StoresPage extends Component {
   async componentDidMount() {
     const { stores, addStores, location } = this.props
     this.props.getActiveRoute(location.pathname)
@@ -35,15 +35,15 @@ class storeContainer extends Component {
   }
 }
 
-const StoreContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(storeContainer)
-
-storeContainer.propTypes = {
+StoresPage.propTypes = {
   getActiveRoute: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   stores: PropTypes.array.isRequired
 }
 
-export default StoreContainer
+const ConnectedStoresPage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StoresPage)
+
+export default ConnectedStoresPage

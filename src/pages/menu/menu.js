@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import './menus-container.scss'
+import './menu.scss'
 
-class Menus extends Component {
+class MenuPage extends Component {
   constructor() {
     super()
     this.state = {
@@ -76,9 +76,9 @@ class Menus extends Component {
   }
 }
 
-Menus.propTypes = {
+MenuPage.propTypes = {
   getActiveRoute: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired
 }
 
-export default Menus
+export default MenuPage

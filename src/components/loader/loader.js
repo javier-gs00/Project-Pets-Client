@@ -1,11 +1,11 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import './loading.scss'
+import './loader.scss'
 
-const LoadingScreen = () => (
+const Loader = () => (
   <div className="loading">
     <FontAwesomeIcon icon="spinner" spin size="3x" />
   </div>
 )
 
-export default LoadingScreen
+export default Loader

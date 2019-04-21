@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
-import CategoriesGrid from './categories-grid'
+import CategoriesGrid from '../../components/categories/categories-grid'
 import Loadable from 'react-loadable'
 import { connect } from 'react-redux'
 import { apiGetProductsByCategory } from '../../api'
-import Loading from '../products/loading'
-import './categories-container.scss'
+import Loading from '../../components/loader/loader'
+import './categories.scss'
 
 import {
   addCategoriesProducts,
@@ -18,12 +18,14 @@ import {
 } from '../../actions/actions'
 
 const AsyncProductsDisplay = Loadable({
-  loader: () => import(/* webpackChunkName: "product_display" */ '../products/products-display'),
+  loader: () =>
+    import(/* webpackChunkName: "product_display" */ '../../components/products/products-display'),
   loading: Loading
 })
 
 const AsyncSingleProductView = Loadable({
-  loader: () => import(/* webpackChunkName: "product_view" */ '../products/product-view'),
+  loader: () =>
+    import(/* webpackChunkName: "product_view" */ '../../components/products/product-view'),
   loading: Loading
 })
 
@@ -44,7 +46,7 @@ const mapDispatchToProps = {
   handleCategoriesSortByPrice: handleCategoriesSortByPrice
 }
 
-class categories extends React.Component {
+class CategoriesPage extends React.Component {
   state = {
     categories: [
       {
@@ -242,7 +244,7 @@ class categories extends React.Component {
   }
 }
 
-categories.propTypes = {
+CategoriesPage.propTypes = {
   pathname: PropTypes.string.isRequired,
   products: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
@@ -250,9 +252,9 @@ categories.propTypes = {
   filters: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
-const CategoriesContainer = connect(
+const ConnectedCategoriesPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(categories)
+)(CategoriesPage)
 
-export default CategoriesContainer
+export default ConnectedCategoriesPage

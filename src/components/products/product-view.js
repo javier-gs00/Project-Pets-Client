@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Loading from './loading'
+import Loader from '../loader/loader'
 import { Link } from 'react-router-dom'
 import { apiFindProductById, apiGetStoreByName } from '../../api'
 import { parsePrice } from '../../utils'
@@ -103,7 +103,7 @@ class ProductView extends React.Component {
         // </div>
       )
     } else {
-      return <Loading />
+      return <Loader />
     }
   }
 }

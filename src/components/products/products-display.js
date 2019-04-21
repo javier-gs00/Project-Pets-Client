@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ProductFilter from './product-filter'
 import ProductGrid from './product-grid'
 import ProductNav from './product-nav'
-import LoadingScreen from './loading'
+import Loader from '../loader/loader'
 import './products-display.scss'
 
 const ProductsDisplay = props => {
@@ -21,7 +21,7 @@ const ProductsDisplay = props => {
   } = props
 
   return isLoading ? (
-    <LoadingScreen />
+    <Loader />
   ) : totalProductsFoundLength ? (
     <div>
       {props.totalProductsFoundLength ? (

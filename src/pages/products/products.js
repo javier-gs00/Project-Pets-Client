@@ -5,7 +5,8 @@ import Loadable from 'react-loadable'
 import queryString from 'query-string'
 import { connect } from 'react-redux'
 import { apiProductsSearch } from '../../api'
-import './product-container.scss'
+import Loader from '../../components/loader/loader'
+import './products.scss'
 
 // Redux Actions
 import {
@@ -19,22 +20,24 @@ import {
 } from '../../actions/actions'
 
 // Components
-import SearchForm from './search-form'
-import Loading from './loading'
+import SearchForm from '../../components/products/search-form'
 
 const AsyncProductGrid = Loadable({
-  loader: () => import(/* webpackChunkName: "product_grid" */ './product-grid'),
-  loading: Loading
+  loader: () =>
+    import(/* webpackChunkName: "product_grid" */ '../../components/products/product-grid'),
+  loading: Loader
 })
 
 const AsyncProductsDisplay = Loadable({
-  loader: () => import(/* webpackChunkName: "product_display" */ './products-display'),
-  loading: Loading
+  loader: () =>
+    import(/* webpackChunkName: "product_display" */ '../../components/products/products-display'),
+  loading: Loader
 })
 
 const AsyncSingleProductView = Loadable({
-  loader: () => import(/* webpackChunkName: "product_view" */ './product-view'),
-  loading: Loading
+  loader: () =>
+    import(/* webpackChunkName: "product_view" */ '../../components/products/product-view'),
+  loading: Loader
 })
 
 const mapStateToProps = ({ products }) => ({
@@ -56,7 +59,7 @@ const mapDispatchToProps = {
   handleSortByPrice: handleSortByPrice
 }
 
-class SearchContainer extends Component {
+class ProductsPage extends Component {
   componentDidMount() {
     const {
       location,
@@ -233,7 +236,7 @@ class SearchContainer extends Component {
                 <div className="products-container">
                   <div className="products-display-container">
                     {isLoading ? (
-                      <Loading />
+                      <Loader />
                     ) : (
                       <AsyncProductGrid
                         {...props}
@@ -252,7 +255,7 @@ class SearchContainer extends Component {
   }
 }
 
-SearchContainer.propTypes = {
+ProductsPage.propTypes = {
   getActiveRoute: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   pathname: PropTypes.string.isRequired,
@@ -263,9 +266,9 @@ SearchContainer.propTypes = {
   filters: PropTypes.array.isRequired
 }
 
-const ProductsContainer = connect(
+const ConnectedProductsPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SearchContainer)
+)(ProductsPage)
 
-export default ProductsContainer
+export default ConnectedProductsPage
